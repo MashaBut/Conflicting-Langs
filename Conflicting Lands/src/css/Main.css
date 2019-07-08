@@ -1,0 +1,63 @@
+body,
+html {
+    /* ------------------Positioning--------------------- */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    /* ------------------Block model--------------------- */
+    height: 100%;
+    width: 100%;
+    min-height: 500px;
+    min-width: 700px;
+	padding: 0;
+    margin: 0;
+    /* ------------------Typography--------------------- */
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px; 
+    font-size: 1.5vw;
+    font-weight: 700;
+    color: #000;
+    /* ------------------Display--------------------- */
+    background-image: url(../images/VS.jpg); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.startpage {
+    /* ------------------Positioning--------------------- */
+    position: relative;
+    /* ------------------Block model--------------------- */
+    width:100%;
+    height:100%;
+    margin: 0 auto;
+}
+
+div.player1 {
+    /* ------------------Block model--------------------- */
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+div.player2 {
+    /* ------------------Block model--------------------- */
+    float: right;
+    width: 50%;
+    height: 100%;
+    }
+
+.click {
+    /* ------------------Positioning--------------------- */
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /* ------------------Block model--------------------- */    
+    width: 100%;
+    height: 15%;
+    /* ------------------Typography--------------------- */
+    text-align: center;
+}

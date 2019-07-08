@@ -3,20 +3,35 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Conflicting Lands</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Conflicting Lands</title>
+    <link rel="stylesheet" href="../src/css/Main.css">
+    <link rel="stylesheet" href="../src/css/Players.css">
+
 </head>
 
 <body>
-    <input type="text" id="player1" value="" placeholder="Player 1">
-    <input type="text" id="player2" value="" placeholder="Player 2">
-    <button type="button" id="writeNames">Start</button>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div class="startpage">
+        <div class="player1">
+            <div class="center">
+                <input type="text" required id="player1" value="">
+                <span class="bar"></span>
+                <label>Player 1</label>
+            </div>
+         </div>           
+        <div class="player2">
+            <div class="center">
+                <input type="text" required id="player2" value="">
+                <span class="bar"></span>
+                <label>Player 2</label>
+            </div>
+        </div>
+        <div class="click">
+                <button type="button" id="writeNames">Play Game</button>       
+        </div>
+    </div>
     <canvas height=500px width=1000px id="fuildGame" style="background-color: #010428"></canvas>
     <script src="AllCode.js"></script>
 </body>
