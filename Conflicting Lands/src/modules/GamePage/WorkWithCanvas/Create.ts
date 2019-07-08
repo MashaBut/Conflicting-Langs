@@ -1,18 +1,27 @@
-export namespace CanvasCreate {
+export class CanvasCreate {
 
-    export let firstDice:number;
-    export let secondDice:number;
+    private firstDice:number;
+    private secondDice:number;
     //temporary function
-    function random() {
-        firstDice=Math.floor(Math.random() * 6) + 1;
-        secondDice=Math.floor(Math.random() * 6) + 1;
-        console.log(firstDice,secondDice);
+    private random() {
+        this.firstDice=Math.floor(Math.random() * 6) + 1;
+        this.secondDice=Math.floor(Math.random() * 6) + 1;
+        console.log(this.firstDice,this.secondDice);
     }
 
-    export function setSizeBlockForFuild() {
-        random();
-        firstDice=18*firstDice+2*(firstDice-1);
-        secondDice=18*secondDice+2*(secondDice-1);
-        console.log(firstDice,secondDice);
+    public setSizeBlockForFuild(){
+        this.random();
+        this.firstDice=18*this.firstDice+2*(this.firstDice-1);
+        this.secondDice=18*this.secondDice+2*(this.secondDice-1);
+        console.log(this.firstDice,this.secondDice);
+        return [this.firstDice,this.secondDice];
+    }
+
+    public turnSize() {
+        let firstDice:number;
+        firstDice=this.firstDice;
+        this.firstDice=this.secondDice;
+        this.secondDice=firstDice;
+        return [this.firstDice,this.secondDice];
     }
 }

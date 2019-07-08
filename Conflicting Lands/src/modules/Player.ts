@@ -1,19 +1,22 @@
-interface ModelPlayer {
-    name:string;
-    coins: number;
-    color:string;
-}
+export class Player {
+    private name:string;
+    private coins:number;
+    private color:any;
+    private firstElementonFuild:boolean;
+    private xInitialLocation:number;
+    private yInitialLocation:number;
 
-export default class Player implements ModelPlayer  {
-    name:string;
-    coins:number;
-    color:string;
-    constructor (name:string,color:string){
+    //add start position
+    public constructor (name:string,color:any,xInitialLocation,yInitialLocation){
         this.name=name;
         this.coins=1200;
         this.color=color;
+        this.firstElementonFuild=false;
+        this.xInitialLocation=xInitialLocation;
+        this.yInitialLocation=yInitialLocation;
     }
-    Draw():void {
+    
+    public Draw():void {
         console.log(this.name);
     }
 }

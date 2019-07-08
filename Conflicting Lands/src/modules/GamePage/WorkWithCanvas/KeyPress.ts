@@ -1,16 +1,18 @@
-import { CanvasCreate } from "./Create";
 import { CanvasDraw } from "./Draw";
 
-export namespace CanvasKeyPress {
+export class CanvasKeyPress {
 
-    export function setPositionBlockOnFuild(event) {
-        let firstDice;
-        switch(event) {
+    canvasDraw;
+    
+    constructor (canvasObj:CanvasRenderingContext2D) {
+        this.canvasDraw = new CanvasDraw(canvasObj);
+    }
+   
+    setPositionBlockOnFuild(KeyCode) {
+        switch(KeyCode) {
             case 38: { //up
-                firstDice=CanvasCreate.firstDice;
-                CanvasCreate.firstDice=CanvasCreate.secondDice;
-                CanvasCreate.secondDice=firstDice;
-                CanvasDraw.drawGrid();
+                this.canvasDraw.setSizeBlock();
+                this.canvasDraw.drawGrid();
                 break;
             }
             case 39: {//right
@@ -20,10 +22,13 @@ export namespace CanvasKeyPress {
                 break;
             }
             case 40: {//down
-                firstDice=CanvasCreate.firstDice;
-                CanvasCreate.firstDice=CanvasCreate.secondDice;
-                CanvasCreate.secondDice=firstDice;
-                CanvasDraw.drawGrid();
+                this.canvasDraw.setSizeBlock();
+                this.canvasDraw.drawGrid();
+                break;
+            }
+            case 16: {//shift
+                this.canvasDraw.saveBlockToArray();
+                this.canvasDraw.drawGrid(); 
                 break;
             }
             default :

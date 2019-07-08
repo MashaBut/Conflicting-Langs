@@ -1,5 +1,4 @@
-import setNamePlayers from "./StartPage/WriteNames";
-import {CanvasDraw} from "./GamePage/WorkWithCanvas/Draw";
+import {NamePlayers} from "./StartPage/WriteNames";
 import {CanvasKeyPress} from "./GamePage/WorkWithCanvas/KeyPress";
 
 ///------------------StartPage---------------------
@@ -7,9 +6,10 @@ import {CanvasKeyPress} from "./GamePage/WorkWithCanvas/KeyPress";
 document.getElementById("writeNames").onclick=setNamePlayersStart;
 
 function setNamePlayersStart() {
-    let player1:string = (<HTMLInputElement> document.getElementById("player1")).value;
-    let player2:string = (<HTMLInputElement> document.getElementById("player2")).value; 
-    setNamePlayers(player1,player2);
+    let player1:string = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2:string = (<HTMLInputElement>document.getElementById("player2")).value;
+    let namePlayers =new NamePlayers();
+    namePlayers.setNamePlayers(player1,player2);
 
     drawGridStart();
 }
@@ -17,13 +17,13 @@ function setNamePlayersStart() {
 ///----------------WorkWithCanvas------------------
 
 addEventListener("keydown",setPositionBlockOnFuildStart);
+let canvasKeyPress;
 
 function drawGridStart() {
     let canvasObj = (<HTMLCanvasElement> document.getElementById('fuildGame')).getContext('2d');
-    CanvasDraw.canvasObj=canvasObj;
-    CanvasDraw.drawGrid();
+    canvasKeyPress = new CanvasKeyPress(canvasObj);
 }
 
 function setPositionBlockOnFuildStart(e:KeyboardEvent) {
-  CanvasKeyPress.setPositionBlockOnFuild(e.keyCode);
+  canvasKeyPress.setPositionBlockOnFuild(e.keyCode);
 }
