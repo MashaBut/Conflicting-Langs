@@ -7,13 +7,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../src/css/Main.css">
-    <link rel="stylesheet" href="../src/css/Players.css">
+    <link rel="stylesheet" href="../src/modules/front/css/Main.css">
+    <link rel="stylesheet" href="../src/modules/front/css/Players.css">
 
 </head>
 
 <body>
-    <div class="startpage">
+    <div class="startpage" id="startpage">
         <div class="player1">
             <div class="center">
                 <input type="text" required id="player1" value="">
@@ -32,6 +32,7 @@
                 <button type="button" id="writeNames">Play Game</button>       
         </div>
     </div>
+    
     <canvas height=500px width=1000px id="fuildGame" style="background-color: #010428"></canvas>
     <script src="AllCode.js"></script>
 </body>
