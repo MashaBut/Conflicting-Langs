@@ -1,8 +1,13 @@
 import {NamePlayers} from "./StartPage/WriteNames";
 import {CanvasKeyPress} from "./GamePage/WorkWithCanvas/KeyPress";
+import {HideF} from "./Front/scripts/Hide";
+import "./Front/css/main.css";
+import "./Front/css/Players.css";
+import "./Front/images/VS.jpg";
+
 
 ///------------------StartPage---------------------
-
+document.getElementById('canvas').style.display = 'none';
 document.getElementById("writeNames").onclick=setNamePlayersStart;
 
 function setNamePlayersStart() {
@@ -11,7 +16,15 @@ function setNamePlayersStart() {
     let namePlayers =new NamePlayers();
     namePlayers.setNamePlayers(player1,player2);
 
+    HideHTML();
     drawGridStart();
+}
+
+let hideF;
+function HideHTML()
+{
+hideF = new HideF();
+hideF.Hide();
 }
 
 ///----------------WorkWithCanvas------------------
