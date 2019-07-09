@@ -1,7 +1,7 @@
 import {CanvasCreate} from "./Create";
 export class CanvasDraw {
 
-	private listPixelsGrid;
+	private listPixelsGrid:any;
 	private colorGreyRGB="rgb(171, 139, 187)";//"#ab8cbc"
 	private xSize:number;
 	private ySize:number;
