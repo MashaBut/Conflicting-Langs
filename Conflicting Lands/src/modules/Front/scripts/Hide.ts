@@ -1,8 +1,10 @@
 export class HideF
 {
     public Hide() {
-        document.getElementById('startpage').style.display = 'none'; 
-        document.getElementById('canvas').style.display = 'block';
+        let elementForHide1:any=document.getElementById('startpage');
+        elementForHide1.style.display = 'none'; 
+        let elementForHide2:any=document.getElementById('canvas');
+        elementForHide2.style.display = 'block';
     }
 }
 
