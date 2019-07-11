@@ -12,7 +12,7 @@
     margin-top: -.5em;
 }
 
-input {
+.input {
     /* ------------------Block model--------------------- */
     width: 50%;
     /* ------------------Typography--------------------- */
@@ -26,9 +26,9 @@ input {
     border: none;
 }
 
-input:focus { outline: none; }
+.input:focus { outline: none; }
 
-label {
+.label {
     /* ------------------Positioning--------------------- */
     position: absolute;
     left: 1%;
@@ -45,8 +45,8 @@ label {
 }
 
 /* active state */
-input:focus ~ label,
-input:valid ~ label {
+.input:focus ~ .label,
+.input:valid ~ .label {
     /* ------------------Positioning--------------------- */
     top: -75%;
     /* ------------------Typography--------------------- */
@@ -91,8 +91,8 @@ input:valid ~ label {
 .bar:after { right: 50%; }
 
 /* active state */
-input:focus ~ .bar:before, 
-input:focus ~ .bar:after { width: 100%; }  
+.input:focus ~ .bar:before, 
+.input:focus ~ .bar:after { width: 100%; }  
 
 .click button {
     /* ------------------Block model--------------------- */
