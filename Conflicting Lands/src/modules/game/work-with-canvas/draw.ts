@@ -1,4 +1,4 @@
-import {CanvasCreate} from "./Create";
+import {CanvasCreate} from "./create";
 export class CanvasDraw {
 
 	private listPixelsGrid:any;

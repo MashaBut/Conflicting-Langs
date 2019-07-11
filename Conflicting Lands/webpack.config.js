@@ -46,7 +46,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-        filename: 'AllCode.js',
+        filename: 'app.js',
         path: path.resolve(__dirname, 'dist')
     },
 };

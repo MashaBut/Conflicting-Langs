@@ -1,15 +1,16 @@
-import {NamePlayers} from "./StartPage/WriteNames";
+import {NamePlayers} from "./start/write-names";
+import {Player} from "./player";
+import {Game} from "../controllers/controller-main-module"
+import {HideFunction} from "./start/ux/scripts/hide-function";
+import "./start/ux/css/main.css";
+import "./start/ux/css/players.css";
+import "../assets/images/VS.jpg";
 
-import {Player} from "./Player";
-import {Game} from "./Controllers/ControllerMain"
-import {HideF} from "./Front/scripts/Hide";
-import "./Front/css/main.css";
-import "./Front/css/Players.css";
-import "./Front/images/VS.jpg";
 ///------------------StartPage---------------------
 let player1:Player;
 let player2:Player;
 
+let hideF = new HideFunction;
 let canvasObj:any = (<HTMLCanvasElement> document.getElementById('fuildGame')).getContext('2d');
 let game=new Game(canvasObj);
 let canvasNone:any=document.getElementById('canvas');
@@ -23,16 +24,11 @@ buttonWriteNames.onclick=()=>{
 
     player1 = new Player(NamePlayers.setNamePlayer(namePlayer1,"Player 1"),"Red",1,500);
     player2 = new Player(NamePlayers.setNamePlayer(namePlayer2,"Player 2"),"Blue",1,500);
-    HideHTML();
+    hideHTML();
     game.game(player1,player2);
 }
 
-let hideF;
-function HideHTML()
-{
-hideF = new HideF();
-hideF.Hide();
-}
+function hideHTML() { hideF.hide(); }
 
 ///----------------WorkWithCanvas------------------
 window.addEventListener("keydown",(e)=>{

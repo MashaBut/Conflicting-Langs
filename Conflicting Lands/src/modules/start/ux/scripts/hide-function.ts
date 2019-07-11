@@ -1,6 +1,6 @@
-export class HideF
+export class HideFunction
 {
-    public Hide() {
+    public hide() {
         let elementForHide1:any=document.getElementById('startpage');
         elementForHide1.style.display = 'none'; 
         let elementForHide2:any=document.getElementById('canvas');

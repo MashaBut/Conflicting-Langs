@@ -1,5 +1,5 @@
-import { Player } from "../Player";
-import {CanvasDraw} from "../GamePage/WorkWithCanvas/Draw";
+import { Player } from "../modules/player";
+import {CanvasDraw} from "../modules/game/work-with-canvas/draw";
 export class Game {
 
     flagGame:boolean=true;
