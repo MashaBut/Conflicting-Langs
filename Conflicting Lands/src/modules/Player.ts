@@ -6,7 +6,7 @@ export class Player {
     private yInitialLocation:number;
 
     //add start position
-    public constructor (name:string,color:any,xInitialLocation:number,yInitialLocation:number){
+    public constructor (name:string,color:any,xInitialLocation:number,yInitialLocation:number) {
         this.name=name;
         this.coins=1200;
         this.color=color;
@@ -14,19 +14,19 @@ export class Player {
         this.yInitialLocation=yInitialLocation;
     }
 
-    public getColor() {
+    public getColor():string {
         return this.color;
     }
 
-    public getCoints() {
+    public getCoints():number {
         return this.coins;
     }
 
-    public getName() {
+    public getName():string {
         return this.name;
     }
 
-    public setCoints(coins:number) {
+    public setCoints(coins:number):void {
         this.coins=coins;
     }
 }

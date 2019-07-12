@@ -3,13 +3,13 @@ export class CanvasCreate {
     private firstDice:number;
     private secondDice:number;
     //temporary function
-    private random() {
+    private random():void {
         this.firstDice=Math.floor(Math.random() * 6) + 1;
         this.secondDice=Math.floor(Math.random() * 6) + 1;
         console.log(this.firstDice,this.secondDice);
     }
 
-    public setSizeBlockForFuild(){
+    public setSizeBlockForFuild():number[] {
         this.random();
         this.firstDice=18*this.firstDice+2*(this.firstDice-1);
         this.secondDice=18*this.secondDice+2*(this.secondDice-1);
@@ -17,7 +17,7 @@ export class CanvasCreate {
         return [this.firstDice,this.secondDice];
     }
 
-    public turnSize() {
+    public turnSize():number[] {
         let firstDice:number;
         firstDice=this.firstDice;
         this.firstDice=this.secondDice;

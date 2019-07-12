@@ -2,7 +2,7 @@
     "name": "conflicting-lands",
     "version": "1.0.0",
     "description": "",
-    "main": "AllCode.js",
+    "main": "app.js",
     "scripts": {
         "build": "webpack"
     },
@@ -17,5 +17,9 @@
         "typescript": "^3.5.2",
         "webpack": "^4.35.2",
         "webpack-cli": "^3.3.5"
+    },
+    "dependencies": {
+        "@types/node": "^12.6.2",
+        "rxjs": "^6.5.2"
     }
 }

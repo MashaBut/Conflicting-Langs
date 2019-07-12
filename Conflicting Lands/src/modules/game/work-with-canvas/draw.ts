@@ -33,7 +33,7 @@ export class CanvasDraw {
 		this.drawGrid();
 	}
 			
-	public drawGrid() {
+	public drawGrid():void {
 		this.canvasObj.clearRect(0,0,500,1000);
 		for (var i = 0; i <= 25; i++) {
 			this.canvasObj.moveTo(0, 20*i);
@@ -45,12 +45,11 @@ export class CanvasDraw {
 		}
 		this.canvasObj.stroke();
 		this.drawBlocksWithSavedArray();
-		this.drawBlockOnFuild();
-		
+		this.drawBlockOnFuild();		
 	}
 
 	//need to add async
-	getPixelsWithGrid(){
+	getPixelsWithGrid():void {
 		for(let i=0;i<500;i++) {
 			for(let j=0;j<1000;j++) {
 				this.listPixelsGrid[i][j]=this.canvasObj.getImageData(i,j,1,1).data;
@@ -58,24 +57,24 @@ export class CanvasDraw {
 		}
 	}
 
-	public setSizeBlock(){
+	public setSizeBlock():void {
 		let sizeBlock=this.canvasCreate.turnSize();
 		this.xSize=sizeBlock[0];
 		this.ySize=sizeBlock[1];
 	}
 
-	drawBlockOnFuild() {
+	drawBlockOnFuild():void {
 		this.canvasObj.fillStyle="rgb(171, 3, 3)";
 		if(this.boolForStartLocation===false) {
 			this.canvasObj.fillRect(this.x,this.y-this.ySize-1,this.xSize,this.ySize);
 		}
 	}
 
-	public saveBlockToArray() {
+	public saveBlockToArray():void {
 		this.arrayBuiltBlock[this.counterForArrayBuiltBlock++]=[this.x,this.y-this.ySize-1,this.xSize,this.ySize];
 	}
 
-	private drawBlocksWithSavedArray() {
+	private drawBlocksWithSavedArray():void {
 		for(let i=0;i<this.counterForArrayBuiltBlock;i++) {
 			this.canvasObj.fillRect(this.arrayBuiltBlock[i][0],this.arrayBuiltBlock[i][1],this.arrayBuiltBlock[i][2],this.arrayBuiltBlock[i][3]);
 		}
