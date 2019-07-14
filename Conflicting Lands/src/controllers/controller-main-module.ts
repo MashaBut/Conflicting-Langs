@@ -1,39 +1,58 @@
 import {Player} from "../modules/player";
 import {NamePlayers} from "../modules/start/write-names";
 import {CanvasDraw} from "../modules/game/work-with-canvas/draw";
-import {Subject, Observable} from "rxjs";
+import {Subject, fromEvent} from "rxjs";
 import { HideFunction } from "../modules/start/ux/scripts/hide-function";
 let Rx=require('rxjs');
 export class Game {
     
-    player1:Player;
-    player2:Player;
-    flagGame:boolean=true;
-    private gameEvents= new Subject();
-    button = document.querySelector('button');
-    keydown$= Rx.Observable.fromEvent(document,"keydown");
+    private player1:Player;
+    private player2:Player;
+    private currentPlayer:Player;
+
+    private keyDown$:any;
+    private gameEvents$= new Subject();
+
+    private flagGame:boolean=true;
+    private canvasDraw:CanvasDraw;
+    
+    private button = document.querySelector('button');
     
     constructor() {
-       let canvasNone:any=document.getElementById('canvas');
-       canvasNone.style.display = 'none';
+        let canvasNone:any=document.getElementById('canvas');
+        canvasNone.style.display = 'none';
         
+        this.getCanvas();
+
+        this.keyDown$ = fromEvent(document,'keydown')
+            .subscribe((e:KeyboardEvent)=> {
+                window.addEventListener("keydown",(e:KeyboardEvent)=>{
+                    if([13, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                        e.preventDefault();
+                    }
+                this.setPositionBlockOnFuild(e);
+            });
+        })
+
         Rx.fromEvent(this.button, 'click')
         .subscribe(() =>  {
             this.setNamePlayers();
             HideFunction.hide();
+            this.gameEvents$.next();  
         })
+            
+        this.gameEvents$.subscribe(()=>this.currentPlayer = this.changePlayer());
+        this.gameEvents$.subscribe(()=>this.tossDice());
+        this.gameEvents$.subscribe(()=>this.setPositionForBlock());
+        this.keyDown$.next();
 
-        this.gameEvents.subscribe(()=>{
-            window.addEventListener("keydown",(e)=>{
-                if([13, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-                    e.preventDefault();
-                }
-              }, false);
-        });
-        this.gameEvents.next();
+
+      //  setTimeout(()=> {this.repidStream(),4000});
     }
-    private managerKeydown() {
-        
+
+    private repeatStream():void {
+        this.keyDown$.next();
+        this.gameEvents$.next();
     }
 
     private setNamePlayers():void {
@@ -42,7 +61,6 @@ export class Game {
 
         this.player1 = new Player(NamePlayers.setNamePlayer(namePlayer1,"Player 1"),"Red",1,500);
         this.player2 = new Player(NamePlayers.setNamePlayer(namePlayer2,"Player 2"),"Blue",1,500);
-        console.log(this.player1);
     }
 
     private changePlayer():Player {
@@ -56,18 +74,18 @@ export class Game {
         }
     }
 
- /*   
-    canvasDraw:CanvasDraw;
-    
-    constructor (canvasObj:CanvasRenderingContext2D) {
+    private getCanvas():void {
+        let canvasObj:any = (<HTMLCanvasElement> document.getElementById('fuildGame')).getContext('2d');
         this.canvasDraw = new CanvasDraw(canvasObj);
     }
 
-    public setPositionBlockOnFuild(KeyCode:any) {
-        switch(KeyCode) {
+    private setPositionBlockOnFuild(keyCode:KeyboardEvent):void {
+        switch(keyCode.keyCode) {
             case 38: { //up
+                this.canvasDraw.drawBlockOnFuild();
                 this.canvasDraw.setSizeBlock();
                 this.canvasDraw.drawGrid();
+               
                 break;
             }
             case 39: {//right
@@ -77,6 +95,7 @@ export class Game {
                 break;
             }
             case 40: {//down
+                this.canvasDraw.drawBlockOnFuild();
                 this.canvasDraw.setSizeBlock();
                 this.canvasDraw.drawGrid();
                 break;
@@ -89,5 +108,18 @@ export class Game {
             default :
                 break;
         }
-    }*/
+    }
+
+    private tossDice():number[] {
+        return [];
+    }
+
+    private setTimer():void {
+        Rx.Observable.range(10, 0).timer(1000)
+            .subscribe((x:any) => console.log(x));       
+    }
+
+    private setPositionForBlock():number[] {
+        return [];
+    }
   }
