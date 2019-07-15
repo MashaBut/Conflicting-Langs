@@ -1,9 +1,9 @@
-export class HideFunction
+export class TreatmentCanvas
 {
     public static hide() {
-        let elementForHide1:any=document.getElementById('startpage');
+        let elementForHide1:HTMLElement=<HTMLElement>document.getElementById('startpage');
         elementForHide1.style.display = 'none'; 
-        let elementForHide2:any=document.getElementById('canvas');
+        let elementForHide2:HTMLElement=<HTMLElement>document.getElementById('canvas');
         elementForHide2.style.display = 'block';
     }
 }
