@@ -5,6 +5,8 @@ import {Subject, fromEvent, Observable} from "rxjs";
 import {take} from "rxjs/operators";
 import {ConcealCanvas} from "../start/ux/scripts/hide-function";
 import {Directions} from './key-designations';
+import {DiceRollerButton} from "../game/dice/dice-roller";
+import {diceCollection} from "../game/dice/dice";
 
 export class Game {
     
@@ -41,10 +43,16 @@ export class Game {
                 ConcealCanvas.hide();
                 this.gameEvents$.next();  
             })
-            
+
+        fromEvent(<HTMLButtonElement>document.getElementById('dice'),'click')
+            .subscribe(() => {
+                DiceRollerButton.roll(diceCollection);
+            })
+      
         this.gameEvents$.subscribe(() => this.currentPlayer = this.changePlayer());
         this.gameEvents$.subscribe(() => this.tossDice());
         this.gameEvents$.subscribe(() => this.setPositionForBlock());
+
     }
 
     private setPlayerNames(): void {

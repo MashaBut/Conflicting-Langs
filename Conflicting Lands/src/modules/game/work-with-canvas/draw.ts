@@ -63,7 +63,7 @@ export class CanvasDraw {
 		this.ySize = sizeBlock[1];
 	}
 
-	drawBlockOnFuild(): void {
+    drawBlockOnFuild(): void {
 		this.canvasObj.fillStyle = "rgb(171, 3, 3)";
 		if(this.boolForStartLocation === false) {
 			this.canvasObj.fillRect(this.x, this.y-this.ySize-1, this.xSize, this.ySize);
