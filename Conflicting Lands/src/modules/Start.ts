@@ -3,4 +3,4 @@ import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
 import "../assets/images/VS.jpg";
 
-let game:Game= new Game();
+let game: Game = new Game();
