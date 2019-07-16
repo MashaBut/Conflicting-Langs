@@ -12,7 +12,7 @@ export class Game {
     private player2: Player;
     private currentPlayer: Player;
 
-    private keyDown$: Observable<Event> = fromEvent(document,'keydown');;
+    private keyDown$: Observable<Event> = fromEvent(document,'keydown');
     private gameEvents$ = new Subject();
 
     private flagGame: boolean = true;
@@ -25,7 +25,7 @@ export class Game {
         this.setCanvas();
 
         this.keyDown$
-            .subscribe((e: KeyboardEvent)=> {
+            .subscribe((e: KeyboardEvent) => {
 
                if([Directions.Enter, Directions.Down, Directions.Left, Directions.Right, Directions.Up].indexOf(e.keyCode) > -1) {
                     e.preventDefault();
@@ -42,9 +42,16 @@ export class Game {
                 this.gameEvents$.next();  
             })
             
-        this.gameEvents$.subscribe(() => this.currentPlayer = this.changePlayer());
-        this.gameEvents$.subscribe(() => this.tossDice());
-        this.gameEvents$.subscribe(() => this.setPositionForBlock());
+        this.gameEvents$
+            .subscribe(() => { 
+                this.changePlayer();
+                setInterval(() => this.endOfturn(),4000);
+        })
+    }
+
+    private endOfturn(){
+        this.canvasDraw.saveBlockToArray();
+        this.changePlayer();
     }
 
     private setPlayerNames(): void {
@@ -55,14 +62,14 @@ export class Game {
         this.player2 = new Player(Identification.setName(namePlayer2,"Player 2"),"Blue",1,500);
     }
 
-    private changePlayer(): Player {
+    private changePlayer():void {
         if(this.flagGame === true) {
             this.flagGame = false;
-            return this.player1;
+            this.currentPlayer = this.player1;
         }
         else {
             this.flagGame = true;
-            return this.player2;
+            this.currentPlayer = this.player2;
         }
     }
 
