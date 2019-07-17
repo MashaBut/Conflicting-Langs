@@ -20,6 +20,11 @@ export class Game {
     private flagGame: boolean = true;
     private canvasDraw: CanvasDraw;
 
+    timer:any;
+    bool:boolean=false;
+
+    buttonDice: HTMLElement = <HTMLElement>document.getElementById("dice");
+
     constructor() {
         let canvas: HTMLElement = <HTMLElement>document.getElementById('canvas');
         canvas.style.display = 'none';
@@ -36,27 +41,35 @@ export class Game {
                 this.setBlockPositionOnMap(e);
             })
 
-       fromEvent(<HTMLButtonElement>document.getElementById('writeNames'), 'click')
+        fromEvent(<HTMLButtonElement>document.getElementById('writeNames'), 'click')
             .pipe(take(1))
             .subscribe(() =>  {
                 this.setPlayerNames();
+                this.currentPlayer = this.player1;
                 ConcealCanvas.hide();
-                this.gameEvents$.next();  
             })
 
         fromEvent(<HTMLButtonElement>document.getElementById('dice'),'click')
             .subscribe(() => {
+                this.bool = true;
                 DiceRollerButton.roll(diceCollection);
+                this.gameEvents$.next();
             })   
 
         this.gameEvents$
             .subscribe(() => { 
-                this.changePlayer();
-                setInterval(() => this.endOfturn(),4000);
+                this.buttonDice.setAttribute("disabled","true");
+                console.log(this.currentPlayer.getName());
+
+                if(this.bool === true) {
+                    this.timer = setTimeout(() => this.endOfturn(),4000);
+                    this.bool = false;
+                }
         })
     }
 
     private endOfturn(){
+        this.buttonDice.removeAttribute("disabled");
         this.canvasDraw.saveBlockToArray();
         this.changePlayer();
     }
@@ -72,11 +85,11 @@ export class Game {
     private changePlayer():void {
         if(this.flagGame === true) {
             this.flagGame = false;
-            this.currentPlayer = this.player1;
+            this.currentPlayer = this.player2;
         }
         else {
             this.flagGame = true;
-            this.currentPlayer = this.player2;
+            this.currentPlayer = this.player1;
         }
     }
 
@@ -106,7 +119,8 @@ export class Game {
             }
 
             case Directions.Enter: {
-                this.canvasDraw.saveBlockToArray();
+                clearTimeout(this.timer);
+                this.endOfturn();
                 this.canvasDraw.drawGrid(); 
                 break;
             }
