@@ -79,5 +79,6 @@ export class CanvasDraw {
 			this.canvasObj.fillRect(this.arrayBuiltBlock[i][0], this.arrayBuiltBlock[i][1], this.arrayBuiltBlock[i][2], this.arrayBuiltBlock[i][3]);
 		}
 	}
+
 }
 
