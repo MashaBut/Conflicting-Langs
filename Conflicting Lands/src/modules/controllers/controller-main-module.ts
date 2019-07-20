@@ -7,7 +7,6 @@ import {ConcealCanvas} from "../start/ux/scripts/hide-function";
 import {Directions} from './key-designations';
 import {DiceRollerButton} from "../game/dice/dice-roller";
 import {diceCollection} from "../game/dice/dice";
-//import {CanvasCreate} from "../game/work-with-canvas/create";
 
 export class Game {
     
@@ -22,6 +21,7 @@ export class Game {
     private canvasDraw: CanvasDraw;
 
     private diceRollerButton = new DiceRollerButton();
+    private concealCanvas = new ConcealCanvas();
 
     timer:any;
     bool:boolean=false;
@@ -55,7 +55,7 @@ export class Game {
             .subscribe(() =>  {
                 this.setPlayerNames();
                 this.currentPlayer = this.player1;
-                ConcealCanvas.hide();
+                this.concealCanvas.hide();
             })
 
         fromEvent(<HTMLButtonElement>document.getElementById('dice'),'click')
@@ -91,7 +91,7 @@ export class Game {
         this.player2 = new Player(Identification.setName(namePlayer2,"Player 2"),"Blue",1,500);
     }
 
-    private changePlayer():void {
+    private changePlayer(): void {
         if(this.flagGame === true) {
             this.flagGame = false;
             this.currentPlayer = this.player2;

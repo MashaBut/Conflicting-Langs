@@ -1,7 +1,6 @@
 body,
 html {
     /* ------------------Positioning--------------------- */
-    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
@@ -31,9 +30,8 @@ html {
     margin: 0 auto;
     /* ------------------Display--------------------- */
     background-image: url('../../../../assets/images/VS.jpg'); 
-    background-size: cover;
+    background-size: 100%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 div.player1 {
