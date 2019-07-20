@@ -116,7 +116,6 @@ import {ConcealCanvas} from "../start/ux/scripts/hide-function";
 import {Directions} from './key-designations';
 import {DiceRollerButton} from "../game/dice/dice-roller";
 import {diceCollection} from "../game/dice/dice";
-//import {CanvasCreate} from "../game/work-with-canvas/create";
 
 export class Game {
     
@@ -131,22 +130,16 @@ export class Game {
     private canvasDraw: CanvasDraw;
 
     private diceRollerButton = new DiceRollerButton();
+    private concealCanvas = new ConcealCanvas();
 
     timer:any;
     bool:boolean=false;
 
     buttonDice: HTMLElement = <HTMLElement> document.getElementById("dice");
-    canvas: HTMLElement = <HTMLElement> document.getElementById('canvas');
+    gamepage: HTMLElement = <HTMLElement> document.getElementById('gamepage');
 
     constructor() {
-        let canvas: HTMLElement = <HTMLElement>document.getElementById('canvas');
-        let dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
-        let dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
-        let buttonDice: HTMLElement = <HTMLElement>document.getElementById('dice');
-        canvas.style.display = 'none';
-        dice1.style.display = 'none';
-        dice2.style.display = 'none';
-        buttonDice.style.display = 'none';
+        this.gamepage.style.display = 'none';
         this.initCanvas();
         this.keyDown
             .subscribe((e: KeyboardEvent) => {
@@ -162,7 +155,7 @@ export class Game {
             .subscribe(() =>  {
                 this.setPlayerNames();
                 this.currentPlayer = this.player1;
-                ConcealCanvas.hide();
+                this.concealCanvas.hide();
             })
 
         fromEvent( <HTMLButtonElement> document.getElementById('dice'), 'click')
@@ -174,6 +167,7 @@ export class Game {
         this.gameEvents
             .subscribe(() => { 
                 this.buttonDice.setAttribute("disabled", "true");
+                this.buttonDice.style.cssText = "background-color: #202125;"
                 console.log(this.currentPlayer.getName());
                 this.timer = setTimeout(() => this.endOfturn(),4000);
         })
@@ -181,6 +175,7 @@ export class Game {
 
     private endOfturn(){
         this.buttonDice.removeAttribute("disabled");
+        this.buttonDice.style.cssText = "background-color: #0e0e0e;";
         this.changePlayer();
     }
 
@@ -192,7 +187,7 @@ export class Game {
         this.player2 = new Player(Identification.setName(namePlayer2,"Player 2"),"Blue",1,500);
     }
 
-    private changePlayer():void {
+    private changePlayer(): void {
         if(this.flagGame === true) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
