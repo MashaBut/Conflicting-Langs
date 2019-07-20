@@ -21,6 +21,5 @@ export let getRandomIntInclusive: Function = (min:number, max:number) => {
 
 Elements.map((elem, index) => {
     let cube = new Dice(elem.span);
-    document.body.appendChild(elem.span);
     diceCollection.push(cube);
 });

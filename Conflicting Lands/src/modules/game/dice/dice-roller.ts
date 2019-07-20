@@ -11,13 +11,13 @@ export class DiceRollerButton {
             this.dices[i]=circumference(item.span.textContent);
             i++;
       });
+
+      this.numberOfDices();
   }
 
   public numberOfDices(): number[] {
-    console.log(this.dices);
-    return this.dices;
+    return [this.dices[0],this.dices[1]];
   }
-
   }
 
   function circumference(r:any) {

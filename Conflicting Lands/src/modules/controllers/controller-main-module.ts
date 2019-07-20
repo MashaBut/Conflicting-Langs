@@ -27,17 +27,10 @@ export class Game {
     bool:boolean=false;
 
     buttonDice: HTMLElement = <HTMLElement> document.getElementById("dice");
-    canvas: HTMLElement = <HTMLElement> document.getElementById('canvas');
+    gamepage: HTMLElement = <HTMLElement> document.getElementById('gamepage');
 
     constructor() {
-        let canvas: HTMLElement = <HTMLElement>document.getElementById('canvas');
-        let dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
-        let dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
-        let buttonDice: HTMLElement = <HTMLElement>document.getElementById('dice');
-        canvas.style.display = 'none';
-        dice1.style.display = 'none';
-        dice2.style.display = 'none';
-        buttonDice.style.display = 'none';
+        this.gamepage.style.display = 'none';
         this.initCanvas();
         this.keyDown
             .subscribe((e: KeyboardEvent) => {
@@ -65,6 +58,7 @@ export class Game {
         this.gameEvents
             .subscribe(() => { 
                 this.buttonDice.setAttribute("disabled", "true");
+                this.buttonDice.style.cssText = "background-color: #202125;"
                 console.log(this.currentPlayer.getName());
                 this.timer = setTimeout(() => this.endOfturn(),4000);
         })
@@ -72,6 +66,7 @@ export class Game {
 
     private endOfturn(){
         this.buttonDice.removeAttribute("disabled");
+        this.buttonDice.style.cssText = "background-color: #0e0e0e;";
         this.changePlayer();
     }
 

@@ -8,7 +8,7 @@ export class CanvasDraw {
 	private canvasContext: CanvasRenderingContext2D;
 	private dataImage: string;
 	
-	private readonly numberOfHorizontalLines: number = 25;
+	private readonly numberOfHorizontalLines: number = 30;
 	private readonly numberOfVerticalLines: number = 50;
 
 	public constructor (canvasObj: HTMLCanvasElement) {
