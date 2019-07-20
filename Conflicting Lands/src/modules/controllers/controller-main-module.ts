@@ -14,34 +14,31 @@ export class Game {
     private player2: Player;
     private currentPlayer: Player;
 
-    private keyDown$: Observable<Event> = fromEvent(document,'keydown');
-    private gameEvents$ = new Subject();
+    private keyDown: Observable <Event> = fromEvent(document,'keydown');
+    private gameEvents = new Subject();
 
     private flagGame: boolean = true;
     private canvasDraw: CanvasDraw;
 
-    timer:any;
-    bool:boolean=false;
+    private timer:any;
 
-    buttonDice: HTMLElement = <HTMLElement>document.getElementById("dice");
+    buttonDice: HTMLElement = <HTMLElement> document.getElementById("dice");
+    canvas: HTMLElement = <HTMLElement> document.getElementById('canvas');
 
-    constructor() {
-        let canvas: HTMLElement = <HTMLElement>document.getElementById('canvas');
-        canvas.style.display = 'none';
+    constructor() { 
+        this.canvas.style.display = 'none';
+        this.initCanvas();
 
-        this.setCanvas();
-
-        this.keyDown$
+        this.keyDown
             .subscribe((e: KeyboardEvent) => {
 
                if([Directions.Enter, Directions.Down, Directions.Left, Directions.Right, Directions.Up].indexOf(e.keyCode) > -1) {
                     e.preventDefault();
                 }  
-
                 this.setBlockPositionOnMap(e);
             })
 
-        fromEvent(<HTMLButtonElement>document.getElementById('writeNames'), 'click')
+        fromEvent( <HTMLButtonElement> document.getElementById('writeNames'), 'click')
             .pipe(take(1))
             .subscribe(() =>  {
                 this.setPlayerNames();
@@ -49,28 +46,22 @@ export class Game {
                 ConcealCanvas.hide();
             })
 
-        fromEvent(<HTMLButtonElement>document.getElementById('dice'),'click')
+        fromEvent( <HTMLButtonElement> document.getElementById('dice'), 'click')
             .subscribe(() => {
-                this.bool = true;
                 DiceRollerButton.roll(diceCollection);
-                this.gameEvents$.next();
+                this.gameEvents.next();
             })   
 
-        this.gameEvents$
+        this.gameEvents
             .subscribe(() => { 
-                this.buttonDice.setAttribute("disabled","true");
+                this.buttonDice.setAttribute("disabled", "true");
                 console.log(this.currentPlayer.getName());
-
-                if(this.bool === true) {
-                    this.timer = setTimeout(() => this.endOfturn(),4000);
-                    this.bool = false;
-                }
+                this.timer = setTimeout(() => this.endOfturn(),4000);
         })
     }
 
     private endOfturn(){
         this.buttonDice.removeAttribute("disabled");
-        this.canvasDraw.saveBlockToArray();
         this.changePlayer();
     }
 
@@ -93,8 +84,8 @@ export class Game {
         }
     }
 
-    private setCanvas(): void {
-        let canvasObj: any = (<HTMLCanvasElement> document.getElementById('fuildGame')).getContext('2d');
+    private initCanvas(): void {
+        let canvasObj:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('fuildGame');
         this.canvasDraw = new CanvasDraw(canvasObj);
     }
 
@@ -102,28 +93,22 @@ export class Game {
         switch(keyCode.keyCode) {
 
             case Directions.Up:
-
             case Directions.Down: {
-                this.canvasDraw.drawBlockOnFuild();
-                this.canvasDraw.setSizeBlock();
-                this.canvasDraw.drawGrid();
-                break;
             }
-
+            break;
             case Directions.Right: {
-                break;
             }
+            break;
 
             case Directions.Left: {
-                break;
             }
+            break;
 
             case Directions.Enter: {
                 clearTimeout(this.timer);
                 this.endOfturn();
-                this.canvasDraw.drawGrid(); 
-                break;
             }
+            break;
             
             default :
                 break;
@@ -132,10 +117,6 @@ export class Game {
 
     private tossDice(): number[] {
         return [];
-    }
-
-    private setTimer(): void {  
-
     }
 
     private setPositionForBlock(): number[] {
