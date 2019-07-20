@@ -2,9 +2,20 @@ import {DiceValues,getRandomIntInclusive,DiceRoller} from "./dice";
 import {CanvasCreate} from "../work-with-canvas/create";
 
 export class DiceRollerButton {
-  public static roll(diceCollection: Array<DiceRoller>) {
+
+  private smth = new CanvasCreate(); 
+  private dices: number[];
+
+  constructor() {
+    this.dices = this.smth.setSizeBlockForFuild();;
+  }
+
+  public roll(diceCollection: Array<DiceRoller>) {
       diceCollection.forEach((item) => {
-        item.span.textContent = DiceValues[getRandomIntInclusive(1, 6)];
+        for(var i = 0; i <= 1; i++) {
+          item.span.textContent = DiceValues[this.dices[i]];
+          console.log(this.dices[i]);
+        }
       });
   }
   }

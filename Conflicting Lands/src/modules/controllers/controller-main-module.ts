@@ -7,6 +7,7 @@ import {ConcealCanvas} from "../start/ux/scripts/hide-function";
 import {Directions} from './key-designations';
 import {DiceRollerButton} from "../game/dice/dice-roller";
 import {diceCollection} from "../game/dice/dice";
+//import {CanvasCreate} from "../game/work-with-canvas/create";
 
 export class Game {
     
@@ -20,15 +21,24 @@ export class Game {
     private flagGame: boolean = true;
     private canvasDraw: CanvasDraw;
 
-    private timer:any;
+    private diceRollerButton = new DiceRollerButton();
+
+    timer:any;
+    bool:boolean=false;
 
     buttonDice: HTMLElement = <HTMLElement> document.getElementById("dice");
     canvas: HTMLElement = <HTMLElement> document.getElementById('canvas');
 
-    constructor() { 
-        this.canvas.style.display = 'none';
+    constructor() {
+        let canvas: HTMLElement = <HTMLElement>document.getElementById('canvas');
+        let dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
+        let dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
+        let buttonDice: HTMLElement = <HTMLElement>document.getElementById('dice');
+        canvas.style.display = 'none';
+        dice1.style.display = 'none';
+        dice2.style.display = 'none';
+        buttonDice.style.display = 'none';
         this.initCanvas();
-
         this.keyDown
             .subscribe((e: KeyboardEvent) => {
 
@@ -48,7 +58,7 @@ export class Game {
 
         fromEvent( <HTMLButtonElement> document.getElementById('dice'), 'click')
             .subscribe(() => {
-                DiceRollerButton.roll(diceCollection);
+                this.diceRollerButton.roll(diceCollection);
                 this.gameEvents.next();
             })   
 
