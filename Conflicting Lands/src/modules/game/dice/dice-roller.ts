@@ -7,7 +7,7 @@ export class DiceRollerButton {
   private dices: number[];
 
   constructor() {
-    this.dices = this.smth.setSizeBlockForFuild();;
+    this.dices = this.smth.random();
   }
 
   public roll(diceCollection: Array<DiceRoller>) {

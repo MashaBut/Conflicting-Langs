@@ -10,7 +10,6 @@ export class CanvasCreate {
     public random(): number[] {
         this.firstDice = Math.floor(Math.random() * 6) + 1;
         this.secondDice = Math.floor(Math.random() * 6) + 1;
-        console.log(this.firstDice, this.secondDice);
         return [this.firstDice, this.secondDice];
     }
 
