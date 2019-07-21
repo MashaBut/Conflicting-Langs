@@ -1,26 +1,16 @@
 export class CanvasCreate {
+    private static swapDice: number;
+    private static firstDiceConversionToPixel: number;
+    private static secondDiceConversionToPixel: number;
 
-    private firstDice: number;
-    private secondDice: number;
- 
-    private swapDice: number;
-    private firstDiceConversionToPixel: number;
-    private secondDiceConversionToPixel: number;
-
-    public random(): number[] {
-        this.firstDice = Math.floor(Math.random() * 6) + 1;
-        this.secondDice = Math.floor(Math.random() * 6) + 1;
-        return [this.firstDice, this.secondDice];
-    }
-
-    public conversionToPixels(aspectRatio: number): number[] {
-        this.firstDiceConversionToPixel = aspectRatio*this.firstDice + 2 * (this.firstDice - 1);
-        this.secondDiceConversionToPixel = aspectRatio*this.secondDice + 2 * (this.secondDice - 1);
+    public static conversionToPixels(aspectRatio: number, dice :number[]): number[] {
+        this.firstDiceConversionToPixel = aspectRatio*dice[0] + 2 * (dice[0] - 1);
+        this.secondDiceConversionToPixel = aspectRatio*dice[1] + 2 * (dice[1] - 1);
         console.log(this.firstDiceConversionToPixel, this.secondDiceConversionToPixel);
         return [this.firstDiceConversionToPixel, this.secondDiceConversionToPixel];
     }
 
-    public turnSize(): number[] {
+    public static turnSize(): number[] {
         this.swapDice = this.firstDiceConversionToPixel;
         this.firstDiceConversionToPixel = this.secondDiceConversionToPixel;
         this.secondDiceConversionToPixel = this.swapDice;

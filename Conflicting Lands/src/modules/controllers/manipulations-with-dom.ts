@@ -1,23 +1,12 @@
-import {CanvasDraw} from "../game/work-with-canvas/draw";
+import {Directions} from './key-designations';
 export class ManipulationWithDOM {
-    static tossDice: HTMLElement = <HTMLElement> document.getElementById("dice");
-    static canvas: HTMLElement = <HTMLElement> document.getElementById('canvas');
+    static tossDice: HTMLElement = <HTMLElement> document.getElementById("rollTheDice");
     static dice1: HTMLElement = <HTMLElement> document.getElementById('dice1');
     static dice2: HTMLElement = <HTMLElement> document.getElementById('dice2');
-    static writeNames: HTMLElement= <HTMLButtonElement> document.getElementById('writeNames')
-    private canvasDraw: CanvasDraw;
-
-    public static hideElementOnPage(): void {
-        this.canvas.style.display = 'none';
-        this.dice1.style.display = 'none';
-        this.dice2.style.display = 'none';
-        this.tossDice.style.display = 'none';
-    }
-
-    private  initCanvas(): void {
-        let canvasObj:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('fuildGame');
-        this.canvasDraw = new CanvasDraw(canvasObj);
-    }
+    static writeNames: HTMLElement = <HTMLButtonElement> document.getElementById('writeNames');
+    static player1: HTMLInputElement = <HTMLInputElement>document.getElementById("player1");
+    static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
+    static canvas:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('fuildGame');
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
@@ -25,5 +14,11 @@ export class ManipulationWithDOM {
 
     public static undisabledButtonDice(): void {
         this.tossDice.removeAttribute("disabled");
+    }
+
+    public static disableStandardKeyOperation(e: KeyboardEvent): void {
+        if([Directions.Enter, Directions.Down, Directions.Left, Directions.Right, Directions.Up].indexOf(e.keyCode) > -1) {
+            e.preventDefault();
+        }  
     }
 }
