@@ -6,6 +6,7 @@ import {Directions} from './key-designations';
 import {CanvasDraw} from "../game/work-with-canvas/draw";
 import {CoordinateTransformation} from "../game/work-with-canvas/create";
 import {Position} from "../game/work-with-canvas/create-position";
+
 export class Game {
     
     private player1: Player;
@@ -88,6 +89,7 @@ export class Game {
                 break;
 
             case Directions.Enter: {
+                ManipulationWithDOM.playSound();
                 clearTimeout(this.timer);
                 this.endOfturn();
             }

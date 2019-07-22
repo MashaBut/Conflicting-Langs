@@ -34,6 +34,15 @@ module.exports = {
             test: /\.(eot|svg|ttf|woff|woff2)$/,
             use: [{ loader: 'file-loader?name=./fonts/[name].[ext]'}]
         },
+
+        {
+            test:/\.wav$/,
+            use: [{
+                loader: 'file-loader',
+                options: { name: '[name].[ext]',
+              },
+            }],
+        }
     ]},
 
     plugins: [
