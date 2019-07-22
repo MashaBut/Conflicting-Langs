@@ -1,0 +1,43 @@
+div.divForPlayerOne {
+    /* ------------------Positioning--------------------- */
+    position: relative;
+    /* ------------------Block model--------------------- */
+    float: left;
+    width: 17%;
+    height: 100%;
+    /* ------------------Typography--------------------- */
+    text-align: center;
+    color: white;
+}
+
+div.divForPlayerTwo {
+    /* ------------------Positioning--------------------- */
+    position: relative;
+    /* ------------------Block model--------------------- */
+    float: right;
+    width: 17%;
+    height: 100%;
+    /* ------------------Typography--------------------- */
+    text-align: center;
+    color: white;
+}
+
+.player1ForGame {
+    display: block;
+    background-image: url('../../../../assets//images/icon1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 90%;
+    height: 25%;
+    margin: 5%;
+}
+
+.player2ForGame {
+    display: block;
+    background-image: url('../../../../assets//images/icon2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 90%;
+    height: 25%;
+    margin: 5%;
+}
