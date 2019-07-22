@@ -4,17 +4,21 @@ import {ManipulationWithDOM} from "./manipulations-with-dom";
 import {fromEvent, Observable} from "rxjs";
 import {Directions} from './key-designations';
 import {CanvasDraw} from "../game/work-with-canvas/draw";
-import {CanvasCreate} from "../game/work-with-canvas/create";
-
+import {CoordinateTransformation} from "../game/work-with-canvas/create";
+import {Position} from "../game/work-with-canvas/create-position";
 export class Game {
     
     private player1: Player;
     private player2: Player;
     private currentPlayer: Player;
+
     private keyDown: Observable <Event> = fromEvent(document,'keydown');
     private flagGame: boolean = true;
+    private timer: any;
+    private position = new Position();
     private canvasDraw: CanvasDraw;
-    timer:any;
+    private coordinates: number[];
+    private positionCurrentPlayer: object[];
 
     constructor() {
         this.initCanvas();
@@ -24,9 +28,9 @@ export class Game {
         this.canvasDraw = new CanvasDraw(ManipulationWithDOM.canvas);
     }
 
-    public method(dice: number[]) {
-        let P= new Array(2);
-       // CanvasCreate.conversionToPixels(dice);
+    public createPositionsBlockForMap(dice: number[]) {
+        this.coordinates = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio,dice);
+        this.positionCurrentPlayer = this.position.createPositionForCurrentPlayer(this.coordinates,this.currentPlayer.getColor());
     }
 
     private endOfturn(){

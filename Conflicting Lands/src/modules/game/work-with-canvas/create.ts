@@ -1,4 +1,4 @@
-export class CanvasCreate {
+export class CoordinateTransformation {
     private static swapDice: number;
     private static firstDiceConversionToPixel: number;
     private static secondDiceConversionToPixel: number;

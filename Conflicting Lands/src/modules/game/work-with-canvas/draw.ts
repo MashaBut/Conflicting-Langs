@@ -1,3 +1,5 @@
+import { threadId } from "worker_threads";
+
 export class CanvasDraw {
 
 	private colorGreyRGB: string = "rgb(171, 139, 187)";
@@ -25,7 +27,7 @@ export class CanvasDraw {
 			this.canvasContext.moveTo(0, this.aspectRatio*i);
 			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatio*i);
 		}
-		for (let i = 0; i <= this.numberOfVerticalLines; i++) {
+		for (let i = 0; i <= this.numberOfVerticalLines; i++) { 
 			this.canvasContext.moveTo(this.aspectRatio*i, 0);
 		    this.canvasContext.lineTo(this.aspectRatio*i, this.canvasElement.height);
 		}
@@ -40,9 +42,9 @@ export class CanvasDraw {
 	private saveCanvasInImage(canvasElement: HTMLCanvasElement): void {
 		this.dataImage =canvasElement.toDataURL("image/png", 1);
 	}
-	public unloadingImageOnCanvas(canvasContext: CanvasRenderingContext2D): void {
+	public unloadingImageOnCanvas(): void {
 		this.img.src = this.dataImage;
-		canvasContext.drawImage(this.img, 0, 0);
+		this.canvasContext.drawImage(this.img, 0, 0);
 	}
 	
 	public clearCanvas(): void {
@@ -52,5 +54,11 @@ export class CanvasDraw {
     public drawBlockOnMap(xCoordinate: number, yCoordinate: number, xSize: number, ySize: number, colorBlock:string): void {
 		this.canvasContext.fillStyle = colorBlock;
 		this.canvasContext.fillRect(xCoordinate, yCoordinate-ySize-1, xSize, ySize);
+	}
+
+	public redraw(): void {
+		this.clearCanvas();
+		this.unloadingImageOnCanvas();
+		//this.drawBlockOnMap();
 	}
 }
