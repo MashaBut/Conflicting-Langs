@@ -7,6 +7,8 @@ import {CanvasDraw} from "../game/work-with-canvas/draw";
 import {CoordinateTransformation} from "../game/work-with-canvas/create";
 import {Position} from "../game/work-with-canvas/create-position";
 
+var enterSound = require ('../../assets/sounds/soundForBlock.wav');
+
 export class Game {
     
     private player1: Player;
@@ -89,7 +91,7 @@ export class Game {
                 break;
 
             case Directions.Enter: {
-                ManipulationWithDOM.playSound();
+                ManipulationWithDOM.playSound(enterSound);
                 clearTimeout(this.timer);
                 this.endOfturn();
             }

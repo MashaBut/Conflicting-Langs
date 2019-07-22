@@ -10,8 +10,6 @@ import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
 import "./start/ux/css/canvas.css";
 import "../assets/images/VS.jpg";
-import "../assets/sounds/rollTheDice2.wav";
-import "../assets/sounds/soundForBlock.wav";
 
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();

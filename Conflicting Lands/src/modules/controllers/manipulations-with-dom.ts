@@ -1,4 +1,6 @@
 import {Directions} from './key-designations';
+var soundForDice = require ('../../assets/sounds/rollTheDice1.wav');
+
 export class ManipulationWithDOM {
 
     static tossDice: HTMLElement = <HTMLElement> document.getElementById("rollTheDice");
@@ -12,9 +14,7 @@ export class ManipulationWithDOM {
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
         this.tossDice.style.cssText = "background-color: #202125;"
-        var path = "rollTheDice2.wav";
-        var sound = new Audio(path);
-        sound.play();
+        this.playSound(soundForDice);
     }
 
     public static undisabledButtonDice(): void {
@@ -28,8 +28,7 @@ export class ManipulationWithDOM {
         }  
     }
 
-    public static playSound(): void {
-        var path = "soundForBlock.wav";
+    public static playSound(path:string): void {
         var sound = new Audio(path);
         sound.play();
     }
