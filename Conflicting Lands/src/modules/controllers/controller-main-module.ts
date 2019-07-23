@@ -7,8 +7,8 @@ import {CanvasDraw} from "../game/work-with-canvas/draw";
 import {CoordinateTransformation} from "../game/work-with-canvas/create";
 import {Position} from "../game/work-with-canvas/create-position";
 
-let enterSound = require ('../../assets/sounds/soundForBlock.wav');
-
+let enterSound = require ('../../assets/sounds/soundForBlock3.wav');
+let movementsOfBlock = require ('../../assets/sounds/moveblock2.wav');
 export class Game {
     
     private player1: Player;
@@ -112,12 +112,15 @@ export class Game {
         switch(keyCode.keyCode) {
             case Directions.Up:
             case Directions.Down: {
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Right: {
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Left: {
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Enter: {

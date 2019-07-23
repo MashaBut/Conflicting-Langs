@@ -9,7 +9,10 @@ import {diceCollection} from "./game/dice/dice";
 import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
 import "./start/ux/css/canvas.css";
+import "./start/ux/css/blocks-for-players.css";
 import "../assets/images/VS.jpg";
+
+let playGame = require ('../assets/sounds/playGame.wav');
 
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
@@ -20,6 +23,7 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
+        ManipulationWithDOM.playSound(playGame);
     })
 
 fromEvent(ManipulationWithDOM.tossDice, 'click')

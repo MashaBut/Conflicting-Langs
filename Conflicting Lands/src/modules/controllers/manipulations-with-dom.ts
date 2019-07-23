@@ -1,5 +1,5 @@
 import {Directions} from './key-designations';
-let soundForDice = require ('../../assets/sounds/rollTheDice1.wav');
+let soundForDice = require ('../../assets/sounds/rollTheDice2.wav');
 
 export class ManipulationWithDOM {
 
