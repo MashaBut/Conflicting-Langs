@@ -1,5 +1,5 @@
 import {Directions} from './key-designations';
-var soundForDice = require ('../../assets/sounds/rollTheDice1.wav');
+let soundForDice = require ('../../assets/sounds/rollTheDice1.wav');
 
 export class ManipulationWithDOM {
 
@@ -29,7 +29,7 @@ export class ManipulationWithDOM {
     }
 
     public static playSound(path:string): void {
-        var sound = new Audio(path);
+        let sound = new Audio(path);
         sound.play();
     }
 }

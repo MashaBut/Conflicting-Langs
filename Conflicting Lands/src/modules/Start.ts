@@ -27,6 +27,6 @@ fromEvent(ManipulationWithDOM.tossDice, 'click')
         ManipulationWithDOM.disabledButtonDice();
         diceRollerButton.roll(diceCollection);
         game.createPositionsBlockForMap(diceRollerButton.numberOfDices());
-        game.manipulationKeyBoard();
+        game.draw();
         game.turnTime();
     })   

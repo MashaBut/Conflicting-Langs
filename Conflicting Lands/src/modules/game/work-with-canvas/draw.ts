@@ -1,16 +1,16 @@
 import { threadId } from "worker_threads";
+import { ManipulationWithDOM } from "../../controllers/manipulations-with-dom";
 
 export class CanvasDraw {
 
 	private colorGreyRGB: string = "rgb(171, 139, 187)";
 	public  readonly aspectRatio: number;
-	private img = new Image();
 
 	private canvasElement: HTMLCanvasElement;
 	private canvasContext: CanvasRenderingContext2D;
-	private dataImage: string;
-	
-	private readonly numberOfHorizontalLines: number = 30;
+	public dataImage: string;
+	private img = new Image();
+	private readonly numberOfHorizontalLines: number = 25;
 	private readonly numberOfVerticalLines: number = 50;
 
 	public constructor (canvasObj: HTMLCanvasElement) {
@@ -19,10 +19,10 @@ export class CanvasDraw {
 		this.canvasContext.strokeStyle = this.colorGreyRGB; 
 		this.aspectRatio = this.setAspectRatio();
 		this.drawGrid();
+		this.saveCanvasToImage();
 	}
 			
-	private drawGrid(): void {	
-		
+	public drawGrid(): void {	
 		for (let i = 0; i <= this.numberOfHorizontalLines; i++) {
 			this.canvasContext.moveTo(0, this.aspectRatio*i);
 			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatio*i);
@@ -31,20 +31,20 @@ export class CanvasDraw {
 			this.canvasContext.moveTo(this.aspectRatio*i, 0);
 		    this.canvasContext.lineTo(this.aspectRatio*i, this.canvasElement.height);
 		}
-		this.canvasContext.stroke();	  
-		this.saveCanvasInImage(this.canvasElement);
+		this.canvasContext.stroke();
 	}
 
 	private setAspectRatio(): number {
 		return this.canvasElement.width/this.numberOfVerticalLines;
 	}
 
-	private saveCanvasInImage(canvasElement: HTMLCanvasElement): void {
-		this.dataImage =canvasElement.toDataURL("image/png", 1);
+	public saveCanvasToImage(): void {
+		this.dataImage= this.canvasElement.toDataURL("image/png",1);
 	}
+
 	public unloadingImageOnCanvas(): void {
 		this.img.src = this.dataImage;
-		this.canvasContext.drawImage(this.img, 0, 0);
+		this.canvasContext.drawImage(this.img,0,0);
 	}
 	
 	public clearCanvas(): void {
@@ -53,12 +53,12 @@ export class CanvasDraw {
 
     public drawBlockOnMap(xCoordinate: number, yCoordinate: number, xSize: number, ySize: number, colorBlock:string): void {
 		this.canvasContext.fillStyle = colorBlock;
-		this.canvasContext.fillRect(xCoordinate, yCoordinate-ySize-1, xSize, ySize);
+		this.canvasContext.fillRect(xCoordinate, yCoordinate, xSize, ySize);
 	}
 
-	public redraw(): void {
+	public redraw(element: number[], color: string): void {
 		this.clearCanvas();
 		this.unloadingImageOnCanvas();
-		//this.drawBlockOnMap();
+		this.drawBlockOnMap(element[0],element[1],element[2],element[3],color);
 	}
 }

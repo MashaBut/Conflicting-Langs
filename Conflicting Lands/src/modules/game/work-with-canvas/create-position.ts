@@ -1,13 +1,17 @@
 export class Position {
-    private blocksSetOnMap: object[];
-    private positionBlocksForCurrentPlayer: number[];
+    private blocksSetOnMap = new Array;
 
-    public saveBlockOnMap(xCoordinate: number, yCoordinate: number, xSize: number, ySize: number, colorBlock:string): void {
-        let blockObj:object = {xCoordinate, yCoordinate, xSize, ySize, colorBlock};
+    private positionBlocksForCurrentPlayer = new Array<object>();
+
+    public saveBlockOnMap(element: number[], colorBlock:string): void {
+        let blockObj:object = {element, colorBlock};
         this.blocksSetOnMap.push(blockObj);
     }
 
     public createPositionForCurrentPlayer(size: number[], colorBlock: string): object[] {
-        return [];
+        this.positionBlocksForCurrentPlayer.shift();
+        let a: object = size;
+        this.positionBlocksForCurrentPlayer.push(a);
+        return this.positionBlocksForCurrentPlayer;
     }
 }

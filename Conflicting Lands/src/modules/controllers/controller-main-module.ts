@@ -7,7 +7,7 @@ import {CanvasDraw} from "../game/work-with-canvas/draw";
 import {CoordinateTransformation} from "../game/work-with-canvas/create";
 import {Position} from "../game/work-with-canvas/create-position";
 
-var enterSound = require ('../../assets/sounds/soundForBlock.wav');
+let enterSound = require ('../../assets/sounds/soundForBlock.wav');
 
 export class Game {
     
@@ -22,9 +22,11 @@ export class Game {
     private canvasDraw: CanvasDraw;
     private coordinates: number[];
     private positionCurrentPlayer: object[];
+    private currentPositionforBlockOnMap: any;
 
     constructor() {
         this.initCanvas();
+        this.manipulationKeyBoard();
     }
 
     private initCanvas(): void {
@@ -32,12 +34,43 @@ export class Game {
     }
 
     public createPositionsBlockForMap(dice: number[]) {
-        this.coordinates = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio,dice);
-        this.positionCurrentPlayer = this.position.createPositionForCurrentPlayer(this.coordinates,this.currentPlayer.getColor());
+        this.coordinates = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio-2,dice);
+        if(this.currentPlayer.isFirstMove()) {
+            let x:number;
+            let y:number;
+            if(this.currentPlayer.getXCoordinate()-this.coordinates[0]-1>0) {
+                x = this.currentPlayer.getXCoordinate()-this.coordinates[0]-1;
+            }
+            else {
+                x = 1;
+            }
+
+            if(this.currentPlayer.getYCoordinate()-this.coordinates[1]-1>0) {
+                y = this.currentPlayer.getYCoordinate()-this.coordinates[1]-1;
+            }
+            else {
+                y = 1;
+            }
+            this.currentPositionforBlockOnMap=[x,y,this.coordinates[0],this.coordinates[1]];
+            console.log(this.currentPositionforBlockOnMap);
+        }
+        else {
+            this.positionCurrentPlayer = this.position.createPositionForCurrentPlayer(this.coordinates,this.currentPlayer.getColor());
+            this.currentPositionforBlockOnMap=this.positionCurrentPlayer[0];
+        }
+    }
+
+    private firstStep(coordinates: number[]): number[] {
+        return [];
     }
 
     private endOfturn(){
         ManipulationWithDOM.undisabledButtonDice();
+        this.position.saveBlockOnMap(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+        this.canvasDraw.saveCanvasToImage();
+        if(this.currentPlayer.isFirstMove()) {
+            this.currentPlayer.firstMove = false;
+        }
         this.changePlayer();
         console.log(this.currentPlayer.getName());
     }
@@ -61,8 +94,8 @@ export class Game {
         let namePlayer1: string = (ManipulationWithDOM.player1).value;
         let namePlayer2: string = (ManipulationWithDOM.player2).value;
 
-        this.player1 = new Player(Identification.setName(namePlayer1,"Player 1"),"Red",1,500);
-        this.player2 = new Player(Identification.setName(namePlayer2,"Player 2"),"Blue",1,500);
+        this.player1 = new Player(Identification.setName(namePlayer1, "Player 1"), "Red", 1, ManipulationWithDOM.canvas.height);
+        this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), "Blue",ManipulationWithDOM.canvas.width, 1);
 
         this.currentPlayer=this.player1;
     }
@@ -77,7 +110,6 @@ export class Game {
 
     private setBlockPositionOnMap(keyCode: KeyboardEvent): void {
         switch(keyCode.keyCode) {
-
             case Directions.Up:
             case Directions.Down: {
             }
@@ -85,11 +117,9 @@ export class Game {
             case Directions.Right: {
             }
                 break;
-
             case Directions.Left: {
             }
                 break;
-
             case Directions.Enter: {
                 ManipulationWithDOM.playSound(enterSound);
                 clearTimeout(this.timer);
@@ -99,5 +129,9 @@ export class Game {
             default :
                 break;
         }
+    }
+
+    public draw(): void {
+       this.canvasDraw.redraw(this.currentPositionforBlockOnMap,this.currentPlayer.getColor());  
     }
 }
