@@ -9,7 +9,7 @@ export class CanvasDraw {
 	private canvasElement: HTMLCanvasElement;
 	private canvasContext: CanvasRenderingContext2D;
 	public dataImage: string;
-	private img = new Image();
+	image = new Image();
 	private readonly numberOfHorizontalLines: number = 25;
 	private readonly numberOfVerticalLines: number = 50;
 
@@ -39,12 +39,11 @@ export class CanvasDraw {
 	}
 
 	public saveCanvasToImage(): void {
-		this.dataImage= this.canvasElement.toDataURL("image/png",1);
+	    this.image.src =this.canvasElement.toDataURL("image/png");
 	}
 
 	public unloadingImageOnCanvas(): void {
-		this.img.src = this.dataImage;
-		this.canvasContext.drawImage(this.img,0,0);
+		this.canvasContext.drawImage(this.image,0,0);
 	}
 	
 	public clearCanvas(): void {

@@ -6,6 +6,7 @@ import {Directions} from './key-designations';
 import {CanvasDraw} from "../game/work-with-canvas/draw";
 import {CoordinateTransformation} from "../game/work-with-canvas/create";
 import {Position} from "../game/work-with-canvas/create-position";
+import { threadId } from "worker_threads";
 
 let enterSound = require ('../../assets/sounds/soundForBlock3.wav');
 let movementsOfBlock = require ('../../assets/sounds/moveblock2.wav');
@@ -14,13 +15,14 @@ export class Game {
     private player1: Player;
     private player2: Player;
     private currentPlayer: Player;
-
     private keyDown: Observable <Event> = fromEvent(document,'keydown');
     private flagGame: boolean = true;
     private timer: any;
+
     private position = new Position();
     private canvasDraw: CanvasDraw;
     private coordinates: number[];
+
     private positionCurrentPlayer: object[];
     private currentPositionforBlockOnMap: any;
 
@@ -35,33 +37,25 @@ export class Game {
 
     public createPositionsBlockForMap(dice: number[]) {
         this.coordinates = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio-2,dice);
-        if(this.currentPlayer.isFirstMove()) {
-            let x:number;
-            let y:number;
-            if(this.currentPlayer.getXCoordinate()-this.coordinates[0]-1>0) {
-                x = this.currentPlayer.getXCoordinate()-this.coordinates[0]-1;
-            }
-            else {
-                x = 1;
-            }
+        this.calculatePosition();
+    }
 
-            if(this.currentPlayer.getYCoordinate()-this.coordinates[1]-1>0) {
-                y = this.currentPlayer.getYCoordinate()-this.coordinates[1]-1;
-            }
-            else {
-                y = 1;
-            }
-            this.currentPositionforBlockOnMap=[x,y,this.coordinates[0],this.coordinates[1]];
-            console.log(this.currentPositionforBlockOnMap);
+    private calculatePosition() {
+        if(this.currentPlayer.isFirstMove()) { 
+            let coord = this.firstStep(this.coordinates);
+            this.currentPositionforBlockOnMap=[coord[0],coord[1],this.coordinates[0],this.coordinates[1]];
         }
         else {
-            this.positionCurrentPlayer = this.position.createPositionForCurrentPlayer(this.coordinates,this.currentPlayer.getColor());
+            this.positionCurrentPlayer = this.position.createPositionForCurrentPlayer(this.coordinates,this.canvasDraw.aspectRatio,this.currentPlayer.getColor());
             this.currentPositionforBlockOnMap=this.positionCurrentPlayer[0];
         }
     }
-
     private firstStep(coordinates: number[]): number[] {
-        return [];
+        let x: number = this.currentPlayer.getXCoordinate()-this.coordinates[0]-1;
+        let y: number = this.currentPlayer.getYCoordinate()-this.coordinates[1]-1;
+        x > 0 ? x : x = 1;
+        y > 0 ? y : y = 1;
+        return [x,y];
     }
 
     private endOfturn(){
@@ -72,7 +66,6 @@ export class Game {
             this.currentPlayer.firstMove = false;
         }
         this.changePlayer();
-        console.log(this.currentPlayer.getName());
     }
 
     private changePlayer():void {
@@ -95,7 +88,7 @@ export class Game {
         let namePlayer2: string = (ManipulationWithDOM.player2).value;
 
         this.player1 = new Player(Identification.setName(namePlayer1, "Player 1"), "Red", 1, ManipulationWithDOM.canvas.height);
-        this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), "Blue",ManipulationWithDOM.canvas.width, 1);
+        this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), "Blue", ManipulationWithDOM.canvas.width, 1);
 
         this.currentPlayer=this.player1;
     }
@@ -112,19 +105,24 @@ export class Game {
         switch(keyCode.keyCode) {
             case Directions.Up:
             case Directions.Down: {
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                this.coordinates =CoordinateTransformation.turnSize();
+                this.calculatePosition();
+                this.draw();
+           //     ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Right: {
-                ManipulationWithDOM.playSound(movementsOfBlock);
+           //     ManipulationWithDOM.playSound(movementsOfBlock);
+                this.draw();
             }
                 break;
             case Directions.Left: {
-                ManipulationWithDOM.playSound(movementsOfBlock);
+           //     ManipulationWithDOM.playSound(movementsOfBlock);
+                this.draw();
             }
                 break;
             case Directions.Enter: {
-                ManipulationWithDOM.playSound(enterSound);
+            //    ManipulationWithDOM.playSound(enterSound);
                 clearTimeout(this.timer);
                 this.endOfturn();
             }
