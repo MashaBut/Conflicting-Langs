@@ -23,7 +23,7 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
-      //  ManipulationWithDOM.playSound(playGame);
+        ManipulationWithDOM.playSound(playGame);
     })
 
 fromEvent(ManipulationWithDOM.tossDice, 'click')
