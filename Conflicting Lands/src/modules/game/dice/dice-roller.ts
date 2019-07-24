@@ -6,8 +6,7 @@ export class DiceRollerButton {
   public roll(diceCollection: Array<Dice>) {
     let i=0;
       diceCollection.forEach((item) => {
-            item.span.textContent = getRandomIntInclusive(1,6);
-            this.dices[i] = circumference(item.span.textContent);
+            this.dices[i] = getRandomIntInclusive(1,6);
             i++;
       });
 
@@ -17,8 +16,4 @@ export class DiceRollerButton {
   public numberOfDices(): number[] {
     return [this.dices[0], this.dices[1]];
   }
-}
-
-function circumference(r: any) {
-  return parseFloat(r);
 }

@@ -39,7 +39,7 @@ export class CanvasDraw {
 	}
 
 	public saveCanvasToImage(): void {
-	    this.image.src =this.canvasElement.toDataURL("image/png");
+	    this.image.src = this.canvasElement.toDataURL("image/png");
 	}
 
 	public unloadingImageOnCanvas(): void {

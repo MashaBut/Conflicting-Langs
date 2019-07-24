@@ -108,21 +108,21 @@ export class Game {
                 this.coordinates =CoordinateTransformation.turnSize();
                 this.calculatePosition();
                 this.draw();
-           //     ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Right: {
-           //     ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
                 this.draw();
             }
                 break;
             case Directions.Left: {
-           //     ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
                 this.draw();
             }
                 break;
             case Directions.Enter: {
-            //    ManipulationWithDOM.playSound(enterSound);
+                ManipulationWithDOM.playSound(enterSound);
                 clearTimeout(this.timer);
                 this.endOfturn();
             }
