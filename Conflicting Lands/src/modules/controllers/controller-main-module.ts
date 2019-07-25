@@ -115,6 +115,15 @@ export class Game {
                 ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
+            case Directions.Down: {
+                    if(!this.currentPlayer.isFirstMove()) {
+                    this.currentPositionforBlockOnMap[1] +=this.canvasDraw.aspectRatio;
+                    this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
+                    this.draw();
+                    ManipulationWithDOM.playSound(movementsOfBlock);
+                    }
+                }
+                    break;
             case Directions.Up: {
                 if(!this.currentPlayer.isFirstMove()) {
                     this.currentPositionforBlockOnMap[1] -= this.canvasDraw.aspectRatio;
@@ -124,15 +133,7 @@ export class Game {
                 ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
-            case Directions.Down: {
-                if(!this.currentPlayer.isFirstMove()) {
-                this.currentPositionforBlockOnMap[1] +=this.canvasDraw.aspectRatio;
-                this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
-                this.draw();
-                }
-                ManipulationWithDOM.playSound(movementsOfBlock);
-            }
-                break;
+            
             case Directions.Right: {
                 if(!this.currentPlayer.isFirstMove()) {
                 this.currentPositionforBlockOnMap[0] +=this.canvasDraw.aspectRatio;

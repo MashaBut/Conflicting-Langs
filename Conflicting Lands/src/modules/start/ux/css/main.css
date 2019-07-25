@@ -87,6 +87,11 @@ div.player2 {
     font-size: 1.5vw;
 }
 
+img {
+    width: 120px;
+    height: 100px;
+}
+
 @font-face {
     font-family: "Roboto"; 
     src: url("../../../../assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype"); 

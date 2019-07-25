@@ -1,5 +1,4 @@
 import {Directions} from './key-designations';
-let soundForDice = require ('../../assets/sounds/rollTheDice2.wav');
 
 export class ManipulationWithDOM {
 
@@ -14,7 +13,6 @@ export class ManipulationWithDOM {
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
         this.tossDice.style.cssText = "background-color: #202125;"
-        this.playSound(soundForDice);
     }
 
     public static undisabledButtonDice(): void {
