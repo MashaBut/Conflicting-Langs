@@ -26,6 +26,7 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
     .pipe(take(1))
     .subscribe(() => {
         game.setPlayerNames();
+        
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(playGame);
         CreateImage.createImage();
@@ -34,7 +35,7 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
 fromEvent(ManipulationWithDOM.tossDice, 'click')
     .subscribe(() => {
         CreateImage.returmAnimate();
-        ManipulationWithDOM.playSound(soundForDice);
+      //  ManipulationWithDOM.playSound(soundForDice);
         ManipulationWithDOM.disabledButtonDice();
         diceRollerButton.roll(diceCollection);
         game.createPositionsBlockForMap(diceRollerButton.numberOfDices());

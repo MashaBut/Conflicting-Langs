@@ -10,6 +10,9 @@ export class ManipulationWithDOM {
     static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
     static canvas:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('fuildGame');
 
+    static nameplayer1:HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
+    static nameplayer2:HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
+
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
         this.tossDice.style.cssText = "background-color: #202125;"
