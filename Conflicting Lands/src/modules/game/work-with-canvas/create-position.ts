@@ -1,79 +1,58 @@
 export class Position {
-    private blocksSetOnMap = new Array;
-
+    private blocksSetOnMap = new Array<any>();
     private positionBlocksForCurrentPlayer = new Array<object>();
 
-    public saveBlockOnMap(element: number[], colorBlock:string): void {
-        let blockObj:object = {element, colorBlock};
+    public saveBlockOnMap(element: number[], colorBlock: string): void {
+        let blockObj: object = { element, colorBlock };
         this.blocksSetOnMap.push(blockObj);
     }
 
-    public createPositionForCurrentPlayer(elem: number[],colorBlock: string,colorCurrent :string="Green"): string {
-        let w=20;
-        for(let i = 0 ; i<this.blocksSetOnMap.length ; i++) {
-            for(let n=elem[0]+elem[2]; n>=elem[0];n--) {
-                for(let m = elem[1]+elem[3]; m>=elem[1]; m--) {
-                    if(this.blocksSetOnMap[i].element[0]+this.blocksSetOnMap[i].element[2]===n && this.blocksSetOnMap[i].element[1]+this.blocksSetOnMap[i].element[3]===m){
-                        return "Orange";
+    public createPositionForCurrentPlayer(elem: number[], colorBlock: string, colorCurrent: string = "Green"): string {
+        let w = 20;
+        let xSavedElement: number;
+        let ySavedElement: number;
+        let xSizeSavedElement: number;
+        let ySizeSavedElement: number;
+
+        let xCurrentElement: number = elem[0];
+        let yCurrentElement: number = elem[1];
+        let xSizeCurrentElement: number = elem[0] + elem[2];
+        let ySizeCurrentElement: number = elem[1] + elem[3];
+
+        for (let i = 0; i < this.blocksSetOnMap.length; i++) {
+
+            xSavedElement = this.blocksSetOnMap[i].element[0];
+            ySavedElement = this.blocksSetOnMap[i].element[1];
+            xSizeSavedElement = this.blocksSetOnMap[i].element[0] + this.blocksSetOnMap[i].element[2];
+            ySizeSavedElement = this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3];
+
+            for (let j = xSavedElement; j <= xSizeSavedElement; j += w) {
+                for (let n = ySavedElement; n <= ySizeSavedElement; n += w) {
+                    for (let m = yCurrentElement; m <= ySizeCurrentElement; m++) {
+                        if (n === m) {
+                            let t = j;
+                            for (let k = xCurrentElement; k <= xSizeCurrentElement; k++) {
+                                if (k === t++) {
+                                    return "Orange";
+                                }
+                            }
+                        }
                     }
                 }
             }
-            for(let n=elem[0]+elem[2]; n>=elem[0];n--) {
-                for(let m = elem[1]+elem[3]; m>=elem[1]; m--) {
-                    if(this.blocksSetOnMap[i].element[0]===n && this.blocksSetOnMap[i].element[1]===m){
-                        return "Orange";
+            for (let j = ySavedElement; j <= ySizeSavedElement; j += w) {
+                for (let n = yCurrentElement; n <= ySizeCurrentElement; n += w) {
+                    for (let m = xCurrentElement; m <= xSizeCurrentElement; m += w) {
+                        if (j === n) {
+                            if (m === xSavedElement || m === xSizeSavedElement)
+                                return "Orange";
+                        }
                     }
                 }
             }
-
-           /* for(let j=elem[0];j<=elem[0]+elem[2];j++) {
-                for(let k =this.blocksSetOnMap[i].element[1];k<=this.blocksSetOnMap[i].element[1]+elem[3];k++) {
-                    if(j==k){
-                        return "Orange";
-                    }
-                }
-            }
-
-            for(let n = elem[0]; n<=elem[0]+elem[2]; n++) {
-                for(let m = elem[1]; m<=elem[1]+elem[3]; m++) {
-                    if(this.blocksSetOnMap[i].element[0]===n && this.blocksSetOnMap[i].element[1]===m){
-                        return "Orange";
-                    }
-                }
-            }
-
-            for( let r = this.blocksSetOnMap[i].element[0];r<=this.blocksSetOnMap[i].element[0]+this.blocksSetOnMap[i].element[2];r++) {
-                for(let a= elem[0];a<=elem[0]+elem[2];a++) {
-                    if(r==a) {
-                        return "Orange";
-                    }
-                }
-            }*/
-
-           /*for(let n=elem[0]+elem[2]; n>=elem[0];n--) {
-                for(let m = elem[1]; m<=elem[1]+elem[3]; m++) {
-                    if(this.blocksSetOnMap[i].element[0]+this.blocksSetOnMap[i].element[2]===n && this.blocksSetOnMap[i].element[1]+this.blocksSetOnMap[i].element[3]===m){
-                        return "Orange";
-                    }
-                }
-            }*/
-
-          /*  for(let n=elem[0]+elem[2]; n>=elem[0];n--) {
-                for(let m = elem[1]+elem[3]; m>=elem[1]; m--) {
-                    if(this.blocksSetOnMap[i].element[0]+this.blocksSetOnMap[i].element[2]===n && this.blocksSetOnMap[i].element[1]+this.blocksSetOnMap[i].element[3]===m){
-                        return "Orange";
-                    }
-                }
-            }*/
-
-            /*for(let m = elem[1]; m<=elem[1]+elem[3]; m++) {
-                for(let n = elem[0]; n<=elem[0]+elem[2]; n++) {
-                    if(this.blocksSetOnMap[i].element[0]===n && this.blocksSetOnMap[i].element[1]===m){
-                        return "Orange";
-                    }
-                }
-            }*/
         }
+        //TODO:
+        //check on touching the desired item
         return colorCurrent;
     }
 }
