@@ -70,10 +70,12 @@ export class Game {
         if(this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
+            ManipulationWithDOM.currentPlayer.style.cssText = "color: #0719e6";
         }
         else {
             this.flagGame = true;
             this.currentPlayer = this.player1;
+            ManipulationWithDOM.currentPlayer.style.cssText = "color: #ed1818";
         }
     }
 
@@ -90,6 +92,7 @@ export class Game {
         ManipulationWithDOM.nameplayer1.innerHTML=this.player1.getName();
         ManipulationWithDOM.nameplayer2.innerHTML=this.player2.getName();
         this.currentPlayer=this.player1;
+        ManipulationWithDOM.currentPlayer.style.cssText = "color: #ed1818";
     }
 
     public manipulationKeyBoard():void {
@@ -113,7 +116,7 @@ export class Game {
                 }
                 this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
                 this.draw();
-          //      ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Down: {
@@ -121,7 +124,7 @@ export class Game {
                     this.currentPositionforBlockOnMap[1] +=this.canvasDraw.aspectRatio;
                     this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
                     this.draw();
-               //     ManipulationWithDOM.playSound(movementsOfBlock);
+                    ManipulationWithDOM.playSound(movementsOfBlock);
                     }
                 }
                     break;
@@ -131,7 +134,7 @@ export class Game {
                     this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
                     this.draw();
                 }
-              //  ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             
@@ -141,7 +144,7 @@ export class Game {
                 this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
                 this.draw();
                 }
-              //  ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Left: {
@@ -150,7 +153,7 @@ export class Game {
                 this.a = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap,this.currentPlayer.getColor(),"Green");
                 this.draw();
                 }
-              //  ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Enter: {

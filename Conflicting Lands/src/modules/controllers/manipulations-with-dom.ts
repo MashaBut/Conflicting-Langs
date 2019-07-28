@@ -8,7 +8,11 @@ export class ManipulationWithDOM {
     static writeNames: HTMLElement = <HTMLButtonElement> document.getElementById('writeNames');
     static player1: HTMLInputElement = <HTMLInputElement>document.getElementById("player1");
     static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
-    static canvas:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('fuildGame');
+    static canvas:HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
+
+    static currentPlayer:HTMLElement = <HTMLElement>document.getElementById('currentPlayer');
+
+    static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
 
     static nameplayer1:HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2:HTMLElement = <HTMLElement>document.getElementById("nameplayer2");

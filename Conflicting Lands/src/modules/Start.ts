@@ -13,7 +13,6 @@ import "./start/ux/css/canvas.css";
 import "./start/ux/css/blocks-for-players.css";
 import "../assets/images/VS.jpg";
 import "../assets/images/dicesAnimation.gif";
-import { url } from "inspector";
 
 let playGame = require ('../assets/sounds/playGame.wav');
 let soundForDice = require ('../assets/sounds/rollTheDice2.wav');
@@ -26,7 +25,6 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
     .pipe(take(1))
     .subscribe(() => {
         game.setPlayerNames();
-        
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(playGame);
         CreateImage.createImage();
@@ -35,10 +33,14 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
 fromEvent(ManipulationWithDOM.tossDice, 'click')
     .subscribe(() => {
         CreateImage.returmAnimate();
-      //  ManipulationWithDOM.playSound(soundForDice);
+        ManipulationWithDOM.playSound(soundForDice);
         ManipulationWithDOM.disabledButtonDice();
         diceRollerButton.roll(diceCollection);
-        game.createPositionsBlockForMap(diceRollerButton.numberOfDices());
-        game.draw();
-        game.turnTime();
-    })   
+        setTimeout(timer,2500);
+    }) 
+    
+function timer() {
+    game.createPositionsBlockForMap(diceRollerButton.numberOfDices());
+    game.draw();
+    game.turnTime();
+}
