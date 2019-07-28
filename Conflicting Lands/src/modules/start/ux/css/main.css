@@ -92,6 +92,14 @@ img {
     height: 100px;
 }
 
+.currentPlayer {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
 @font-face {
     font-family: "Roboto"; 
     src: url("../../../../assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype"); 
