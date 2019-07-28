@@ -46,6 +46,7 @@ export class Game {
         let coord = this.firstStep(this.size);
         this.currentPositionforBlockOnMap = [coord[0], coord[1], this.size[0], this.size[1]];
     }
+
     private firstStep(coordinates: number[]): number[] {
         this.x = this.currentPlayer.getXCoordinate() - this.size[0] - 1;
         this.y = this.currentPlayer.getYCoordinate() - this.size[1] - 1;
@@ -126,7 +127,6 @@ export class Game {
                     ManipulationWithDOM.playSound(movementsOfBlock);
                     }
                 }
-            }
                 break;
             case Directions.Up: {
                 if (!this.currentPlayer.isFirstMove()) {
