@@ -1,3 +1,4 @@
+import {Color} from "./color";
 export class Position {
     private blocksSetOnMap = new Array<any>();
     private positionBlocksForCurrentPlayer = new Array<object>();
@@ -7,7 +8,7 @@ export class Position {
         this.blocksSetOnMap.push(blockObj);
     }
 
-    public createPositionForCurrentPlayer(elem: number[], colorBlock: string, colorCurrent: string = "Green"): string {
+    public createPositionForCurrentPlayer(elem: number[], colorBlock: string): string {
         let w = 20;
         let xSavedElement: number;
         let ySavedElement: number;
@@ -33,7 +34,7 @@ export class Position {
                             let t = j;
                             for (let k = xCurrentElement; k <= xSizeCurrentElement; k++) {
                                 if (k === t++) {
-                                    return "Orange";
+                                    return Color.Orange;
                                 }
                             }
                         }
@@ -45,7 +46,7 @@ export class Position {
                     for (let m = xCurrentElement; m <= xSizeCurrentElement; m += w) {
                         if (j === n) {
                             if (m === xSavedElement || m === xSizeSavedElement)
-                                return "Orange";
+                                return Color.Orange;
                         }
                     }
                 }
@@ -53,6 +54,6 @@ export class Position {
         }
         //TODO:
         //check on touching the desired item
-        return colorCurrent;
+        return Color.Green;
     }
 }

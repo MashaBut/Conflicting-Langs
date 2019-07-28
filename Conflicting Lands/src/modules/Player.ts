@@ -5,15 +5,17 @@ export class Player {
     public firstMove: boolean;
     private xStart: number;
     private yStart: number;
+    private occupiedArea: number;
 
     //add start position
-    public constructor (name: string, color: string, xStart: number, yStart: number) {
+    public constructor(name: string, color: string, xStart: number, yStart: number) {
         this.name = name;
         this.coins = 1200;
         this.color = color;
         this.firstMove = true;
         this.xStart = xStart;
         this.yStart = yStart;
+        this.occupiedArea = 0;
     }
     public isFirstMove(): boolean {
         return this.firstMove;
@@ -39,7 +41,15 @@ export class Player {
         return this.yStart;
     }
 
-    public setCoints(coins:number): void {
+    public getOccupiedArea(): number {
+        return this.occupiedArea;
+    }
+
+    public setCoints(coins: number): void {
         this.coins = coins;
+    }
+
+    public setOccupiedArea(occupiedArea: number): void {
+        this.occupiedArea = occupiedArea;
     }
 }
