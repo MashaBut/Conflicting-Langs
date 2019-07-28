@@ -17,6 +17,12 @@ export class ManipulationWithDOM {
     static nameplayer1:HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2:HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
 
+    static territoryplayer1:HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
+    static territoryplaye2:HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
+
+    static coinsplayer1:HTMLElement = <HTMLElement> document.getElementById("coinsplayer1");
+    static coinsplayer2:HTMLElement = <HTMLElement> document.getElementById("coinsplayer2");
+
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
         this.tossDice.style.cssText = "background-color: #202125;"

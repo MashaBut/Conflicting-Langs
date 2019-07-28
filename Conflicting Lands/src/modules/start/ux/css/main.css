@@ -47,14 +47,14 @@ html {
    background-repeat: no-repeat;
 }
 
-div.player1 {
+.player1 {
     /* ------------------Block model--------------------- */
     float: left;
     width: 50%;
     height: 100%;
 }
 
-div.player2 {
+.player2 {
     /* ------------------Block model--------------------- */
     float: right;
     width: 50%;
@@ -71,33 +71,6 @@ div.player2 {
     height: 15%;
     /* ------------------Typography--------------------- */
     text-align: center;
-}
-
-.span {
-    border: 2px solid white; 
-    display: inline-block; 
-    height: 45px;  
-    width: 60px; 
-    text-align: center; 
-    color: white;
-    margin-top: 5px; 
-    margin-left: 10px; 
-    padding-top : 15px; 
-    font-size: 20px; 
-    font-size: 1.5vw;
-}
-
-img {
-    width: 120px;
-    height: 100px;
-}
-
-.currentPlayer {
-    position: absolute;
-    top: 7%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
 }
 
 @font-face {

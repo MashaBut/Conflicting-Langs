@@ -1,4 +1,4 @@
-div.divForPlayerOne {
+.divForPlayerOne {
     /* ------------------Positioning--------------------- */
     position: relative;
     /* ------------------Block model--------------------- */
@@ -8,9 +8,12 @@ div.divForPlayerOne {
     /* ------------------Typography--------------------- */
     text-align: center;
     color: white;
+    font-size: 14px; 
+    font-size: 1.1vw;
+
 }
 
-div.divForPlayerTwo {
+.divForPlayerTwo {
     /* ------------------Positioning--------------------- */
     position: relative;
     /* ------------------Block model--------------------- */
@@ -20,6 +23,8 @@ div.divForPlayerTwo {
     /* ------------------Typography--------------------- */
     text-align: center;
     color: white;
+    font-size: 14px; 
+    font-size: 1.1vw;
 }
 
 .player1ForGame {
@@ -40,4 +45,12 @@ div.divForPlayerTwo {
     width: 90%;
     height: 25%;
     margin: 5%;
+}
+
+.currentPlayer {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
