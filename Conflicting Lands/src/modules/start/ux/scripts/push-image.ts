@@ -1,9 +1,9 @@
 import {ManipulationWithDOM} from "../../../controllers/manipulations-with-dom";
+import {DiceRollerButton} from "../../../game/dice/dice-roller";
 let pathToImage = require ('../../../../assets/images/dicesAnimation.gif');
 
 export class CreateImage {
 private static image = document.createElement('img');
-
 
 public static createImage() {
     this.image.id = "img";
@@ -13,6 +13,12 @@ public static createImage() {
 
 public static returmAnimate()
 {
-    this.image.src = this.image.src;
-}  
+    this.image.src = pathToImage;
+}
+
+public static returnImage() {
+    let a  = DiceRollerButton.getPathOfImage();
+    let pathToImage: string = "./dices/" + a;
+    this.image.src = pathToImage;
+  }
 }

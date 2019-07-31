@@ -22,12 +22,18 @@ module.exports = {
                 ]},
 
         {
-        test: /\.(png|jpe?g|gif)$/,
+        test: /\.(jpe?g|gif)$/,
         use: [{
             loader: 'file-loader',
-            options: { name: '[name].[ext]',
-          },
+            options: { name: '[name].[ext]',},
         }],
+        },
+
+        {
+        test:/\.png$/,
+        use:[{
+           // options: { name: '[name].[ext]',},
+            loader: 'file-loader?name=./dices/[name].[ext]'}]
         },
 
         {
