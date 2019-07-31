@@ -29,7 +29,7 @@
 
 .player1ForGame {
     display: block;
-    background-image: url('../../../../assets//images/icon1.png');
+    background-image: url('../../../../assets//images/icon1.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     width: 90%;
@@ -39,7 +39,7 @@
 
 .player2ForGame {
     display: block;
-    background-image: url('../../../../assets//images/icon2.png');
+    background-image: url('../../../../assets//images/icon2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     width: 90%;

@@ -121,7 +121,7 @@ export class Game {
                 }
                 this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                 this.draw();
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Down: {
@@ -129,7 +129,7 @@ export class Game {
                     this.currentPositionforBlockOnMap[1] += this.canvasDraw.aspectRatio;
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
-                    ManipulationWithDOM.playSound(movementsOfBlock);
+                    //ManipulationWithDOM.playSound(movementsOfBlock);
                     }
                 }
                 break;
@@ -139,7 +139,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
 
@@ -149,7 +149,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Left: {
@@ -158,7 +158,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Enter: {
