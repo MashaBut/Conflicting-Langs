@@ -59,8 +59,12 @@ export class Game {
     private endOfturn() {
         ManipulationWithDOM.undisabledButtonDice();
         this.canvasDraw.redraw(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
-        if( this.currentColorBlockOnMap === Color.Green) {
+        if (this.currentColorBlockOnMap === Color.Green) {
+            let a;
             this.position.saveBlockOnMap(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+            this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
+            ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer1, this.player1.getOccupiedArea());
+            ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer2, this.player2.getOccupiedArea());
             this.canvasDraw.saveCanvasToImage();
         }
         this.currentColorBlockOnMap = Color.Orange;
@@ -88,14 +92,23 @@ export class Game {
         this.timer = setTimeout(() => this.endOfturn(), 20000);
     }
 
+    private initComponentOnMapForPlayers(): void {
+        ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
+        ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
+
+        ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer1, this.player1.getOccupiedArea());
+        ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer2, this.player2.getOccupiedArea());
+
+        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
+        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
+    }
     public setPlayerNames(): void {
         let namePlayer1: string = (ManipulationWithDOM.player1).value;
         let namePlayer2: string = (ManipulationWithDOM.player2).value;
 
         this.player1 = new Player(Identification.setName(namePlayer1, "Player 1"), Color.Red, 1, ManipulationWithDOM.canvas.height);
         this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), Color.Blue, ManipulationWithDOM.canvas.width, 1);
-        ManipulationWithDOM.nameplayer1.innerHTML = this.player1.getName();
-        ManipulationWithDOM.nameplayer2.innerHTML = this.player2.getName();
+        this.initComponentOnMapForPlayers();
         this.currentPlayer = this.player1;
         ManipulationWithDOM.currentPlayer.style.cssText = "color: #ed1818";
     }
@@ -114,14 +127,15 @@ export class Game {
                 this.size = CoordinateTransformation.turnSize();
                 if (this.currentPlayer.isFirstMove()) {
                     this.calculatePosition();
+                    this.currentColorBlockOnMap = Color.Green;
                 }
                 else {
                     this.currentPositionforBlockOnMap[2] = this.size[0];
                     this.currentPositionforBlockOnMap[3] = this.size[1];
+                    this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                 }
-                this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                 this.draw();
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                // ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Down: {
@@ -129,9 +143,9 @@ export class Game {
                     this.currentPositionforBlockOnMap[1] += this.canvasDraw.aspectRatio;
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
-                    ManipulationWithDOM.playSound(movementsOfBlock);
-                    }
+                    //    ManipulationWithDOM.playSound(movementsOfBlock);
                 }
+            }
                 break;
             case Directions.Up: {
                 if (!this.currentPlayer.isFirstMove()) {
@@ -139,7 +153,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //  ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
 
@@ -149,7 +163,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //  ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Left: {
@@ -158,7 +172,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                ManipulationWithDOM.playSound(movementsOfBlock);
+                //  ManipulationWithDOM.playSound(movementsOfBlock);
             }
                 break;
             case Directions.Enter: {

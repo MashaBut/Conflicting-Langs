@@ -6,7 +6,6 @@ export class CoordinateTransformation {
     public static conversionToPixels(aspectRatio: number, dice :number[]): number[] {
         this.firstDiceConversionToPixel = aspectRatio*dice[0] + 2 * (dice[0] - 1);
         this.secondDiceConversionToPixel = aspectRatio*dice[1] + 2 * (dice[1] - 1);
-        console.log(this.firstDiceConversionToPixel, this.secondDiceConversionToPixel);
         return [this.firstDiceConversionToPixel, this.secondDiceConversionToPixel];
     }
 

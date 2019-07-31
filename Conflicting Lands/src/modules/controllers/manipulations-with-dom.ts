@@ -1,27 +1,27 @@
-import {Directions} from './key-designations';
+import { Directions } from './key-designations';
 
 export class ManipulationWithDOM {
 
-    static tossDice: HTMLElement = <HTMLElement> document.getElementById("rollTheDice");
-    static dice1: HTMLElement = <HTMLElement> document.getElementById('dice1');
-    static dice2: HTMLElement = <HTMLElement> document.getElementById('dice2');
-    static writeNames: HTMLElement = <HTMLButtonElement> document.getElementById('writeNames');
+    static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
+    static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
+    static dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
+    static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static player1: HTMLInputElement = <HTMLInputElement>document.getElementById("player1");
     static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
-    static canvas:HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
+    static canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
 
-    static currentPlayer:HTMLElement = <HTMLElement>document.getElementById('currentPlayer');
+    static currentPlayer: HTMLElement = <HTMLElement>document.getElementById('currentPlayer');
 
     static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
 
-    static nameplayer1:HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
-    static nameplayer2:HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
+    static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
+    static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
 
-    static territoryplayer1:HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
-    static territoryplaye2:HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
+    static teritoryplayer1: HTMLElement = <HTMLElement>document.getElementById("teritoryplayer1");
+    static teritoryplayer2: HTMLElement = <HTMLElement>document.getElementById("teritoryplayer2");
 
-    static coinsplayer1:HTMLElement = <HTMLElement> document.getElementById("coinsplayer1");
-    static coinsplayer2:HTMLElement = <HTMLElement> document.getElementById("coinsplayer2");
+    static coinsplayer1: HTMLElement = <HTMLElement>document.getElementById("coinsplayer1");
+    static coinsplayer2: HTMLElement = <HTMLElement>document.getElementById("coinsplayer2");
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
@@ -34,13 +34,25 @@ export class ManipulationWithDOM {
     }
 
     public static disableStandardKeyOperation(e: KeyboardEvent): void {
-        if([Directions.Enter, Directions.Down, Directions.Left, Directions.Right, Directions.Up].indexOf(e.keyCode) > -1) {
+        if ([Directions.Enter, Directions.Down, Directions.Left, Directions.Right, Directions.Up].indexOf(e.keyCode) > -1) {
             e.preventDefault();
-        }  
+        }
     }
 
-    public static playSound(path:string): void {
+    public static playSound(path: string): void {
         let sound = new Audio(path);
         sound.play();
+    }
+
+    public static engagedTeritory(path: HTMLElement, fieldPercentage: number): void {
+        path.innerHTML = fieldPercentage + " %";
+    }
+
+    public static setupNamePlayer(path: HTMLElement, name: string): void {
+        path.innerHTML = name;
+    }
+
+    public static engagedCoins(path: HTMLElement, coins: number): void {
+        path.innerHTML = String(coins);
     }
 }

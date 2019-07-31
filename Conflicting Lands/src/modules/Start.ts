@@ -26,19 +26,19 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
-        ManipulationWithDOM.playSound(playGame);
+        //   ManipulationWithDOM.playSound(playGame);
         CreateImage.createImage();
     })
 
 fromEvent(ManipulationWithDOM.tossDice, 'click')
     .subscribe(() => {
         CreateImage.returmAnimate();
-        ManipulationWithDOM.playSound(soundForDice);
+        //  ManipulationWithDOM.playSound(soundForDice);
         ManipulationWithDOM.disabledButtonDice();
         diceRollerButton.roll(diceCollection);
-        setTimeout(timer,2500);
-    }) 
-    
+        setTimeout(timer, 2500);
+    })
+
 function timer() {
     game.createPositionsBlockForMap(diceRollerButton.numberOfDices());
     game.draw();
