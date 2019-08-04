@@ -1,8 +1,24 @@
 import { Directions } from './key-designations';
 
+
+
 export class ManipulationWithDOM {
 
+    static imageFlag: boolean = false;
+    private static audio = document.createElement('audio');
+
+    static pathToAnimate = require ('../../assets/images/dicesAnimation.gif');
+    static volumeImage = require ('../../assets/images/volume.jpg');
+    static noVolumeImage = require ('../../assets/images/no_volume.jpg');
+
+    static playGame = require('../../assets/sounds/playGame.wav');
+    static soundForDice = require('../../assets/sounds/rollTheDice2.wav');
+    static enterSound = require('../../assets/sounds/soundForBlock3.wav');
+    static movementsOfBlock = require('../../assets/sounds/moveblock2.wav');
+
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
+    static soundOff: HTMLElement = <HTMLElement>document.getElementById("soundOff");
+
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
     static dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
     static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
@@ -13,19 +29,20 @@ export class ManipulationWithDOM {
     static currentPlayer: HTMLElement = <HTMLElement>document.getElementById('currentPlayer');
 
     static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
+    static soundHolder: HTMLElement = <HTMLElement>document.getElementById('holderForSounds');
 
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
 
-    static teritoryplayer1: HTMLElement = <HTMLElement>document.getElementById("teritoryplayer1");
-    static teritoryplayer2: HTMLElement = <HTMLElement>document.getElementById("teritoryplayer2");
+    static territoryplayer1: HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
+    static territoryplayer2: HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
 
     static coinsplayer1: HTMLElement = <HTMLElement>document.getElementById("coinsplayer1");
     static coinsplayer2: HTMLElement = <HTMLElement>document.getElementById("coinsplayer2");
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
-        this.tossDice.style.cssText = "background-color: #202125;"
+        this.tossDice.style.cssText = "background-color: #2c2d32;"
     }
 
     public static undisabledButtonDice(): void {
@@ -41,10 +58,26 @@ export class ManipulationWithDOM {
 
     public static playSound(path: string): void {
         let sound = new Audio(path);
-        sound.play();
+        this.audio.id = "audio";
+        this.audio = sound;
+        this.soundHolder.appendChild(this.audio);
+        this.audio.play();
     }
 
-    public static engagedTeritory(path: HTMLElement, fieldPercentage: number): void {
+    public static disableSound(): void {
+        let audios = new Array();
+        if(this.imageFlag === true)
+        {
+           this.soundOff.style.cssText = "background-image: url('volume.jpg');";
+           this.imageFlag = false;
+        }
+        else if(this.imageFlag === false) {
+            this.soundOff.style.cssText = "background-image: url('no_volume.jpg');"; 
+            this.imageFlag = true;
+        }
+    }
+
+    public static engagedTerritory(path: HTMLElement, fieldPercentage: number): void {
         path.innerHTML = fieldPercentage + " %";
     }
 

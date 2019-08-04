@@ -1,24 +1,24 @@
 import {ManipulationWithDOM} from "../../../controllers/manipulations-with-dom";
-import {DiceRollerButton} from "../../../game/dice/dice-roller";
-let pathToImage = require ('../../../../assets/images/dicesAnimation.gif');
+import {DiceRoller} from "../../../game/dice/dice-roller";
 
-export class CreateImage {
+export class PushImage {
 private static image = document.createElement('img');
 
 public static createImage() {
     this.image.id = "img";
-    this.image.src = pathToImage;
+    this.image.src = ManipulationWithDOM.pathToAnimate;
     ManipulationWithDOM.imageHolder.appendChild(this.image);
 }
 
 public static returmAnimate()
 {
-    this.image.src = pathToImage;
+    this.image.src = ManipulationWithDOM.pathToAnimate;
 }
 
 public static returnImage() {
-    let a  = DiceRollerButton.getPathOfImage();
+    let a  = DiceRoller.getPathOfImage();
     let pathToImage: string = "./dices/" + a;
     this.image.src = pathToImage;
-  }
+}
+
 }

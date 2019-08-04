@@ -1,6 +1,6 @@
 import {Dice,getRandomIntInclusive} from "./dice";
 
-export class DiceRollerButton {
+export class DiceRoller {
   private static dices = new Array();
 
   public static roll(diceCollection: Array<Dice>) {

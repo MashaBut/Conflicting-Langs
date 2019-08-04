@@ -28,34 +28,43 @@
             <button type="button" id="writeNames">Play Game</button>
         </div>
     </div>
+
     <div class="gamepage" id="gamepage">
-        <label class="currentPlayer" id="currentPlayer">Current player!</label>
+        <div class="holderForSounds" id="holderForSounds"></div>
 
         <div class="divForPlayerOne">
             <p class="player1ForGame"></p>
-            <p id="nameplayer1" value=""></p>
-            <div class="territoryplayer1">
-                <label>Engaged territory: </label>
-                <p id="teritoryplayer1" value=""></p>
-            </div>
-            <div class="coinsplayer1">
-                <label>Coins: </label>
-                <p id="coinsplayer1" value=""></p>
+            <div class="card">
+                    <p id="nameplayer1" value=""></p>
+                    <div class="territoryplayer1">
+                        <label>Engaged territory: </label>
+                        <p id="territoryplayer1" value=""></p>
+                    </div>
+                    <div class="coinsplayer1">
+                        <label>Coins: </label>
+                        <p id="coinsplayer1" value=""></p>
+                    </div>        
             </div>
         </div>
 
         <div class="divForPlayerTwo">
             <p class="player2ForGame"></p>
-            <p id="nameplayer2" value=""></p>
+            <div class="card">
+                    <p id="nameplayer2" value=""></p>
+                    <div class="territoryplayer2">
+                        <label>Engaged territory: </label>
+                        <p id="territoryplayer2" value=""></p>
+                    </div>
+                    <div class="coinsplayer2">
+                        <label>Coins: </label>
+                        <p id="coinsplayer2" value=""></p>
+                    </div>        
+            </div>
+
             <div class="dice" id="dice"> </div>
-            <div class="territoryplayer2">
-                <label>Engaged territory: </label>
-                <p id="teritoryplayer2" value=""></p>
-            </div>
-            <div class="coinsplayer2">
-                <label>Coins: </label>
-                <p id="coinsplayer2" value=""></p>
-            </div>
+            <div class="sound">
+                <button type="button" id="soundOff"></button>
+            </div>    
         </div>
 
         <div class="canvas" id="canvas">
@@ -64,8 +73,7 @@
 
         <div class="click">
             <button type="button" id="rollTheDice">Roll the dice</button>
-        </div>
-
+        </div>   
     </div>
 </body>
 

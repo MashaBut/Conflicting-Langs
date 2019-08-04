@@ -15,6 +15,8 @@ export class Position {
     ySizeCurrentElement: number;
 
     elementShiftCounter: number;
+    counter: number = 0;
+
     public saveBlockOnMap(element: number[], colorBlock: string): void {
         let blockObj: object = { element, colorBlock };
         this.blocksSetOnMap.push(blockObj);
@@ -76,6 +78,21 @@ export class Position {
                 this.ySizeSavedElement = this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3];
                 for (let r = this.blocksSetOnMap[i].element[0]; r <= this.blocksSetOnMap[i].element[0] + this.blocksSetOnMap[i].element[2]; r++) {
                     this.elementShiftCounter++;
+
+                    for(let f = this.blocksSetOnMap[i].element[1]; f <= this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3]; f++) {
+                        this.counter++;
+                        if(f === elem[1]) {
+                            if(this.blocksSetOnMap[i].element[3] + this.counter + 1 >= elem[3]) {
+                                if (this.xSizeSavedElement + 2 === elem[0]) {
+                                    return Color.Green;
+                                }
+                                else if (this.blocksSetOnMap[i].element[0] - elem[0] === elem[2] + 2) {
+                                    return Color.Green;
+                                }
+                            }
+                        }
+                    }
+
                     if (r === elem[0]) {
                         if (this.blocksSetOnMap[i].element[2] - this.elementShiftCounter + 1 >= elem[2]) {
                             if (this.ySizeSavedElement + 2 === elem[1]) {

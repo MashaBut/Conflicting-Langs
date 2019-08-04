@@ -6,11 +6,8 @@ import { Directions } from './key-designations';
 import { CanvasDraw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/create";
 import { Position } from "../game/work-with-canvas/create-position";
-import { threadId } from "worker_threads";
 import { Color } from "../game/work-with-canvas/color";
 
-let enterSound = require('../../assets/sounds/soundForBlock3.wav');
-let movementsOfBlock = require('../../assets/sounds/moveblock2.wav');
 export class Game {
 
     private player1: Player;
@@ -63,8 +60,8 @@ export class Game {
             let a;
             this.position.saveBlockOnMap(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
             this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
-            ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer1, this.player1.getOccupiedArea());
-            ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer2, this.player2.getOccupiedArea());
+            ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
+            ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
             this.canvasDraw.saveCanvasToImage();
         }
         this.currentColorBlockOnMap = Color.Orange;
@@ -79,12 +76,14 @@ export class Game {
         if (this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
-            ManipulationWithDOM.currentPlayer.style.cssText = "color: #0719e6";
+            ManipulationWithDOM.nameplayer2.style.cssText = "color: #068d03";
+            ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
         }
         else {
             this.flagGame = true;
             this.currentPlayer = this.player1;
-            ManipulationWithDOM.currentPlayer.style.cssText = "color: #ed1818";
+            ManipulationWithDOM.nameplayer1.style.cssText = "color: #068d03";
+            ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
         }
     }
 
@@ -96,8 +95,8 @@ export class Game {
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
 
-        ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer1, this.player1.getOccupiedArea());
-        ManipulationWithDOM.engagedTeritory(ManipulationWithDOM.teritoryplayer2, this.player2.getOccupiedArea());
+        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
+        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
 
         ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
         ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
@@ -110,7 +109,7 @@ export class Game {
         this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), Color.Blue, ManipulationWithDOM.canvas.width, 1);
         this.initComponentOnMapForPlayers();
         this.currentPlayer = this.player1;
-        ManipulationWithDOM.currentPlayer.style.cssText = "color: #ed1818";
+        ManipulationWithDOM.nameplayer1.style.cssText = "color: #068d03";
     }
 
     public manipulationKeyBoard(): void {
@@ -123,7 +122,7 @@ export class Game {
 
     private setBlockPositionOnMap(keyCode: KeyboardEvent): void {
         switch (keyCode.keyCode) {
-            case 16: {
+            case 32: {
                 this.size = CoordinateTransformation.turnSize();
                 if (this.currentPlayer.isFirstMove()) {
                     this.calculatePosition();
@@ -135,7 +134,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                 }
                 this.draw();
-                // ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
             }
                 break;
             case Directions.Down: {
@@ -143,7 +142,7 @@ export class Game {
                     this.currentPositionforBlockOnMap[1] += this.canvasDraw.aspectRatio;
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
-                    //    ManipulationWithDOM.playSound(movementsOfBlock);
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
                 }
             }
                 break;
@@ -153,7 +152,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                //  ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
             }
                 break;
 
@@ -163,7 +162,7 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                //  ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
             }
                 break;
             case Directions.Left: {
@@ -172,11 +171,11 @@ export class Game {
                     this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
                     this.draw();
                 }
-                //  ManipulationWithDOM.playSound(movementsOfBlock);
+                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
             }
                 break;
             case Directions.Enter: {
-                // ManipulationWithDOM.playSound(enterSound);
+                ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
                 clearTimeout(this.timer);
                 this.endOfturn();
             }
