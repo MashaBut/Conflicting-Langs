@@ -55,6 +55,8 @@ import "../assets/images/dices/6_6.png";
 
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
+let flagGame: boolean = true;
+
 
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .pipe(take(1))
@@ -63,6 +65,7 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(ManipulationWithDOM.playGame);
         PushImage.createImage();
+        ManipulationWithDOM.initSounds();
     })
 
 fromEvent(ManipulationWithDOM.tossDice, 'click')
@@ -77,7 +80,7 @@ fromEvent(ManipulationWithDOM.tossDice, 'click')
 
 fromEvent(ManipulationWithDOM.soundOff, 'click')
     .subscribe(() => {
-        ManipulationWithDOM.disableSound();
+        ManipulationWithDOM.soundsOff();
     })
     
 function timer() {

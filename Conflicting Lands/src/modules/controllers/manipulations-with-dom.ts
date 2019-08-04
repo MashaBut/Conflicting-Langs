@@ -1,11 +1,13 @@
 import { Directions } from './key-designations';
+import { Player } from '../Player';
 
 
 
 export class ManipulationWithDOM {
 
     static imageFlag: boolean = false;
-    private static audio = document.createElement('audio');
+    private static arrayOfAudios = new Array();
+    private static somebody: Player;
 
     static pathToAnimate = require ('../../assets/images/dicesAnimation.gif');
     static volumeImage = require ('../../assets/images/volume.jpg');
@@ -29,7 +31,6 @@ export class ManipulationWithDOM {
     static currentPlayer: HTMLElement = <HTMLElement>document.getElementById('currentPlayer');
 
     static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
-    static soundHolder: HTMLElement = <HTMLElement>document.getElementById('holderForSounds');
 
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
@@ -56,25 +57,41 @@ export class ManipulationWithDOM {
         }
     }
 
-    public static playSound(path: string): void {
-        let sound = new Audio(path);
-        this.audio.id = "audio";
-        this.audio = sound;
-        this.soundHolder.appendChild(this.audio);
-        this.audio.play();
+    public static initSounds(): void {
+        let sound1 = new Audio(this.playGame);
+        let sound2 = new Audio(this.soundForDice);
+        let sound3 = new Audio(this.enterSound);
+        let sound4 = new Audio(this.movementsOfBlock);
+
+        this.arrayOfAudios.push(sound1);
+        this.arrayOfAudios.push(sound2);
+        this.arrayOfAudios.push(sound3);
+        this.arrayOfAudios.push(sound4);
     }
 
-    public static disableSound(): void {
-        let audios = new Array();
+    public static playSound(path: string): void {
+            let sound = new Audio(path);
+            if(this.imageFlag === true) {
+                console.log("SoundOff");
+            }
+            else if(this.imageFlag === false) {
+                sound.play(); 
+            }
+    }
+
+    public static soundsOff(): void {
         if(this.imageFlag === true)
-        {
-           this.soundOff.style.cssText = "background-image: url('volume.jpg');";
-           this.imageFlag = false;
-        }
+            {
+               this.soundOff.style.cssText = "background-image: url('volume.jpg');";
+               this.imageFlag = false;
+            }
         else if(this.imageFlag === false) {
-            this.soundOff.style.cssText = "background-image: url('no_volume.jpg');"; 
-            this.imageFlag = true;
-        }
+                this.soundOff.style.cssText = "background-image: url('no_volume.jpg');";
+                this.arrayOfAudios.forEach((item) => {
+                  item.volume = 0;
+                });
+                this.imageFlag = true;
+            }
     }
 
     public static engagedTerritory(path: HTMLElement, fieldPercentage: number): void {
@@ -88,4 +105,5 @@ export class ManipulationWithDOM {
     public static engagedCoins(path: HTMLElement, coins: number): void {
         path.innerHTML = String(coins);
     }
+    
 }

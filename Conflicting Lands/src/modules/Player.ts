@@ -3,6 +3,7 @@ export class Player {
     private coins: number;
     private color: string;
     public firstMove: boolean;
+    public soundsForPlayer: boolean;
     private xStart: number;
     private yStart: number;
     private occupiedArea: number;
@@ -13,10 +14,16 @@ export class Player {
         this.coins = 1200;
         this.color = color;
         this.firstMove = true;
+        this.soundsForPlayer = true;
         this.xStart = xStart;
         this.yStart = yStart;
         this.occupiedArea = 0;
     }
+    
+    public issoundsForPlayer(): boolean {
+        return this.soundsForPlayer;
+    }
+    
     public isFirstMove(): boolean {
         return this.firstMove;
     }

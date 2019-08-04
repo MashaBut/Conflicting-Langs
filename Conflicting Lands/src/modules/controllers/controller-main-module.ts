@@ -57,7 +57,6 @@ export class Game {
         ManipulationWithDOM.undisabledButtonDice();
         this.canvasDraw.redraw(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
         if (this.currentColorBlockOnMap === Color.Green) {
-            let a;
             this.position.saveBlockOnMap(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
             this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
             ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
