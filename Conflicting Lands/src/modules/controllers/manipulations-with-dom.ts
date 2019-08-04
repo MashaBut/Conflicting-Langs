@@ -13,8 +13,8 @@ export class ManipulationWithDOM {
 
     static playGame = require('../../assets/sounds/playGame.wav');
     static soundForDice = require('../../assets/sounds/rollTheDice2.wav');
-    static enterSound = require('../../assets/sounds/soundForBlock3.wav');
-    static movementsOfBlock = require('../../assets/sounds/moveblock2.wav');
+    static enterSound = require('../../assets/sounds/soundForBlock6.wav');
+    static movementsOfBlock = require('../../assets/sounds/moveblock3.wav');
 
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
     static soundOff: HTMLElement = <HTMLElement>document.getElementById("soundOff");
