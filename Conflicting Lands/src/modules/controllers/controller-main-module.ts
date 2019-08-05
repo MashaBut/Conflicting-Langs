@@ -15,6 +15,7 @@ export class Game {
     private currentPlayer: Player;
     private keyDown: Observable<Event> = fromEvent(document, 'keydown');
     private flagGame: boolean = true;
+    private flag: boolean = true;
     private timer: any;
 
     private position = new Position();
@@ -115,6 +116,7 @@ export class Game {
         else {
             this.flagGame = true;
             this.currentPlayer = this.player1;
+            this.currentPlayer.soundsForPlayer = true;
             ManipulationWithDOM.nameplayer1.style.cssText = "color: #068d03";
             ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
         }
@@ -122,6 +124,7 @@ export class Game {
 
     public turnTime() {
         this.timer = setTimeout(() => this.endOfturn(), 20000);
+        this.flag = true;
     }
 
     private initComponentOnMapForPlayers(): void {

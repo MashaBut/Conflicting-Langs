@@ -1,13 +1,9 @@
 import { KeyDesignations } from './key-designations';
-import { Player } from '../Player';
-
-
 
 export class ManipulationWithDOM {
 
     static imageFlag: boolean = false;
     private static arrayOfAudios = new Array();
-    private static somebody: Player;
 
     static pathToAnimate = require ('../../assets/images/dicesAnimation.gif');
     static volumeImage = require ('../../assets/images/volume.jpg');
@@ -80,18 +76,17 @@ export class ManipulationWithDOM {
     }
 
     public static soundsOff(): void {
-        if(this.imageFlag === true)
-            {
-               this.soundOff.style.cssText = "background-image: url('volume.jpg');";
-               this.imageFlag = false;
-            }
+        if(this.imageFlag === true) {
+            this.soundOff.style.cssText = "background-image: url('volume.jpg');";
+            this.imageFlag = false;
+        }
         else if(this.imageFlag === false) {
-                this.soundOff.style.cssText = "background-image: url('no_volume.jpg');";
-                this.arrayOfAudios.forEach((item) => {
-                  item.volume = 0;
-                });
-                this.imageFlag = true;
-            }
+            this.soundOff.style.cssText = "background-image: url('no_volume.jpg');";
+            this.arrayOfAudios.forEach((item) => {
+                item.volume = 0;
+            });
+            this.imageFlag = true;
+        }
     }
 
     public static engagedTerritory(path: HTMLElement, fieldPercentage: number): void {
