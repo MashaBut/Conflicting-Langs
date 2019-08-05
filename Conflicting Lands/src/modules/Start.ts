@@ -86,6 +86,4 @@ fromEvent(ManipulationWithDOM.soundOff, 'click')
 function timer() {
     PushImage.returnImage();
     game.createPositionsBlockForMap(DiceRoller.numberOfDices());
-    game.draw();
-    game.turnTime();
 }

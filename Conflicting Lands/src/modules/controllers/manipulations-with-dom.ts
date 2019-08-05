@@ -1,4 +1,4 @@
-import { Directions } from './key-designations';
+import { KeyDesignations } from './key-designations';
 import { Player } from '../Player';
 
 
@@ -52,7 +52,7 @@ export class ManipulationWithDOM {
     }
 
     public static disableStandardKeyOperation(e: KeyboardEvent): void {
-        if ([Directions.Enter, Directions.Down, Directions.Left, Directions.Right, Directions.Up].indexOf(e.keyCode) > -1) {
+        if ([KeyDesignations.Enter, KeyDesignations.Down, KeyDesignations.Left, KeyDesignations.Right, KeyDesignations.Up].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
     }
@@ -72,7 +72,7 @@ export class ManipulationWithDOM {
     public static playSound(path: string): void {
             let sound = new Audio(path);
             if(this.imageFlag === true) {
-                console.log("SoundOff");
+             //  console.log("SoundOff");
             }
             else if(this.imageFlag === false) {
                 sound.play(); 

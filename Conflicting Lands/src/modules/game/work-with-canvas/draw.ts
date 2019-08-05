@@ -1,6 +1,6 @@
 import { threadId } from "worker_threads";
 
-export class CanvasDraw {
+export class Draw {
 
 	private colorGreyRGB: string = "rgb(171, 139, 187)";
 	public readonly aspectRatio: number;
@@ -8,7 +8,7 @@ export class CanvasDraw {
 	private canvasElement: HTMLCanvasElement;
 	private canvasContext: CanvasRenderingContext2D;
 	public dataImage: string;
-	image = new Image();
+	private image = new Image();
 	private readonly numberOfHorizontalLines: number = 25;
 	private readonly numberOfVerticalLines: number = 50;
 
