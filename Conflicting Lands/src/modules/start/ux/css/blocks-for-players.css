@@ -1,24 +1,32 @@
 .player1ForGame {
     display: block;
+    border-radius: 50%;
+    background-color: ghostwhite;
     background-image: url('../../../../assets//images/icon1.jpg');
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    width: 90%;
-    height: 25%;
-    margin: 5%;
+    background-position: center;
+    width: 50%;
+    height: 18%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 25%;
 }
 
 .player2ForGame {
     display: block;
+    border-radius: 50%;
+    background-color: ghostwhite;
     background-image: url('../../../../assets//images/icon2.jpg');
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    width: 90%;
-    height: 25%;
-    margin: 5%;
+    background-position: center;
+    width: 50%;
+    height: 18%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 25%;
 }
-
-
 
 @media screen and (min-width : 1224px) { /*Настольные компьютеры и ноутбуки*/
     .divForPlayerOne {
@@ -53,17 +61,21 @@
         /* ------------------Positioning--------------------- */
         position: absolute;
         bottom: 1%;
-        margin-left: 65%;
+        margin-left: 20%;
         height: 9%;
-        width: 30%;
+        width: 65%;
         text-align: center;
-    
+    }
+
+    .floated {
+        width: 24%;
+        float:left;
+        margin-right:14px;
     }
      
     .sound button {
             /* ------------------Block model--------------------- */
             height: 65%;
-            width: 54%;
             /* ------------------Typography--------------------- */
             font-size: 10px; 
             font-weight: 700;
@@ -81,38 +93,74 @@
             /* ------------------ Other --------------------- */
             outline: none;
     }
+
+    .sound #goToStartPage {
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/exit.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .sound #endGame {
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/stopGame1.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     
     .card {
-        /* display: block; */
-        padding: 0.5%;
-        margin-left: 8%;
+        display: block;
+        padding: 1%;
+        margin-left: 10%;
         margin-right: 8%;
-        height: 40%;
+        height: 35%;
+        width: 73%;
         border-radius: 10px;
         text-align: center;
         font-size: 18px;
         font-weight: 700;
-        background-color: #e6e6e6;
+        background-color: #010428;
+        background-image: url('../../../../assets/images/frame10.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
         color: black;
     }
     
     .card label {
         color: #ff7e00;
-        font-size: larger;
+        font-size: 16px;
         font-weight: bolder;
         margin-top: 3%; 
     }
-    
-    .divForPlayerOne .card p {
-        color: #ed1818;
-        font-size: larger;
+
+    .divForPlayerOne .card .territoryplayer1 p, 
+    .divForPlayerTwo .card .territoryplayer2 p,
+    .divForPlayerOne .card .coinsplayer1 p,
+    .divForPlayerTwo .card .coinsplayer2 p {
+        color: white;
+        font-size: large;
         font-weight: bolder;
+        margin-top: 13%;
     }
     
-    .divForPlayerTwo .card p {
-        color: #0719e6;
-        font-size: larger;
+    .divForPlayerOne .card #nameplayer1 {
+        color: #ed1818;
+        text-decoration: underline;
+        font-size: large;
         font-weight: bolder;
+        margin-top: 13%;
+    }
+    
+    .divForPlayerTwo .card #nameplayer2 {
+        color: #0719e6;
+        text-decoration: underline;
+        font-size: large;
+        font-weight: bolder;
+        margin-top: 13%;
     }
 }
 

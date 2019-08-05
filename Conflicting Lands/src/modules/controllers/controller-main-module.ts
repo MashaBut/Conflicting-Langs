@@ -15,6 +15,7 @@ export class Game {
     private currentPlayer: Player;
     private keyDown: Observable<Event> = fromEvent(document, 'keydown');
     private flagGame: boolean = true;
+    private flag: boolean = true;
     private timer: any;
 
     private position = new Position();
@@ -75,12 +76,14 @@ export class Game {
         if (this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
+            this.currentPlayer.soundsForPlayer = false;
             ManipulationWithDOM.nameplayer2.style.cssText = "color: #068d03";
             ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
         }
         else {
             this.flagGame = true;
             this.currentPlayer = this.player1;
+            this.currentPlayer.soundsForPlayer = true;
             ManipulationWithDOM.nameplayer1.style.cssText = "color: #068d03";
             ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
         }
@@ -88,6 +91,7 @@ export class Game {
 
     public turnTime() {
         this.timer = setTimeout(() => this.endOfturn(), 20000);
+        this.flag = true;
     }
 
     private initComponentOnMapForPlayers(): void {
@@ -100,6 +104,7 @@ export class Game {
         ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
         ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
     }
+
     public setPlayerNames(): void {
         let namePlayer1: string = (ManipulationWithDOM.player1).value;
         let namePlayer2: string = (ManipulationWithDOM.player2).value;
@@ -122,61 +127,104 @@ export class Game {
     private setBlockPositionOnMap(keyCode: KeyboardEvent): void {
         switch (keyCode.keyCode) {
             case 32: {
-                this.size = CoordinateTransformation.turnSize();
-                if (this.currentPlayer.isFirstMove()) {
-                    this.calculatePosition();
-                    this.currentColorBlockOnMap = Color.Green;
+                if(this.flag === true) {
+                    this.size = CoordinateTransformation.turnSize();
+                    if (this.currentPlayer.isFirstMove()) {
+                        this.calculatePosition();
+                        this.currentColorBlockOnMap = Color.Green;
+                    }
+                    else {
+                        this.currentPositionforBlockOnMap[2] = this.size[0];
+                        this.currentPositionforBlockOnMap[3] = this.size[1];
+                        this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+                    }
+                    this.draw();
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
                 }
-                else {
-                    this.currentPositionforBlockOnMap[2] = this.size[0];
-                    this.currentPositionforBlockOnMap[3] = this.size[1];
-                    this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+                else if(keyCode.keyCode === 32) {
+                    if(this.flag === false) {
+                        return;   
+                    }
                 }
-                this.draw();
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
             }
                 break;
             case Directions.Down: {
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.currentPositionforBlockOnMap[1] += this.canvasDraw.aspectRatio;
-                    this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
-                    this.draw();
-                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                if(this.flag === true) {
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.currentPositionforBlockOnMap[1] += this.canvasDraw.aspectRatio;
+                        this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+                        this.draw();
+                    }   
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock); 
+                }
+                else if(keyCode.keyCode === Directions.Down) {
+                    if(this.flag === false) {
+                        return;   
+                    }
                 }
             }
                 break;
             case Directions.Up: {
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.currentPositionforBlockOnMap[1] -= this.canvasDraw.aspectRatio;
-                    this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
-                    this.draw();
+                if(this.flag === true) {
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.currentPositionforBlockOnMap[1] -= this.canvasDraw.aspectRatio;
+                        this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+                        this.draw();
+                    }
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);    
                 }
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                else if(keyCode.keyCode === Directions.Up) {
+                    if(this.flag === false) {
+                        return;   
+                    }
+                }
             }
                 break;
 
             case Directions.Right: {
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.currentPositionforBlockOnMap[0] += this.canvasDraw.aspectRatio;
-                    this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
-                    this.draw();
+                if(this.flag === true) {
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.currentPositionforBlockOnMap[0] += this.canvasDraw.aspectRatio;
+                        this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+                        this.draw();
+                    }
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);    
                 }
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                else if (keyCode.keyCode === Directions.Right) {
+                    if(this.flag === false) {
+                        return;   
+                    }
+                }
             }
                 break;
             case Directions.Left: {
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.currentPositionforBlockOnMap[0] -= this.canvasDraw.aspectRatio;
-                    this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
-                    this.draw();
+                if(this.flag === true) {
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.currentPositionforBlockOnMap[0] -= this.canvasDraw.aspectRatio;
+                        this.currentColorBlockOnMap = this.position.createPositionForCurrentPlayer(this.currentPositionforBlockOnMap, this.currentPlayer.getColor());
+                        this.draw();
+                    }
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
                 }
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                else if(keyCode.keyCode === Directions.Left) { 
+                    if(this.flag === false) {
+                        return;   
+                    }
+                }
             }
                 break;
             case Directions.Enter: {
-                ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
-                clearTimeout(this.timer);
-                this.endOfturn();
+                if(this.flag === true) {
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
+                    clearTimeout(this.timer);
+                    this.endOfturn();  
+                    this.flag = false;  
+                }
+                else if (keyCode.keyCode === Directions.Enter) { 
+                    if(this.flag === false) {
+                        return;   
+                    }
+                }
             }
                 break;
             default:
