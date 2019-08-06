@@ -54,12 +54,12 @@ export class Game {
         else {
             this.calculateAllPosition(this.size[0], this.size[1]);
             if (this.arrayCurrentPosition.length != 0) {
-                this.setFirstMove();
+                this.setFirstStep();
             }
             else {
                 this.calculateAllPosition(this.size[1], this.size[0]);
                 if (this.arrayCurrentPosition.length != 0) {
-                    this.setFirstMove();
+                    this.setFirstStep();
                 }
                 else {
                     this.possiblePositions = false;
@@ -68,7 +68,7 @@ export class Game {
             }
         }
     }
-    private setFirstMove():void {
+    private setFirstStep(): void {
         this.currentPosition = this.arrayCurrentPosition[0];
         this.draw();
         this.possiblePositions = true;
@@ -100,6 +100,7 @@ export class Game {
     private endOfturn() {
         ManipulationWithDOM.undisabledButtonDice();
         clearTimeout(this.timer);
+        this.flag = false;
         if (this.currentPlayer.isFirstMove()) {
             this.currentPlayer.setFirstMove(false);
             this.repetitionAtCompletion();
@@ -112,7 +113,7 @@ export class Game {
                 alert("Oh, no. Sorry:(");
                 this.currentPlayer.setLifes();
                 if (this.currentPlayer.getLifes() === 0) {
-                    alert(this.currentPlayer.getName+" loser");
+                    alert(this.currentPlayer.getName + " loser");
                 }
             }
         }

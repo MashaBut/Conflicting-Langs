@@ -9,7 +9,6 @@ export class Player {
     private occupiedArea: number;
     private lifes:number;
 
-    //add start position
     public constructor(name: string, color: string, xStart: number, yStart: number) {
         this.name = name;
         this.coins = 1200;

@@ -1,20 +1,19 @@
-import { Color } from "./color";
 export class Position {
     private blocksSetOnMap = new Array<any>();
-    asperio: number = 20;
-    coefArea: number = 5000;
-    sum: number;
-    xSavedElement: number;
-    ySavedElement: number;
-    xSizeSavedElement: number;
-    ySizeSavedElement: number;
-    xCurrentElement: number;
-    yCurrentElement: number;
-    xSizeCurrentElement: number;
-    ySizeCurrentElement: number;
+    private asperio: number = 20;
+    private coefArea: number = 5000;
+    private sum: number;
+    private xSavedElement: number;
+    private ySavedElement: number;
+    private xSizeSavedElement: number;
+    private ySizeSavedElement: number;
+    private xCurrentElement: number;
+    private yCurrentElement: number;
+    private xSizeCurrentElement: number;
+    private ySizeCurrentElement: number;
 
-    horizontalShiftCounter: number;
-    verticalShiftCounter: number;
+    private horizontalShiftCounter: number;
+    private verticalShiftCounter: number;
 
     public saveBlockOnMap(element: number[], colorBlock: string): void {
         let blockObj: object = { element, colorBlock };
@@ -92,12 +91,15 @@ export class Position {
                             for (let key = 0; key < this.blocksSetOnMap.length; key++) {
                                 if (this.blocksSetOnMap[key].colorBlock === colorBlock) {
                                     if (this.blocksSetOnMap[i].element[2] - this.horizontalShiftCounter + this.blocksSetOnMap[key].element[2] + 10 >= elem[2]) {
-                                        if (this.blocksSetOnMap[i].element[1] === this.blocksSetOnMap[key].element[1]) {
-                                            if (this.xSizeSavedElement + 2 === this.blocksSetOnMap[key].element[0]) {
-                                                if (this.ySavedElement - elem[1] === elem[3] + 2) {
+
+                                        if (this.xSizeSavedElement + 2 === this.blocksSetOnMap[key].element[0]) {
+                                            if (this.ySavedElement - elem[1] === elem[3] + 2) {
+                                                if (this.blocksSetOnMap[i].element[1] === this.blocksSetOnMap[key].element[1]) {
                                                     return true;
                                                 }
-                                                else if (this.ySizeSavedElement + 2 === elem[1]) {
+                                            }
+                                            else if (this.ySizeSavedElement + 2 === elem[1]) {
+                                                if (this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3] === this.blocksSetOnMap[key].element[1] + this.blocksSetOnMap[key].element[3]) {
                                                     return true;
                                                 }
                                             }
@@ -124,11 +126,14 @@ export class Position {
                                 if (this.blocksSetOnMap[key].colorBlock === colorBlock) {
                                     if (this.blocksSetOnMap[i].element[3] - this.verticalShiftCounter + this.blocksSetOnMap[key].element[3] + 10 >= elem[3]) {
                                         if (this.ySizeSavedElement + 2 === this.blocksSetOnMap[key].element[1]) {
-                                            if (this.blocksSetOnMap[i].element[0] === this.blocksSetOnMap[key].element[0]) {
-                                                if (this.xSavedElement - elem[0] === elem[2] + 2) {
+
+                                            if (this.xSavedElement - elem[0] === elem[2] + 2) {
+                                                if (this.blocksSetOnMap[i].element[0] === this.blocksSetOnMap[key].element[0]) {
                                                     return true;
                                                 }
-                                                else if (this.xSizeSavedElement + 2 === elem[0]) {
+                                            }
+                                            else if (this.xSizeSavedElement + 2 === elem[0]) {
+                                                if (this.blocksSetOnMap[i].element[0]+this.blocksSetOnMap[i].element[2] === this.blocksSetOnMap[key].element[0]+this.blocksSetOnMap[key].element[2]) {
                                                     return true;
                                                 }
                                             }

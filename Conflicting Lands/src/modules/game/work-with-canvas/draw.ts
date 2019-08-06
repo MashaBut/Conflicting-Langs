@@ -1,5 +1,3 @@
-import { threadId } from "worker_threads";
-
 export class Draw {
 
 	private colorGreyRGB: string = "rgb(171, 139, 187)";
