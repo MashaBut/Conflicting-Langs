@@ -2,11 +2,12 @@ export class Player {
     private name: string;
     private coins: number;
     private color: string;
-    public firstMove: boolean;
+    private firstMove: boolean;
     public soundsForPlayer: boolean;
     private xStart: number;
     private yStart: number;
     private occupiedArea: number;
+    private lifes:number;
 
     //add start position
     public constructor(name: string, color: string, xStart: number, yStart: number) {
@@ -18,12 +19,13 @@ export class Player {
         this.xStart = xStart;
         this.yStart = yStart;
         this.occupiedArea = 0;
+        this.lifes = 8;
     }
-    
-    public issoundsForPlayer(): boolean {
+
+    public isSoundsForPlayer(): boolean {
         return this.soundsForPlayer;
     }
-    
+
     public isFirstMove(): boolean {
         return this.firstMove;
     }
@@ -47,6 +49,9 @@ export class Player {
     public getYCoordinate(): number {
         return this.yStart;
     }
+    public getLifes(): number {
+        return this.lifes;
+    }
 
     public getOccupiedArea(): number {
         return this.occupiedArea;
@@ -56,7 +61,15 @@ export class Player {
         this.coins = coins;
     }
 
+    public setLifes():void {
+        this.lifes-=1;
+    }
+
     public setOccupiedArea(occupiedArea: number): void {
         this.occupiedArea = occupiedArea;
+    }
+
+    public setFirstMove(flag: boolean): void {
+        this.firstMove = flag;
     }
 }

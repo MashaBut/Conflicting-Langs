@@ -29,6 +29,7 @@ export class Game {
     private x: number;
     private y: number;
     private currentColor: string = Color.Green;
+    private possiblePositions = false;
 
     constructor() {
         this.initCanvas();
@@ -42,7 +43,6 @@ export class Game {
     public createPositionsBlockForMap(dice: number[]): void {
         this.size = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio - 2, dice);
         this.calculatePosition();
-        this.turnTime();
     }
 
     private calculatePosition() {
@@ -52,26 +52,39 @@ export class Game {
             this.draw();
         }
         else {
-            this.counterElementsInArray = 0;
-            this.arrayCurrentPosition.length = 0;
-            for (let j = 1; j <= ManipulationWithDOM.canvas.height - this.size[1]; j += this.canvasDraw.aspectRatio) {
-                for (let i = 1; i <= ManipulationWithDOM.canvas.width - this.size[0]; i += this.canvasDraw.aspectRatio) {
-                    if (i != ManipulationWithDOM.canvas.width + 1 && j != ManipulationWithDOM.canvas.height + 1) {
-                        this.currentPosition = [i, j, this.size[0], this.size[1]];
-                        if (this.position.createPositionForCurrentPlayer(this.currentPosition, this.currentPlayer.getColor())) {
-                            this.arrayCurrentPosition.push(this.currentPosition);
-                        }
-                    }
-                }
-            }
-            if (this.arrayCurrentPosition.length > 0) {
-                this.currentPosition = this.arrayCurrentPosition[0];
-                this.draw();
+            this.calculateAllPosition(this.size[0], this.size[1]);
+            if (this.arrayCurrentPosition.length != 0) {
+                this.setFirstMove();
             }
             else {
-                clearTimeout(this.timer);
-                alert("No");
-                this.endOfturn();
+                this.calculateAllPosition(this.size[1], this.size[0]);
+                if (this.arrayCurrentPosition.length != 0) {
+                    this.setFirstMove();
+                }
+                else {
+                    this.possiblePositions = false;
+                    this.endOfturn();
+                }
+            }
+        }
+    }
+    private setFirstMove():void {
+        this.currentPosition = this.arrayCurrentPosition[0];
+        this.draw();
+        this.possiblePositions = true;
+    }
+
+    private calculateAllPosition(xSize: number, ySize: number): void {
+        this.counterElementsInArray = 0;
+        this.arrayCurrentPosition.length = 0;
+        for (let j = 1; j <= ManipulationWithDOM.canvas.height - ySize; j += this.canvasDraw.aspectRatio) {
+            for (let i = 1; i <= ManipulationWithDOM.canvas.width - xSize; i += this.canvasDraw.aspectRatio) {
+                if (i != ManipulationWithDOM.canvas.width + 1 && j != ManipulationWithDOM.canvas.height + 1) {
+                    this.currentPosition = [i, j, xSize, ySize];
+                    if (this.position.createPositionForCurrentPlayer(this.currentPosition, this.currentPlayer.getColor())) {
+                        this.arrayCurrentPosition.push(this.currentPosition);
+                    }
+                }
             }
         }
     }
@@ -86,24 +99,38 @@ export class Game {
 
     private endOfturn() {
         ManipulationWithDOM.undisabledButtonDice();
-        if (this.arrayCurrentPosition.length != 0) {
-            this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
-            this.position.saveBlockOnMap(this.currentPosition, this.currentPlayer.getColor());
-            this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
-            ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
-            ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-            this.canvasDraw.saveCanvasToImage();
-        }
+        clearTimeout(this.timer);
         if (this.currentPlayer.isFirstMove()) {
-            this.currentPlayer.firstMove = false;
-            this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
-            this.position.saveBlockOnMap(this.currentPosition, this.currentPlayer.getColor());
-            this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
-            ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
-            ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-            this.canvasDraw.saveCanvasToImage();
+            this.currentPlayer.setFirstMove(false);
+            this.repetitionAtCompletion();
         }
+        else {
+            if (this.possiblePositions) {
+                this.repetitionAtCompletion();
+            }
+            else if (!this.possiblePositions) {
+                alert("Oh, no. Sorry:(");
+                this.currentPlayer.setLifes();
+                if (this.currentPlayer.getLifes() === 0) {
+                    alert(this.currentPlayer.getName+" loser");
+                }
+            }
+        }
+        this.repetititonAtEachTurn();
         this.changePlayer();
+    }
+
+    private repetitionAtCompletion(): void {
+        this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
+        this.position.saveBlockOnMap(this.currentPosition, this.currentPlayer.getColor());
+        this.canvasDraw.saveCanvasToImage();
+    }
+
+    private repetititonAtEachTurn(): void {
+        this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
+        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
+        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
+        console.log(this.currentPlayer.getLifes());
     }
 
     private changePlayer(): void {
@@ -128,6 +155,7 @@ export class Game {
     }
 
     private initComponentOnMapForPlayers(): void {
+
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
 
@@ -141,7 +169,6 @@ export class Game {
     public setPlayerNames(): void {
         let namePlayer1: string = (ManipulationWithDOM.player1).value;
         let namePlayer2: string = (ManipulationWithDOM.player2).value;
-
         this.player1 = new Player(Identification.setName(namePlayer1, "Player 1"), Color.Red, 1, ManipulationWithDOM.canvas.height);
         this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), Color.Blue, ManipulationWithDOM.canvas.width, 1);
         this.initComponentOnMapForPlayers();
@@ -162,48 +189,66 @@ export class Game {
             case KeyDesignations.Space:
             case KeyDesignations.Up:
             case KeyDesignations.Down: {
-                this.size = CoordinateTransformation.turnSize();
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.currentPosition[2] = this.size[0];
-                    this.currentPosition[3] = this.size[1];
+                if (this.flag) {
+                    this.size = CoordinateTransformation.turnSize();
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.currentPosition[2] = this.size[0];
+                        this.currentPosition[3] = this.size[1];
+                    }
+                    this.calculatePosition();
+                    this.draw();
                 }
-                this.calculatePosition();
-                this.draw();
+                else if (!this.flag) {
+                    return;
+                }
                 ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
                 break;
             }
             case KeyDesignations.Right: {
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.counterElementsInArray++;
-                    if (this.counterElementsInArray >= this.arrayCurrentPosition.length || this.counterElementsInArray < 0) {
-                        this.counterElementsInArray = 0;
+                if (this.flag) {
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.counterElementsInArray++;
+                        if (this.counterElementsInArray >= this.arrayCurrentPosition.length || this.counterElementsInArray < 0) {
+                            this.counterElementsInArray = 0;
+                        }
+                        this.currentPosition = this.arrayCurrentPosition[this.counterElementsInArray];
+                        this.draw();
                     }
-                    this.currentPosition = this.arrayCurrentPosition[this.counterElementsInArray];
-                    this.draw();
+                }
+                else if (!this.flag) {
+                    return;
                 }
                 ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
                 break;
             }
             case KeyDesignations.Left: {
-                if (!this.currentPlayer.isFirstMove()) {
-                    this.counterElementsInArray--;
-                    if (this.counterElementsInArray >= this.arrayCurrentPosition.length || this.counterElementsInArray < 0) {
-                        this.counterElementsInArray = 0;
+                if (this.flag) {
+                    if (!this.currentPlayer.isFirstMove()) {
+                        this.counterElementsInArray--;
+                        if (this.counterElementsInArray >= this.arrayCurrentPosition.length || this.counterElementsInArray < 0) {
+                            this.counterElementsInArray = 0;
+                        }
+                        this.currentPosition = this.arrayCurrentPosition[this.counterElementsInArray];
+                        this.draw();
                     }
-                    this.currentPosition = this.arrayCurrentPosition[this.counterElementsInArray];
-                    this.draw();
+                }
+                else if (!this.flag) {
+                    return;
                 }
                 ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
                 break;
             }
             case KeyDesignations.Enter: {
                 ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
-                clearTimeout(this.timer);
-                this.endOfturn();
+                if (this.flag) {
+                    this.endOfturn();
+                    this.flag = false;
+                }
+                else if (!this.flag) {
+                    return;
+                }
                 break;
             }
-            default:
-                break;
         }
     }
 

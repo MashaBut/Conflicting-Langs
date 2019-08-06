@@ -55,8 +55,6 @@ import "../assets/images/dices/6_6.png";
 
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
-let flagGame: boolean = true;
-
 
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .pipe(take(1))
@@ -85,5 +83,6 @@ fromEvent(ManipulationWithDOM.soundOff, 'click')
     
 function timer() {
     PushImage.returnImage();
-    game.createPositionsBlockForMap(DiceRoller.numberOfDices());
+    game.turnTime();
+    game.createPositionsBlockForMap(DiceRoller.numberOfDices());  
 }
