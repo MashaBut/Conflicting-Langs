@@ -6,6 +6,7 @@ import { ConcealCanvas } from "./start/ux/scripts/hide-function";
 import { DiceRoller } from "./game/dice/dice-roller";
 import { diceCollection } from "./game/dice/dice";
 import { PushImage } from "./start/ux/scripts/push-image";
+import {Timer} from "./start/ux/scripts/timer";
 
 import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
@@ -52,9 +53,9 @@ import "../assets/images/dices/6_6.png";
 
 //#endregion "dices"
 
-
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
+let timerForPlayer: Timer = new Timer();
 
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .pipe(take(1))
@@ -83,6 +84,7 @@ fromEvent(ManipulationWithDOM.soundOff, 'click')
     
 function timer() {
     PushImage.returnImage();
+    timerForPlayer.Timer();
     game.turnTime();
     game.createPositionsBlockForMap(DiceRoller.numberOfDices());  
 }

@@ -8,6 +8,16 @@ export class ManipulationWithDOM {
     static pathToAnimate = require ('../../assets/images/dicesAnimation.gif');
     static volumeImage = require ('../../assets/images/volume.jpg');
     static noVolumeImage = require ('../../assets/images/no_volume.jpg');
+    static life8 = require ('../../assets/images/lives/life8.png');
+    static life7 = require ('../../assets/images/lives/life7.png');
+    static life6 = require ('../../assets/images/lives/life6.png');
+    static life5 = require ('../../assets/images/lives/life5.png');
+    static life4 = require ('../../assets/images/lives/life4.png');
+    static life3 = require ('../../assets/images/lives/life3.png');
+    static life2 = require ('../../assets/images/lives/life2.png');
+    static life1 = require ('../../assets/images/lives/life1.png');
+    static life0 = require ('../../assets/images/lives/life0.png');
+
 
     static playGame = require('../../assets/sounds/playGame.wav');
     static soundForDice = require('../../assets/sounds/rollTheDice2.wav');
@@ -31,11 +41,16 @@ export class ManipulationWithDOM {
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
 
+    static livesForPlayerOne: HTMLElement = <HTMLElement>document.getElementById("divForLives1");
+    static livesForPlayerTwo: HTMLElement = <HTMLElement>document.getElementById("divForLives2");
+
     static territoryplayer1: HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
     static territoryplayer2: HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
 
     static coinsplayer1: HTMLElement = <HTMLElement>document.getElementById("coinsplayer1");
     static coinsplayer2: HTMLElement = <HTMLElement>document.getElementById("coinsplayer2");
+
+    static timer:HTMLElement = <HTMLElement>document.getElementById("timer");
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");

@@ -7,6 +7,7 @@ import { Draw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/coordinate-transformation";
 import { Position } from "../game/work-with-canvas/position";
 import { Color } from "../game/work-with-canvas/color";
+import {Timer} from "../start/ux/scripts/timer";
 
 export class Game {
 
@@ -17,6 +18,7 @@ export class Game {
     private flagGame: boolean = true;
     private flag: boolean = true;
     private timer: any;
+    //private life = document.createElement('img');
 
     private position = new Position();
     private canvasDraw: Draw;
@@ -34,6 +36,8 @@ export class Game {
     constructor() {
         this.initCanvas();
         this.manipulationKeyBoard();
+        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life8 + ");";
+        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life8 + ");";
     }
 
     private initCanvas(): void {
@@ -112,8 +116,70 @@ export class Game {
             else if (!this.possiblePositions) {
                 alert("Oh, no. Sorry:(");
                 this.currentPlayer.setLifes();
-                if (this.currentPlayer.getLifes() === 0) {
-                    alert(this.currentPlayer.getName + " loser");
+                if(this.currentPlayer.getLifes() === 7) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";                
+                    }
+                }
+                else if(this.currentPlayer.getLifes() === 6) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";                
+                    }
+                }
+                else if (this.currentPlayer.getLifes() === 5) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");";                
+                    }
+                }
+                else if(this.currentPlayer.getLifes() === 4) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";                
+                    }
+                }
+                else if (this.currentPlayer.getLifes() === 3) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";                
+                    }
+                }
+                else if(this.currentPlayer.getLifes() === 2) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";                
+                    }
+                }
+                else if(this.currentPlayer.getLifes() === 1) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";                
+                    }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";                
+                    }
+                }
+                else if (this.currentPlayer.getLifes() === 0) {
+                    if(this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";                
+                        }
+                    else {
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";                
+                        }
+                    alert(this.currentPlayer.getName() + " loser");
                 }
             }
         }
@@ -139,14 +205,14 @@ export class Game {
             this.flagGame = false;
             this.currentPlayer = this.player2;
             ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
-            ManipulationWithDOM.nameplayer2.style.cssText = "color: #068d03";
+            ManipulationWithDOM.nameplayer2.style.cssText = "color: yellow";
         }
         else {
             this.flagGame = true;
             this.currentPlayer = this.player1;
             this.currentPlayer.soundsForPlayer = true;
-            ManipulationWithDOM.nameplayer1.style.cssText = "color: #068d03";
             ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
+            ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
         }
     }
 
@@ -174,7 +240,7 @@ export class Game {
         this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), Color.Blue, ManipulationWithDOM.canvas.width, 1);
         this.initComponentOnMapForPlayers();
         this.currentPlayer = this.player1;
-        ManipulationWithDOM.nameplayer1.style.cssText = "color: #068d03";
+        ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
     }
 
     public manipulationKeyBoard(): void {
@@ -240,8 +306,9 @@ export class Game {
                 break;
             }
             case KeyDesignations.Enter: {
-                ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
                 if (this.flag) {
+                    ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
+                    Timer.flagForTimer = false;
                     this.endOfturn();
                     this.flag = false;
                 }

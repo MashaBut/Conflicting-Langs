@@ -28,6 +28,21 @@
     margin-left: 25%;
 }
 
+.divForLives {
+    position: absolute;
+    top: 29%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    /* background-image: url('../../../../assets/images/lives/life8.png'); */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 35px;
+    width: 64%;
+}
+
 @media screen and (min-width : 1224px) { /*Настольные компьютеры и ноутбуки*/
     .divForPlayerOne {
         /* ------------------Positioning--------------------- */
@@ -74,24 +89,24 @@
     }
      
     .sound button {
-            /* ------------------Block model--------------------- */
-            height: 65%;
-            /* ------------------Typography--------------------- */
-            font-size: 10px; 
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #fff;
-            /* ------------------Display--------------------- */
-            background-image: url('../../../../assets/images/volume.jpg');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            /* background-color: #0e0e0e; */
-            border : 0.5%;
-            border-color: #8b8b8b;
-            border-radius: 20px;
-            /* ------------------ Other --------------------- */
-            outline: none;
+        /* ------------------Block model--------------------- */
+        height: 65%;
+        /* ------------------Typography--------------------- */
+        font-size: 10px; 
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #fff;
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/volume.jpg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* background-color: #0e0e0e; */
+        border : 0.5%;
+        border-color: #8b8b8b;
+        border-radius: 20px;
+        /* ------------------ Other --------------------- */
+        outline: none;
     }
 
     .sound #goToStartPage {
@@ -109,13 +124,14 @@
         background-position: center;
         background-repeat: no-repeat;
     }
-
     
     .card {
         display: block;
-        padding: 1%;
-        margin-left: 10%;
-        margin-right: 8%;
+        position: absolute;
+        top: 53%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
         height: 35%;
         width: 73%;
         border-radius: 10px;
@@ -144,7 +160,7 @@
         color: white;
         font-size: large;
         font-weight: bolder;
-        margin-top: 13%;
+        margin-top: 0%;
     }
     
     .divForPlayerOne .card #nameplayer1 {
@@ -164,7 +180,7 @@
     }
 }
 
-@media screen and (min-width : 768px) and (max-width : 1224px) {  /*Смартфоны (ландшафтный)*/
+@media screen and (min-width : 768px) and (max-width : 1224px) {  /*Смартфоны (ландшафтный)*/    
     .divForPlayerOne {
         /* ------------------Positioning--------------------- */
         position: relative;
@@ -195,66 +211,108 @@
     .sound {
         /* ------------------Positioning--------------------- */
         position: absolute;
-        bottom: 0%;
-        margin-left: 62%;
+        bottom: 9%;
+        margin-left: 10%;
         height: 9%;
-        width: 32%;
+        width: 80%;
         text-align: center;
+    }
+
+    .floated {
+        width: 25%;
+        float:left;
+        margin-right:12px;
     }
      
     .sound button {
-            /* ------------------Block model--------------------- */
-            height: 65%;
-            width: 65%;
-            /* ------------------Typography--------------------- */
-            font-size: 10px; 
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #fff;
-            /* ------------------Display--------------------- */
-            background-image: url('../../../../assets/images/volume.jpg');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            /* background-color: #0e0e0e; */
-            border : 0.5%;
-            border-color: #8b8b8b;
-            border-radius: 20px;
-            /* ------------------ Other --------------------- */
-            outline: none;
+        /* ------------------Block model--------------------- */
+        height: 70%;
+        /* ------------------Typography--------------------- */
+        font-size: 10px; 
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #fff;
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/volume.jpg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* background-color: #0e0e0e; */
+        border : 0.5%;
+        border-color: #8b8b8b;
+        border-radius: 20px;
+        /* ------------------ Other --------------------- */
+        outline: none;
+    }
+
+    .sound #goToStartPage {
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/exit.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .sound #endGame {
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/stopGame1.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
     }
     
     .card {
-        /* display: block; */
-        padding: 0.5%;
-        margin-left: 10%;
-        margin-right: 8%;
-        height: 30%;
+        display: block;
+        position: absolute;
+        top: 43%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        height: 35%;
+        width: 73%;
         border-radius: 10px;
         text-align: center;
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 700;
-        background-color: #e6e6e6;
+        background-color: #010428;
+        background-image: url('../../../../assets/images/frame10.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
         color: black;
     }
     
     .card label {
         color: #ff7e00;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: bolder;
         margin-top: 3%; 
     }
-    
-    .divForPlayerOne .card p {
-        color: #ed1818;
-        font-size: 15px;
+
+    .divForPlayerOne .card .territoryplayer1 p, 
+    .divForPlayerTwo .card .territoryplayer2 p,
+    .divForPlayerOne .card .coinsplayer1 p,
+    .divForPlayerTwo .card .coinsplayer2 p {
+        color: white;
+        font-size: 12px;
         font-weight: bolder;
+        margin-top: 0%;
     }
     
-    .divForPlayerTwo .card p {
-        color: #0719e6;
-        font-size: 15px;
+    .divForPlayerOne .card #nameplayer1 {
+        color: #ed1818;
+        text-decoration: underline;
+        font-size: 12px;
         font-weight: bolder;
+        margin-top: 13%;
+    }
+    
+    .divForPlayerTwo .card #nameplayer2 {
+        color: #0719e6;
+        text-decoration: underline;
+        font-size: 12px;
+        font-weight: bolder;
+        margin-top: 13%;
     }
 }
 
@@ -290,9 +348,10 @@
         background-image: url('../../../../assets//images/icon1.jpg');
         background-size: cover;
         background-repeat: no-repeat;
-        width: 70%;
-        height: 20%;
-        margin: 3%;
+        width: 69%;
+        height: 18%;
+        margin-top: 10%;
+        margin-left: 15%;
     }
     
     .player2ForGame {
@@ -300,73 +359,116 @@
         background-image: url('../../../../assets//images/icon2.jpg');
         background-size: cover;
         background-repeat: no-repeat;
-        width: 70%;
-        height: 20%;
-        margin: 3%;
+        width: 69%;
+        height: 18%;
+        margin-top: 10%;
+        margin-left: 15%;
     }
 
     .sound {
         /* ------------------Positioning--------------------- */
         position: absolute;
-        bottom: 0%;
-        margin-left: 62%;
+        bottom: 20%;
+        margin-left: 12%;
         height: 9%;
-        width: 32%;
+        width: 80%;
         text-align: center;
+    }
+
+    .floated {
+        width: 28%;
+        float:left;
+        margin-right:5px;
     }
      
     .sound button {
-            /* ------------------Block model--------------------- */
-            height: 65%;
-            width: 65%;
-            /* ------------------Typography--------------------- */
-            font-size: 10px; 
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #fff;
-            /* ------------------Display--------------------- */
-            background-image: url('../../../../assets/images/volume.jpg');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            /* background-color: #0e0e0e; */
-            border : 0.5%;
-            border-color: #8b8b8b;
-            border-radius: 20px;
-            /* ------------------ Other --------------------- */
-            outline: none;
+        /* ------------------Block model--------------------- */
+        height: 65%;
+        /* ------------------Typography--------------------- */
+        font-size: 10px; 
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #fff;
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/volume.jpg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* background-color: #0e0e0e; */
+        border : 0.5%;
+        border-color: #8b8b8b;
+        border-radius: 20px;
+        /* ------------------ Other --------------------- */
+        outline: none;
+    }
+
+    .sound #goToStartPage {
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/exit.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .sound #endGame {
+        /* ------------------Display--------------------- */
+        background-image: url('../../../../assets/images/stopGame1.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
     }
     
     .card {
-        /* display: block; */
-        padding: 0.5%;
-        margin-left: 10%;
-        margin-right: 8%;
-        height: 30%;
+        display: block;
+        position: absolute;
+        top: 38%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        height: 35%;
+        width: 73%;
         border-radius: 10px;
         text-align: center;
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 700;
-        background-color: #e6e6e6;
+        background-color: #010428;
+        background-image: url('../../../../assets/images/frame10.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
         color: black;
     }
-    
+
     .card label {
         color: #ff7e00;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: bolder;
         margin-top: 3%; 
     }
-    
-    .divForPlayerOne .card p {
-        color: #ed1818;
-        font-size: 12px;
+
+    .divForPlayerOne .card .territoryplayer1 p, 
+    .divForPlayerTwo .card .territoryplayer2 p,
+    .divForPlayerOne .card .coinsplayer1 p,
+    .divForPlayerTwo .card .coinsplayer2 p {
+        color: white;
+        font-size: 10px;
         font-weight: bolder;
+        margin-top: 0%;
     }
     
-    .divForPlayerTwo .card p {
-        color: #0719e6;
-        font-size: 12px;
+    .divForPlayerOne .card #nameplayer1 {
+        color: #ed1818;
+        text-decoration: underline;
+        font-size: 10px;
         font-weight: bolder;
+        margin-top: 24%;
+    }
+    
+    .divForPlayerTwo .card #nameplayer2 {
+        color: #0719e6;
+        text-decoration: underline;
+        font-size: 10px;
+        font-weight: bolder;
+        margin-top: 24%;
     }
 }
