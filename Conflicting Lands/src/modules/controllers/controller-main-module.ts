@@ -118,66 +118,82 @@ export class Game {
                 this.currentPlayer.setLifes();
                 if(this.currentPlayer.getLifes() === 7) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";    
+                        Timer.flagForTimer = false;            
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";   
+                        Timer.flagForTimer = false;             
                     }
                 }
                 else if(this.currentPlayer.getLifes() === 6) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";    
+                        Timer.flagForTimer = false;            
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";   
+                        Timer.flagForTimer = false;             
                     }
                 }
                 else if (this.currentPlayer.getLifes() === 5) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");"; 
+                        Timer.flagForTimer = false;               
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");"; 
+                        Timer.flagForTimer = false;               
                     }
                 }
                 else if(this.currentPlayer.getLifes() === 4) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";     
+                        Timer.flagForTimer = false;           
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";   
+                        Timer.flagForTimer = false;             
                     }
                 }
                 else if (this.currentPlayer.getLifes() === 3) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";     
+                        Timer.flagForTimer = false;           
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");"; 
+                        Timer.flagForTimer = false;               
                     }
                 }
                 else if(this.currentPlayer.getLifes() === 2) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");"; 
+                        Timer.flagForTimer = false;               
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";   
+                        Timer.flagForTimer = false;             
                     }
                 }
                 else if(this.currentPlayer.getLifes() === 1) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";   
+                        Timer.flagForTimer = false;             
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";     
+                        Timer.flagForTimer = false;           
                     }
                 }
                 else if (this.currentPlayer.getLifes() === 0) {
                     if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";                
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";    
+                        Timer.flagForTimer = false;            
                         }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";                
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";    
+                        Timer.flagForTimer = false;            
                         }
                     alert(this.currentPlayer.getName() + " loser");
                 }
