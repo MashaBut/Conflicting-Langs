@@ -7,6 +7,7 @@
     "outDir": "./dist",                        /* Redirect output structure to the directory. */
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "sourceMap": true,
     "moduleResolution": "node"
   },
 }

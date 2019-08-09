@@ -8,6 +8,7 @@ import { diceCollection } from "./game/dice/dice";
 import { PushImage } from "./start/ux/scripts/push-image";
 import {Timer} from "./start/ux/scripts/timer";
 
+
 import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
 import "./start/ux/css/canvas.css";
