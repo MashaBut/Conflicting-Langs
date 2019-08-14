@@ -7,7 +7,7 @@ export class Player {
     private xStart: number;
     private yStart: number;
     private occupiedArea: number;
-    private lifes:number;
+    private lifes: number;
 
     public constructor(name: string, color: string, xStart: number, yStart: number) {
         this.name = name;
@@ -60,8 +60,8 @@ export class Player {
         this.coins = coins;
     }
 
-    public setLifes():void {
-        this.lifes-=1;
+    public setLifes(): void {
+        this.lifes -= 1;
     }
 
     public setOccupiedArea(occupiedArea: number): void {

@@ -1,3 +1,5 @@
+import { Block } from "./block";
+
 export class Draw {
 
 	private colorGreyRGB: string = "rgb(171, 139, 187)";
@@ -19,7 +21,7 @@ export class Draw {
 		this.saveCanvasToImage();
 	}
 
-	public drawGrid(): void {
+	private drawGrid(): void {
 		for (let i = 0; i <= this.numberOfHorizontalLines; i++) {
 			this.canvasContext.moveTo(0, this.aspectRatio * i);
 			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatio * i);
@@ -39,22 +41,22 @@ export class Draw {
 		this.image.src = this.canvasElement.toDataURL("image/png");
 	}
 
-	public unloadingImageOnCanvas(): void {
+	private unloadingImageOnCanvas(): void {
 		this.canvasContext.drawImage(this.image, 0, 0);
 	}
 
-	public clearCanvas(): void {
+	private clearCanvas(): void {
 		this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 	}
 
-	public drawBlockOnMap(xCoordinate: number, yCoordinate: number, xSize: number, ySize: number, colorBlock: string): void {
+	private drawBlockOnMap(block: Block, colorBlock:string): void {
 		this.canvasContext.fillStyle = colorBlock;
-		this.canvasContext.fillRect(xCoordinate, yCoordinate, xSize, ySize);
+		this.canvasContext.fillRect(block.x, block.y, block.width, block.height);
 	}
 
-	public redraw(element: number[], color: string): void {
+	public redraw(block: Block, color:string): void {
 		this.clearCanvas();
 		this.unloadingImageOnCanvas();
-		this.drawBlockOnMap(element[0], element[1], element[2], element[3], color);
+		this.drawBlockOnMap(block,color);
 	}
 }

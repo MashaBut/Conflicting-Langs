@@ -23,13 +23,13 @@ export class ManipulationWithDOM {
     static soundForDice = require('../../assets/sounds/rollTheDice2.wav');
     static enterSound = require('../../assets/sounds/soundForBlock6.wav');
     static movementsOfBlock = require('../../assets/sounds/moveblock3.wav');
-
+    static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
     static soundOff: HTMLElement = <HTMLElement>document.getElementById("soundOff");
 
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
     static dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
-    static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
+    
     static player1: HTMLInputElement = <HTMLInputElement>document.getElementById("player1");
     static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
     static canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
