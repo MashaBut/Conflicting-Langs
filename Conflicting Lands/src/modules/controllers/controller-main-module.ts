@@ -6,8 +6,9 @@ import { KeyDesignations } from './key-designations';
 import { Draw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/coordinate-transformation";
 import { Position } from "../game/work-with-canvas/position";
+import { Block } from "../game/work-with-canvas/block";
 import { Color } from "../game/work-with-canvas/color";
-import {Timer} from "../start/ux/scripts/timer";
+import { Timer } from "../start/ux/scripts/timer";
 
 export class Game {
 
@@ -18,15 +19,14 @@ export class Game {
     private flagGame: boolean = true;
     private flag: boolean = true;
     private timer: any;
-    //private life = document.createElement('img');
 
     private position = new Position();
     private canvasDraw: Draw;
     private size: number[];
 
-    private arrayCurrentPosition = new Array;
-    private currentPosition: any;
-    private counterElementsInArray: number = 0;
+    private arrayCurrentPosition = new Array<Block>();
+    private currentPosition: Block;
+    private counterBlocksInArray: number = 0;
 
     private x: number;
     private y: number;
@@ -50,9 +50,12 @@ export class Game {
     }
 
     private calculatePosition() {
+        this.counterBlocksInArray = 0;
+        this.arrayCurrentPosition.length = 0;
         if (this.currentPlayer.isFirstMove()) {
             let coord: number[] = this.firstStep(this.size);
-            this.currentPosition = [coord[0], coord[1], this.size[0], this.size[1]];
+            let block = new Block(coord[0], coord[1], this.size[0], this.size[1],this.currentPlayer.getColor());
+            this.currentPosition = block;
             this.draw();
         }
         else {
@@ -72,6 +75,7 @@ export class Game {
             }
         }
     }
+
     private setFirstStep(): void {
         this.currentPosition = this.arrayCurrentPosition[0];
         this.draw();
@@ -79,14 +83,12 @@ export class Game {
     }
 
     private calculateAllPosition(xSize: number, ySize: number): void {
-        this.counterElementsInArray = 0;
-        this.arrayCurrentPosition.length = 0;
-        for (let j = 1; j <= ManipulationWithDOM.canvas.height - ySize; j += this.canvasDraw.aspectRatio) {
-            for (let i = 1; i <= ManipulationWithDOM.canvas.width - xSize; i += this.canvasDraw.aspectRatio) {
-                if (i != ManipulationWithDOM.canvas.width + 1 && j != ManipulationWithDOM.canvas.height + 1) {
-                    this.currentPosition = [i, j, xSize, ySize];
-                    if (this.position.createPositionForCurrentPlayer(this.currentPosition, this.currentPlayer.getColor())) {
-                        this.arrayCurrentPosition.push(this.currentPosition);
+        for (let y = 1; y <= ManipulationWithDOM.canvas.height - ySize; y += this.canvasDraw.aspectRatio) {
+            for (let x = 1; x <= ManipulationWithDOM.canvas.width - xSize; x += this.canvasDraw.aspectRatio) {
+                if (x != ManipulationWithDOM.canvas.width + 1 && y != ManipulationWithDOM.canvas.height + 1) {
+                    let block = new Block(x, y, xSize, ySize, this.currentPlayer.getColor());
+                    if (this.position.checkPosition(block)) {
+                        this.arrayCurrentPosition.push(block);
                     }
                 }
             }
@@ -116,85 +118,85 @@ export class Game {
             else if (!this.possiblePositions) {
                 alert("Oh, no. Sorry:(");
                 this.currentPlayer.setLifes();
-                if(this.currentPlayer.getLifes() === 7) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";    
-                        Timer.flagForTimer = false;            
+                if (this.currentPlayer.getLifes() === 7) {
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";   
-                        Timer.flagForTimer = false;             
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
-                else if(this.currentPlayer.getLifes() === 6) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";    
-                        Timer.flagForTimer = false;            
+                else if (this.currentPlayer.getLifes() === 6) {
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";   
-                        Timer.flagForTimer = false;             
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
                 else if (this.currentPlayer.getLifes() === 5) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");"; 
-                        Timer.flagForTimer = false;               
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");"; 
-                        Timer.flagForTimer = false;               
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
-                else if(this.currentPlayer.getLifes() === 4) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";     
-                        Timer.flagForTimer = false;           
+                else if (this.currentPlayer.getLifes() === 4) {
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";   
-                        Timer.flagForTimer = false;             
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
                 else if (this.currentPlayer.getLifes() === 3) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";     
-                        Timer.flagForTimer = false;           
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");"; 
-                        Timer.flagForTimer = false;               
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
-                else if(this.currentPlayer.getLifes() === 2) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");"; 
-                        Timer.flagForTimer = false;               
+                else if (this.currentPlayer.getLifes() === 2) {
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";   
-                        Timer.flagForTimer = false;             
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
-                else if(this.currentPlayer.getLifes() === 1) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";   
-                        Timer.flagForTimer = false;             
+                else if (this.currentPlayer.getLifes() === 1) {
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";
+                        Timer.flagForTimer = false;
                     }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";     
-                        Timer.flagForTimer = false;           
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";
+                        Timer.flagForTimer = false;
                     }
                 }
                 else if (this.currentPlayer.getLifes() === 0) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";    
-                        Timer.flagForTimer = false;            
-                        }
+                    if (this.currentPlayer === this.player1) {
+                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";
+                        Timer.flagForTimer = false;
+                    }
                     else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";    
-                        Timer.flagForTimer = false;            
-                        }
+                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";
+                        Timer.flagForTimer = false;
+                    }
                     alert(this.currentPlayer.getName() + " loser");
                 }
             }
@@ -205,7 +207,8 @@ export class Game {
 
     private repetitionAtCompletion(): void {
         this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
-        this.position.saveBlockOnMap(this.currentPosition, this.currentPlayer.getColor());
+        this.currentPosition.color=this.currentPlayer.getColor();
+        this.position.saveBlockOnMap(this.currentPosition);
         this.canvasDraw.saveCanvasToImage();
     }
 
@@ -213,7 +216,6 @@ export class Game {
         this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-        console.log(this.currentPlayer.getLifes());
     }
 
     private changePlayer(): void {
@@ -275,8 +277,8 @@ export class Game {
                 if (this.flag) {
                     this.size = CoordinateTransformation.turnSize();
                     if (!this.currentPlayer.isFirstMove()) {
-                        this.currentPosition[2] = this.size[0];
-                        this.currentPosition[3] = this.size[1];
+                        this.currentPosition.width = this.size[0];
+                        this.currentPosition.height = this.size[1];
                     }
                     this.calculatePosition();
                     this.draw();
@@ -290,11 +292,11 @@ export class Game {
             case KeyDesignations.Right: {
                 if (this.flag) {
                     if (!this.currentPlayer.isFirstMove()) {
-                        this.counterElementsInArray++;
-                        if (this.counterElementsInArray >= this.arrayCurrentPosition.length || this.counterElementsInArray < 0) {
-                            this.counterElementsInArray = 0;
+                        this.counterBlocksInArray++;
+                        if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
+                            this.counterBlocksInArray = 0;
                         }
-                        this.currentPosition = this.arrayCurrentPosition[this.counterElementsInArray];
+                        this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
                         this.draw();
                     }
                 }
@@ -307,11 +309,11 @@ export class Game {
             case KeyDesignations.Left: {
                 if (this.flag) {
                     if (!this.currentPlayer.isFirstMove()) {
-                        this.counterElementsInArray--;
-                        if (this.counterElementsInArray >= this.arrayCurrentPosition.length || this.counterElementsInArray < 0) {
-                            this.counterElementsInArray = 0;
+                        this.counterBlocksInArray--;
+                        if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
+                            this.counterBlocksInArray = 0;
                         }
-                        this.currentPosition = this.arrayCurrentPosition[this.counterElementsInArray];
+                        this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
                         this.draw();
                     }
                 }
