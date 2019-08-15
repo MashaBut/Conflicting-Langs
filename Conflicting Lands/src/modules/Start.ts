@@ -12,9 +12,9 @@ import "./controllers/path-to-multimedia";
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
-
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
+    //    let socket = io();
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(Media.playGame);

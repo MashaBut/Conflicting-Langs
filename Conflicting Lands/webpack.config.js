@@ -3,23 +3,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: './src/modules/Start.ts',
+    entry: './src/modules/start.ts',
     devtool: 'inline-source-map',
+    target: 'node',
     mode: 'development',
     module: {
         rules: [{
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/
-        },
-        {
-            test: /\.css$/,
-            use: [{
-                    loader : MiniCssExtractPlugin.loader,
-                    options: { hmr: process.env.NODE_ENV === 'development', },
-                } ,
-                'css-loader',
-                ]},
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [{
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { hmr: process.env.NODE_ENV === 'development', },
+                    },
+                    'css-loader',
+                ]
+            },
 
         {
             
@@ -71,5 +73,3 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
 };
-
-

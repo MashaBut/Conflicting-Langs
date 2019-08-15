@@ -1,139 +1,76 @@
+import { Block } from "./block";
 export class Position {
-    private blocksSetOnMap = new Array<any>();
+    private blocks = new Array<Block>();
     private asperio: number = 20;
     private coefArea: number = 5000;
-    private sum: number;
-    private xSavedElement: number;
-    private ySavedElement: number;
-    private xSizeSavedElement: number;
-    private ySizeSavedElement: number;
-    private xCurrentElement: number;
-    private yCurrentElement: number;
-    private xSizeCurrentElement: number;
-    private ySizeCurrentElement: number;
 
-    private horizontalShiftCounter: number;
-    private verticalShiftCounter: number;
-
-    public saveBlockOnMap(element: number[], colorBlock: string): void {
-        let blockObj: object = { element, colorBlock };
-        this.blocksSetOnMap.push(blockObj);
+    public saveBlockOnMap(block: Block): void {
+        this.blocks.push(block);
     }
 
     public countingTheAreaOfTheCurrentPlayer(currentColor: string): number {
-        this.sum = 0;
-        for (let i = 0; i < this.blocksSetOnMap.length; i++) {
-            if (this.blocksSetOnMap[i].colorBlock === currentColor) {
-                this.sum += (this.blocksSetOnMap[i].element[2] * this.blocksSetOnMap[i].element[3]) / this.coefArea;
+        let sum: number = 0;
+        this.blocks.forEach(block => {
+            if (block.color === currentColor) {
+                sum += (block.width * block.height) / this.coefArea;
             }
-        }
-        this.sum = parseFloat((this.sum).toPrecision(3));
-        return this.sum;
+        })
+        return parseFloat((sum).toPrecision(3));
     }
 
-    public createPositionForCurrentPlayer(elem: number[], colorBlock: string): boolean {
-        this.xCurrentElement = elem[0];
-        this.yCurrentElement = elem[1];
-        this.xSizeCurrentElement = elem[0] + elem[2];
-        this.ySizeCurrentElement = elem[1] + elem[3];
-        for (let i = 0; i < this.blocksSetOnMap.length; i++) {
-            this.xSavedElement = this.blocksSetOnMap[i].element[0];
-            this.ySavedElement = this.blocksSetOnMap[i].element[1];
-            this.xSizeSavedElement = this.blocksSetOnMap[i].element[0] + this.blocksSetOnMap[i].element[2];
-            this.ySizeSavedElement = this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3];
-
-            for (let j = this.xSavedElement; j <= this.xSizeSavedElement; j += this.asperio) {
-                for (let n = this.ySavedElement; n <= this.ySizeSavedElement; n += this.asperio) {
-                    for (let m = this.yCurrentElement; m <= this.ySizeCurrentElement; m++) {
-                        if (n === m) {
-                            let t = j;
-                            for (let k = this.xCurrentElement; k <= this.xSizeCurrentElement; k++) {
-                                if (k === t++) {
+    private isBlockInOtherBlock(newBlock: Block): boolean {
+        let right = newBlock.x + newBlock.width;
+        let bottom = newBlock.y + newBlock.height;
+        let oldX: number;
+        for (let block of this.blocks) {
+            for (let x = block.x; x <= block.x + block.width; x += this.asperio) {
+                for (let y = block.y; y <= block.y + block.height; y += this.asperio) {
+                    for (let newY = newBlock.y; newY <= bottom; newY++) {
+                        if (y === newY) {
+                            oldX = x;
+                            for (let newX = newBlock.x; newX <= right; newX++) {
+                                if (newX === oldX++) {
                                     return false;
                                 }
+                                if (newX === block.x || newX === block.x + block.width)
+                                    return false;
                             }
-                        }
-                    }
-                }
-            }
-            for (let j = this.ySavedElement; j <= this.ySizeSavedElement; j += this.asperio) {
-                for (let n = this.yCurrentElement; n <= this.ySizeCurrentElement; n += this.asperio) {
-                    for (let m = this.xCurrentElement; m <= this.xSizeCurrentElement; m += this.asperio) {
-                        if (j === n) {
-                            if (m === this.xSavedElement || m === this.xSizeSavedElement)
-                                return false;
                         }
                     }
                 }
             }
         }
-        for (let i = 0; i < this.blocksSetOnMap.length; i++) {
-            if (this.blocksSetOnMap[i].colorBlock === colorBlock) {
-                this.horizontalShiftCounter = 0;
-                this.verticalShiftCounter = 0;
+        return true;
+    }
 
-                this.xSavedElement = this.blocksSetOnMap[i].element[0];
-                this.ySavedElement = this.blocksSetOnMap[i].element[1];
-                this.xSizeSavedElement = this.blocksSetOnMap[i].element[0] + this.blocksSetOnMap[i].element[2];
-                this.ySizeSavedElement = this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3];
-                for (let j = this.xSavedElement; j <= this.xSizeSavedElement; j++) {
-                    this.horizontalShiftCounter++;
-                    if (j === elem[0]) {
-                        if (this.blocksSetOnMap[i].element[2] - this.horizontalShiftCounter + 1 >= elem[2]) {
-                            if (this.ySizeSavedElement + 2 === elem[1]) {
+    private isTouchTheRightBlockForX(newBlock: Block): boolean {
+        let xOfSet: number;
+        for (let block of this.blocks) {
+            if (block.color === newBlock.color) {
+                xOfSet = 0;
+                for (let x = block.x; x <= block.x + block.width; x++) {
+                    xOfSet++;
+                    if (x === newBlock.x) {
+                        if (block.width - xOfSet + 1 >= newBlock.width) {
+                            if (block.y + block.height + 2 === newBlock.y) {
                                 return true;
                             }
-                            else if (this.ySavedElement - elem[1] === elem[3] + 2) {
+                            else if (block.y - newBlock.y === newBlock.height + 2) {
                                 return true;
                             }
                         }
-                        else if (this.blocksSetOnMap[i].element[2] - this.horizontalShiftCounter + 1 < elem[2]) {
-                            for (let key = 0; key < this.blocksSetOnMap.length; key++) {
-                                if (this.blocksSetOnMap[key].colorBlock === colorBlock) {
-                                    if (this.blocksSetOnMap[i].element[2] - this.horizontalShiftCounter + this.blocksSetOnMap[key].element[2] + 10 >= elem[2]) {
-
-                                        if (this.xSizeSavedElement + 2 === this.blocksSetOnMap[key].element[0]) {
-                                            if (this.ySavedElement - elem[1] === elem[3] + 2) {
-                                                if (this.blocksSetOnMap[i].element[1] === this.blocksSetOnMap[key].element[1]) {
+                        else if (block.width - xOfSet + 1 < newBlock.width) {
+                            for (let otherBlock of this.blocks) {
+                                if (otherBlock.color === newBlock.color) {
+                                    if (block.width - xOfSet + otherBlock.width + 10 >= newBlock.width) {
+                                        if (block.x + block.width + 2 === otherBlock.x) {
+                                            if (block.y - newBlock.y === newBlock.height + 2) {
+                                                if (block.y === otherBlock.y) {
                                                     return true;
                                                 }
                                             }
-                                            else if (this.ySizeSavedElement + 2 === elem[1]) {
-                                                if (this.blocksSetOnMap[i].element[1] + this.blocksSetOnMap[i].element[3] === this.blocksSetOnMap[key].element[1] + this.blocksSetOnMap[key].element[3]) {
-                                                    return true;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                for (let j = this.ySavedElement; j <= this.ySizeSavedElement; j++) {
-                    this.verticalShiftCounter++;
-                    if (j === elem[1]) {
-                        if (this.blocksSetOnMap[i].element[3] - this.verticalShiftCounter + 1 >= elem[3]) {
-                            if (this.xSizeSavedElement + 2 === elem[0]) {
-                                return true;
-                            }
-                            else if (this.xSavedElement - elem[0] === elem[2] + 2) {
-                                return true;
-                            }
-                        }
-                        else if (this.blocksSetOnMap[i].element[3] - this.verticalShiftCounter + 1 < elem[3]) {
-                            for (let key = 0; key < this.blocksSetOnMap.length; key++) {
-                                if (this.blocksSetOnMap[key].colorBlock === colorBlock) {
-                                    if (this.blocksSetOnMap[i].element[3] - this.verticalShiftCounter + this.blocksSetOnMap[key].element[3] + 10 >= elem[3]) {
-                                        if (this.ySizeSavedElement + 2 === this.blocksSetOnMap[key].element[1]) {
-
-                                            if (this.xSavedElement - elem[0] === elem[2] + 2) {
-                                                if (this.blocksSetOnMap[i].element[0] === this.blocksSetOnMap[key].element[0]) {
-                                                    return true;
-                                                }
-                                            }
-                                            else if (this.xSizeSavedElement + 2 === elem[0]) {
-                                                if (this.blocksSetOnMap[i].element[0]+this.blocksSetOnMap[i].element[2] === this.blocksSetOnMap[key].element[0]+this.blocksSetOnMap[key].element[2]) {
+                                            else if (block.y + block.height + 2 === newBlock.y) {
+                                                if (block.y + block.height === otherBlock.y + otherBlock.height) {
                                                     return true;
                                                 }
                                             }
@@ -147,5 +84,57 @@ export class Position {
             }
         }
         return false;
+    }
+
+    private isTouchTheRightBlockForY(newBlock: Block): boolean {
+        let yOfSet: number;
+        for (let block of this.blocks) {
+            if (block.color === newBlock.color) {
+                yOfSet = 0;
+                for (let y = block.y; y <= block.y + block.height; y++) {
+                    yOfSet++;
+                    if (y === newBlock.y) {
+                        if (block.height - yOfSet + 1 >= newBlock.height) {
+                            if (block.x + block.width + 2 === newBlock.x) {
+                                return true;
+
+                            }
+                            else if (block.x - newBlock.x === newBlock.width + 2) {
+                                return true;
+                            }
+                        }
+                        else if (block.height - yOfSet + 1 < newBlock.height) {
+                            for (let otherBlock of this.blocks) {
+                                if (otherBlock.color === newBlock.color) {
+                                    if (block.height - yOfSet + otherBlock.height + 10 >= newBlock.height) {
+                                        if (block.y + block.height + 2 === otherBlock.y) {
+                                            if (block.x - newBlock.x === newBlock.width + 2) {
+                                                if (block.x === otherBlock.x) {
+                                                    return true;
+                                                }
+                                            }
+                                            else if (block.x + block.width + 2 === newBlock.x) {
+                                                if (block.x + block.width === otherBlock.x + otherBlock.width) {
+                                                    return true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    public checkPosition(newBlock: Block): boolean {
+        if (this.isBlockInOtherBlock(newBlock) && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))) {
+            return true;
+        }
+        else
+            return false;
     }
 }
