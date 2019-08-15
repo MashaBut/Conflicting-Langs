@@ -1,20 +1,49 @@
-var express = require('express');
-var app = express();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
-var clients = new Array();
-var host = '127.0.0.1';
-var port = 7000;
-app.use('/', express.static('dist'));
-app.use(function (req:any, res:any, next:any) {
-    res.status(404).type('text/plain');
-    res.send('Not found');
+const express = require('express');
+const path = require('path');
+const { createServer } = require('http');
+const webSocket = require('ws');
+const app = express();
+
+app.use(express.static('dist'));
+const server = createServer(app);
+const wss = new webSocket.Server({ server });
+
+let clients = new Array<Client>();
+
+wss.on('connection', function (ws: any) {
+    let client = new Client(DataGenerator.idClient());
+    console.log(client.id);
+    clients.push(client);
+    ws.on('message', (message:any) => console.log('Message: ', message))
+    ws.on('close', function () {
+        clients.splice(clients.indexOf(client), 1);
+        console.log('stopping client interval');
+    });
+
 });
-app.get('/any', function (req:any, res:any) {
-    res.status(200).type('text/plain');
-    res.send('all page');
+app.get('/home', (req: any, res: any) => res.render('index.html'));
+
+
+server.listen(8080, function () {
+    console.log('Listening on http://localhost:8080');
 });
-/*app.listen(3000, () => {
-  console.log(`Server listens`)
-})*/
-http.listen(port, host, function () { return console.log("Server listens http://" + host + ":" + port); });
+
+class Client {
+    public id: number;
+    public name: string;
+
+    constructor(id: number) {
+        this.id = id;
+    }
+
+    public setName(name: string): void {
+        this.name = name;
+    }
+}
+
+class DataGenerator {
+    public static idClient(): number {
+        let id: number = (Math.random()*(999999 - 100000 + 1) + 100000);
+        return Number(id.toPrecision(6));
+    }
+}

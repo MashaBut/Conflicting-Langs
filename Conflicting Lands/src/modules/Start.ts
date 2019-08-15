@@ -6,14 +6,22 @@ import { ConcealCanvas } from "./start/ux/scripts/hide-function";
 import { DiceRoller } from "./game/dice/dice-roller";
 import { diceCollection } from "./game/dice/dice";
 import { PushImage } from "./start/ux/scripts/push-image";
-import {Timer} from "./start/ux/scripts/timer";
-//let io = require('socket.io/lib/client');
+import { Timer } from "./start/ux/scripts/timer";
+
+const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:')
+const echoSocketUrl = socketProtocol + '//' + location.host;
+const socket = new WebSocket(echoSocketUrl);
+
+console.log(echoSocketUrl);
+socket.readyState
+socket.addEventListener('open', function (event) {
+    socket.send('Hello Server!');
+});
 
 import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
 import "./start/ux/css/canvas.css";
 import "./start/ux/css/blocks-for-players.css";
-
 //#region "dices"
 import "../assets/images/dices/1_1.png";
 import "../assets/images/dices/1_2.png";
@@ -53,18 +61,29 @@ import "../assets/images/dices/6_5.png";
 import "../assets/images/dices/6_6.png";
 //#endregion "dices"
 ConcealCanvas.hideGamePage();
-let game: Game = new Game();
-let timerForPlayer: Timer = new Timer();
+
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .pipe(take(1))
     .subscribe(() => {
-    //    let socket = io();
+        game.setPlayerNames();
+        socket.send("Look am me");
+        ConcealCanvas.hideStartPage();
+      //  ManipulationWithDOM.playSound(ManipulationWithDOM.playGame);
+      //  PushImage.createImage();
+       // ManipulationWithDOM.initSounds();
+    })
+
+let game: Game = new Game();
+let timerForPlayer: Timer = new Timer();
+/*fromEvent(ManipulationWithDOM.writeNames, 'click')
+    .pipe(take(1))
+    .subscribe(() => {  
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(ManipulationWithDOM.playGame);
         PushImage.createImage();
         ManipulationWithDOM.initSounds();
-    })
+    })*/
 
 fromEvent(ManipulationWithDOM.tossDice, 'click')
     .subscribe(() => {
@@ -73,17 +92,17 @@ fromEvent(ManipulationWithDOM.tossDice, 'click')
         ManipulationWithDOM.disabledButtonDice();
         DiceRoller.roll(diceCollection);
         DiceRoller.getPathOfImage();
-        setTimeout(timer,1790);
+        setTimeout(timer, 1790);
     })
 
 fromEvent(ManipulationWithDOM.soundOff, 'click')
     .subscribe(() => {
         ManipulationWithDOM.soundsOff();
     })
-    
+
 function timer() {
     PushImage.returnImage();
     timerForPlayer.Timer();
     game.turnTime();
-    game.createPositionsBlockForMap(DiceRoller.numberOfDices());  
+    game.createPositionsBlockForMap(DiceRoller.numberOfDices());
 }
