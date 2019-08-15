@@ -9,6 +9,20 @@ import { Timer } from "./game/ux/scripts/timer";
 import { Media } from "./controllers/path-to-multimedia";
 import "./controllers/path-to-multimedia";
 
+const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:')
+const echoSocketUrl = socketProtocol + '//' + location.host;
+const socket = new WebSocket(echoSocketUrl);
+
+console.log(echoSocketUrl);
+socket.readyState
+socket.addEventListener('open', function (event) {
+    socket.send('Hello Server!');
+});
+
+import "./start/ux/css/main.css";
+import "./start/ux/css/players.css";
+import "./start/ux/css/canvas.css";
+import "./start/ux/css/blocks-for-players.css";
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
