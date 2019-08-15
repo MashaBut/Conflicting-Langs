@@ -1,0 +1,23 @@
+.gamepage {
+    /* ------------------Positioning--------------------- */
+    position: relative;
+    /* ------------------Block model--------------------- */
+    width:100%;
+    height:100%;
+    margin: 0 auto;
+    /* ------------------Display--------------------- */
+    background-color: #010428; 
+ }
+
+ .timer {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    color: white;
+    font-size: 28px;
+}
+
+/* При разделение html страниц не забыть потом сюда добавить медиазапросы для кнопки */

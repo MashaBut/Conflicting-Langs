@@ -2,7 +2,7 @@
     display: block;
     border-radius: 50%;
     background-color: ghostwhite;
-    background-image: url('../../../../assets//images/icon1.jpg');
+    background-image: url('../../../../assets/images/icon1.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -17,7 +17,7 @@
     display: block;
     border-radius: 50%;
     background-color: ghostwhite;
-    background-image: url('../../../../assets//images/icon2.jpg');
+    background-image: url('../../../../assets/images/icon2.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -35,7 +35,6 @@
     margin-right: -50%;
     transform: translate(-50%, -50%);
     background-color: transparent;
-    /* background-image: url('../../../../assets/images/lives/life8.png'); */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -119,7 +118,7 @@
 
     .sound #endGame {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/stopGame1.png');
+        background-image: url('../../../../assets/images/stopGame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -139,7 +138,7 @@
         font-size: 18px;
         font-weight: 700;
         background-color: #010428;
-        background-image: url('../../../../assets/images/frame10.png');
+        background-image: url('../../../../assets/images/frame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -186,7 +185,7 @@
         position: relative;
         /* ------------------Block model--------------------- */
         float: left;
-        width: 17%;
+        width: 15%;
         height: 100%;
         /* ------------------Typography--------------------- */
         text-align: center;
@@ -200,7 +199,7 @@
         position: relative;
         /* ------------------Block model--------------------- */
         float: right;
-        width: 17%;
+        width: 15%;
         height: 100%;
         /* ------------------Typography--------------------- */
         text-align: center;
@@ -255,7 +254,7 @@
 
     .sound #endGame {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/stopGame1.png');
+        background-image: url('../../../../assets/images/stopGame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -275,7 +274,7 @@
         font-size: 18px;
         font-weight: 700;
         background-color: #010428;
-        background-image: url('../../../../assets/images/frame10.png');
+        background-image: url('../../../../assets/images/frame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -412,7 +411,7 @@
 
     .sound #endGame {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/stopGame1.png');
+        background-image: url('../../../../assets/images/stopGame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -432,7 +431,7 @@
         font-size: 18px;
         font-weight: 700;
         background-color: #010428;
-        background-image: url('../../../../assets/images/frame10.png');
+        background-image: url('../../../../assets/images/frame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;

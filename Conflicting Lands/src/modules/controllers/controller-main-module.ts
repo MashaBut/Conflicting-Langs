@@ -7,7 +7,9 @@ import { Draw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/coordinate-transformation";
 import { Position } from "../game/work-with-canvas/position";
 import { Color } from "../game/work-with-canvas/color";
-import {Timer} from "../start/ux/scripts/timer";
+import { Timer } from "../game/ux/scripts/timer";
+import { PlayersLives } from "../game/ux/scripts/calculate-lives";
+import { Media } from "./path-to-multimedia";
 
 export class Game {
 
@@ -18,7 +20,6 @@ export class Game {
     private flagGame: boolean = true;
     private flag: boolean = true;
     private timer: any;
-    //private life = document.createElement('img');
 
     private position = new Position();
     private canvasDraw: Draw;
@@ -36,8 +37,6 @@ export class Game {
     constructor() {
         this.initCanvas();
         this.manipulationKeyBoard();
-        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life8 + ");";
-        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life8 + ");";
     }
 
     private initCanvas(): void {
@@ -115,86 +114,17 @@ export class Game {
             }
             else if (!this.possiblePositions) {
                 alert("Oh, no. Sorry:(");
-                this.currentPlayer.setLifes();
-                if(this.currentPlayer.getLifes() === 7) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";    
-                        Timer.flagForTimer = false;            
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life7 + ");";   
-                        Timer.flagForTimer = false;             
-                    }
+                this.currentPlayer.setLives();
+                ManipulationWithDOM.playSound(Media.lostLife);
+                if(this.currentPlayer === this.player1) {
+                    PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
+                    Timer.flagForTimer = false;            
                 }
-                else if(this.currentPlayer.getLifes() === 6) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";    
-                        Timer.flagForTimer = false;            
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life6 + ");";   
-                        Timer.flagForTimer = false;             
-                    }
+                else if(this.currentPlayer === this.player2) {
+                    PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
+                    Timer.flagForTimer = false;             
                 }
-                else if (this.currentPlayer.getLifes() === 5) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");"; 
-                        Timer.flagForTimer = false;               
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life5 + ");"; 
-                        Timer.flagForTimer = false;               
-                    }
-                }
-                else if(this.currentPlayer.getLifes() === 4) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";     
-                        Timer.flagForTimer = false;           
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life4 + ");";   
-                        Timer.flagForTimer = false;             
-                    }
-                }
-                else if (this.currentPlayer.getLifes() === 3) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");";     
-                        Timer.flagForTimer = false;           
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life3 + ");"; 
-                        Timer.flagForTimer = false;               
-                    }
-                }
-                else if(this.currentPlayer.getLifes() === 2) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");"; 
-                        Timer.flagForTimer = false;               
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life2 + ");";   
-                        Timer.flagForTimer = false;             
-                    }
-                }
-                else if(this.currentPlayer.getLifes() === 1) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";   
-                        Timer.flagForTimer = false;             
-                    }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life1 + ");";     
-                        Timer.flagForTimer = false;           
-                    }
-                }
-                else if (this.currentPlayer.getLifes() === 0) {
-                    if(this.currentPlayer === this.player1) {
-                        ManipulationWithDOM.livesForPlayerOne.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";    
-                        Timer.flagForTimer = false;            
-                        }
-                    else {
-                        ManipulationWithDOM.livesForPlayerTwo.style.cssText = "background-image: url(" + ManipulationWithDOM.life0 + ");";    
-                        Timer.flagForTimer = false;            
-                        }
+                if (this.currentPlayer.getLives() === 0) {
                     alert(this.currentPlayer.getName() + " loser");
                 }
             }
@@ -213,7 +143,7 @@ export class Game {
         this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-        console.log(this.currentPlayer.getLifes());
+        console.log(this.currentPlayer.getLives());
     }
 
     private changePlayer(): void {
@@ -247,6 +177,9 @@ export class Game {
 
         ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
         ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
+
+        PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
+        PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
     }
 
     public setPlayerNames(): void {
@@ -284,7 +217,7 @@ export class Game {
                 else if (!this.flag) {
                     return;
                 }
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                ManipulationWithDOM.playSound(Media.movementsOfBlock);
                 break;
             }
             case KeyDesignations.Right: {
@@ -301,7 +234,7 @@ export class Game {
                 else if (!this.flag) {
                     return;
                 }
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                ManipulationWithDOM.playSound(Media.movementsOfBlock);
                 break;
             }
             case KeyDesignations.Left: {
@@ -318,12 +251,12 @@ export class Game {
                 else if (!this.flag) {
                     return;
                 }
-                ManipulationWithDOM.playSound(ManipulationWithDOM.movementsOfBlock);
+                ManipulationWithDOM.playSound(Media.movementsOfBlock);
                 break;
             }
             case KeyDesignations.Enter: {
                 if (this.flag) {
-                    ManipulationWithDOM.playSound(ManipulationWithDOM.enterSound);
+                    ManipulationWithDOM.playSound(Media.enterSound);
                     Timer.flagForTimer = false;
                     this.endOfturn();
                     this.flag = false;

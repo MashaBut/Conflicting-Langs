@@ -48,7 +48,7 @@ export class Player {
     public getYCoordinate(): number {
         return this.yStart;
     }
-    public getLifes(): number {
+    public getLives(): number {
         return this.lifes;
     }
 
@@ -60,7 +60,7 @@ export class Player {
         this.coins = coins;
     }
 
-    public setLifes():void {
+    public setLives():void {
         this.lifes-=1;
     }
 

@@ -21,55 +21,6 @@ html {
     color: #000;
 }
 
-.startpage {
-    /* ------------------Positioning--------------------- */
-    position: relative;
-    /* ------------------Block model--------------------- */
-    width:100%;
-    height:100%;
-    margin: 0 auto;
-    /* ------------------Display--------------------- */
-    background-image: url('../../../../assets/images/VS.jpg'); 
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.gamepage {
-   /* ------------------Positioning--------------------- */
-   position: relative;
-   /* ------------------Block model--------------------- */
-   width:100%;
-   height:100%;
-   margin: 0 auto;
-   /* ------------------Display--------------------- */
-   background-color: #010428; 
-}
-
-.player1 {
-    /* ------------------Block model--------------------- */
-    float: left;
-    width: 50%;
-    height: 100%;
-}
-
-.player2 {
-    /* ------------------Block model--------------------- */
-    float: right;
-    width: 50%;
-    height: 100%;
-}
-
-.timer {
-    position: absolute;
-    top: 4%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    text-transform: uppercase;
-    color: white;
-    font-size: 28px;
-}
-
 @font-face {
     font-family: "Roboto"; 
     src: url("../../../../assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype"); 
@@ -82,47 +33,5 @@ html {
     src: url("../../../../assets/fonts/Roboto/Roboto-Light.ttf") format("truetype"); 
     font-style: normal; 
     font-weight: normal; 
-} 
-
-@media screen and (min-width : 1224px) { /*Настольные компьютеры и ноутбуки*/
-    .click {
-        /* ------------------Positioning--------------------- */
-        position: absolute;
-        left: 50%;
-        bottom: -7%;
-        transform: translate(-50%, -50%);
-        /* ------------------Block model--------------------- */    
-        width: 65%;
-        height: 15%;
-        /* ------------------Typography--------------------- */
-        text-align: center;
-    }
 }
-
-@media screen and (min-width : 768px) and (max-width : 1224px) {  /*Смартфоны (ландшафтный)*/
-    .click {
-        /* ------------------Positioning--------------------- */
-        position: absolute;
-        left: 0;
-        bottom: 5%;
-        /* ------------------Block model--------------------- */    
-        width: 100%;
-        height: 15%;
-        /* ------------------Typography--------------------- */
-        text-align: center;
-    }
-}
-
-@media screen and (min-width : 480px) and (max-width : 768px) {  /*Смартфоны (ландшафтный)*/
-    .click {
-        /* ------------------Positioning--------------------- */
-        position: absolute;
-        left: 0;
-        bottom: 20%;
-        /* ------------------Block model--------------------- */    
-        width: 100%;
-        height: 15%;
-        /* ------------------Typography--------------------- */
-        text-align: center;
-    }
-}
+ 

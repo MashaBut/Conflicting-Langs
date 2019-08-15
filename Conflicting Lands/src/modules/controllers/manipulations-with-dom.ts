@@ -1,55 +1,39 @@
 import { KeyDesignations } from './key-designations';
+import { Media } from "./path-to-multimedia";
 
 export class ManipulationWithDOM {
-
     static imageFlag: boolean = false;
     private static arrayOfAudios = new Array();
-
-    static pathToAnimate = require ('../../assets/images/dicesAnimation.gif');
-    static volumeImage = require ('../../assets/images/volume.jpg');
-    static noVolumeImage = require ('../../assets/images/no_volume.jpg');
-    static life8 = require ('../../assets/images/lives/life8.png');
-    static life7 = require ('../../assets/images/lives/life7.png');
-    static life6 = require ('../../assets/images/lives/life6.png');
-    static life5 = require ('../../assets/images/lives/life5.png');
-    static life4 = require ('../../assets/images/lives/life4.png');
-    static life3 = require ('../../assets/images/lives/life3.png');
-    static life2 = require ('../../assets/images/lives/life2.png');
-    static life1 = require ('../../assets/images/lives/life1.png');
-    static life0 = require ('../../assets/images/lives/life0.png');
-
-
-    static playGame = require('../../assets/sounds/playGame.wav');
-    static soundForDice = require('../../assets/sounds/rollTheDice2.wav');
-    static enterSound = require('../../assets/sounds/soundForBlock6.wav');
-    static movementsOfBlock = require('../../assets/sounds/moveblock3.wav');
-
+//buttons
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
     static soundOff: HTMLElement = <HTMLElement>document.getElementById("soundOff");
+    static endGame: HTMLElement = <HTMLElement>document.getElementById("endGame");
+    static goToStartPage: HTMLElement = <HTMLElement>document.getElementById("goToStartPage");
 
+//dices
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
     static dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
+    static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
+
+//players
     static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static player1: HTMLInputElement = <HTMLInputElement>document.getElementById("player1");
     static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
-    static canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
-
-    static currentPlayer: HTMLElement = <HTMLElement>document.getElementById('currentPlayer');
-
-    static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
-
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
 
+//canvas element
+    static canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
+
+//resources of players
     static livesForPlayerOne: HTMLElement = <HTMLElement>document.getElementById("divForLives1");
     static livesForPlayerTwo: HTMLElement = <HTMLElement>document.getElementById("divForLives2");
-
     static territoryplayer1: HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
     static territoryplayer2: HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
-
     static coinsplayer1: HTMLElement = <HTMLElement>document.getElementById("coinsplayer1");
     static coinsplayer2: HTMLElement = <HTMLElement>document.getElementById("coinsplayer2");
 
+//timer
     static timer:HTMLElement = <HTMLElement>document.getElementById("timer");
 
     public static disabledButtonDice(): void {
@@ -69,15 +53,17 @@ export class ManipulationWithDOM {
     }
 
     public static initSounds(): void {
-        let sound1 = new Audio(this.playGame);
-        let sound2 = new Audio(this.soundForDice);
-        let sound3 = new Audio(this.enterSound);
-        let sound4 = new Audio(this.movementsOfBlock);
+        let sound1 = new Audio(Media.playGame);
+        let sound2 = new Audio(Media.soundForDice);
+        let sound3 = new Audio(Media.enterSound);
+        let sound4 = new Audio(Media.movementsOfBlock);
+        let sound5 = new Audio(Media.endOfTheGame);
 
         this.arrayOfAudios.push(sound1);
         this.arrayOfAudios.push(sound2);
         this.arrayOfAudios.push(sound3);
         this.arrayOfAudios.push(sound4);
+        this.arrayOfAudios.push(sound5);
     }
 
     public static playSound(path: string): void {
@@ -92,11 +78,11 @@ export class ManipulationWithDOM {
 
     public static soundsOff(): void {
         if(this.imageFlag === true) {
-            this.soundOff.style.cssText = "background-image: url('volume.jpg');";
+            this.soundOff.style.cssText = "background-image: url('./images/jpg/volume.jpg');";
             this.imageFlag = false;
         }
         else if(this.imageFlag === false) {
-            this.soundOff.style.cssText = "background-image: url('no_volume.jpg');";
+            this.soundOff.style.cssText = "background-image: url('./images/jpg/no_volume.jpg');";
             this.arrayOfAudios.forEach((item) => {
                 item.volume = 0;
             });

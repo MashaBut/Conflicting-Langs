@@ -22,44 +22,45 @@ module.exports = {
                 ]},
 
         {
-        test: /\.(jpe?g|gif)$/,
-        use: [{
-            loader: 'file-loader',
-            options: { name: '[name].[ext]',},
-        }],
+            
+        test: /\.jpe?g$/,
+        use:[{loader: 'file-loader?name=./images/jpg/[name].[ext]'}]
         },
+
+        {
+        test: /\.gif$/,
+        use:[{loader: 'file-loader?name=./images/gif/[name].[ext]'}]
+        },
+
 
         {
         test:/\.png$/,
-        use:[{
-           // options: { name: '[name].[ext]',},
-            loader: 'file-loader?name=./dices/[name].[ext]'}]
+        use:[{loader: 'file-loader?name=./images/png/[name].[ext]'}]
         },
 
-        {
-            test: /\.(eot|svg|ttf|woff|woff2)$/,
-            use: [{ loader: 'file-loader?name=./fonts/[name].[ext]'}]
-        },
 
         {
-            test:/\.wav$/,
-            use: [{
-                loader: 'file-loader',
-                options: { name: '[name].[ext]',
-              },
-            }],
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [{ loader: 'file-loader?name=./fonts/[name].[ext]'}]
         },
+
+
+        {
+        test:/\.wav$/,
+        use: [{ loader: 'file-loader?name=./sounds/[name].[ext]'}]
+        },
+
     ]},
 
     plugins: [
         new MiniCssExtractPlugin({ filename: 'main.css' }),
-        new HtmlWebpackPlugin({ 
-          title: 'Conflicting Lands',
-          hash: false,
-          template: './src/modules/start/ux/html/start.html',
-          filename: 'index.html',
-       }),
-      ],
+         new HtmlWebpackPlugin({ 
+           title: 'Conflicting Lands',
+           hash: false,
+           template: './src/modules/start/ux/html/start.html',
+           filename: 'index.html',
+        }),
+       ],
 
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
