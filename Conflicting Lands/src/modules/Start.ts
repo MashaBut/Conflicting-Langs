@@ -19,10 +19,10 @@ socket.addEventListener('open', function (event) {
     socket.send('Hello Server!');
 });
 
-import "./start/ux/css/main.css";
+/*import "./start/ux/css/main.css";
 import "./start/ux/css/players.css";
 import "./start/ux/css/canvas.css";
-import "./start/ux/css/blocks-for-players.css";
+import "./start/ux/css/blocks-for-players.css";*/
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
