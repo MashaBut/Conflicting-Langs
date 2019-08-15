@@ -28,7 +28,7 @@ let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
-    //    let socket = io();
+        socket.send("Look am me");
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(Media.playGame);
@@ -43,7 +43,7 @@ fromEvent(ManipulationWithDOM.tossDice, 'click')
         ManipulationWithDOM.disabledButtonDice();
         DiceRoller.roll(diceCollection);
         DiceRoller.getPathOfImage();
-        setTimeout(timer,1790);
+        setTimeout(timer, 1790);
     })
 
 fromEvent(ManipulationWithDOM.soundOff, 'click')
@@ -51,15 +51,15 @@ fromEvent(ManipulationWithDOM.soundOff, 'click')
         ManipulationWithDOM.soundsOff();
     })
 
-    fromEvent(ManipulationWithDOM.endGame, 'click')
+fromEvent(ManipulationWithDOM.endGame, 'click')
     .subscribe(() => {
         ConcealCanvas.hideGamePage();
         ManipulationWithDOM.playSound(Media.endOfTheGame);
     })
-    
+
 function timer() {
     PushImage.returnImage();
     timerForPlayer.Timer();
     game.turnTime();
-    game.createPositionsBlockForMap(DiceRoller.numberOfDices());  
+    game.createPositionsBlockForMap(DiceRoller.numberOfDices());
 }
