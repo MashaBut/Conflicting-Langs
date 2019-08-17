@@ -1,6 +1,6 @@
 export enum MessageType {
     SetName,
-    SetMap,
+    SetNameRoom,
     StartGame,
     PressedButton,
     EndGame

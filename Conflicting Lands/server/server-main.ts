@@ -1,4 +1,5 @@
-import { send } from "q";
+import { MessageSetName } from "../src/modules/message-modules/message-set-name";
+import { MessageSetNameRoom } from "../src/modules/message-modules/message-set-name-room";
 
 const express = require('express');
 const path = require('path');
@@ -11,22 +12,29 @@ const server = createServer(app);
 const wss = new webSocket.Server({ server });
 
 let clients = new Array<Client>();
-
+let rooms = new Array<Room>();
 wss.on('connection', function (ws: any) {
     let client = new Client(DataGenerator.idClient());
-    console.log(client.id);
     clients.push(client);
     ws.on('message', (message: any) => {
-        switch (message.type) {
-            case 'writename':
-                console.log('Name: ', message);
+        console.log(JSON.parse(message));
+        switch (JSON.parse(message).Type) {
+            case 0:
+                let name: MessageSetName = JSON.parse(message);
+                client.setName(name.Name);
+                //  ws.send("I am here");
+                break;
+            case 1:
+                let nameRoom: MessageSetNameRoom = JSON.parse(message);
+                client.setNameRoom(nameRoom.nameRoom);
+                let room;
                 break;
         }
     })
-   /* ws.on('close', function () {
-        clients.splice(clients.indexOf(client), 1);
-        console.log('stopping client interval');
-    });*/
+    /* ws.on('close', function () {
+         clients.splice(clients.indexOf(client), 1);
+         console.log('stopping client interval');
+     });*/
 });
 
 server.listen(8080, function () {
@@ -36,6 +44,7 @@ server.listen(8080, function () {
 class Client {
     public id: number;
     public name: string;
+    public nameRoom: string;
 
     constructor(id: number) {
         this.id = id;
@@ -43,6 +52,10 @@ class Client {
 
     public setName(name: string): void {
         this.name = name;
+    }
+
+    public setNameRoom(nameRoom: string): void {
+        this.nameRoom = nameRoom;
     }
 }
 
@@ -53,7 +66,6 @@ class DataGenerator {
     }
 }
 
-class Message {
-    public type: string;
-    public info: string;
+class Room {
+    public name: string;
 }

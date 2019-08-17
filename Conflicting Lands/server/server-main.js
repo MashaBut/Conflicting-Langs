@@ -9,24 +9,30 @@ app.use(express.static('dist'));
 var server = createServer(app);
 var wss = new webSocket.Server({ server: server });
 var clients = new Array();
+var rooms = new Array();
 wss.on('connection', function (ws) {
     var client = new Client(DataGenerator.idClient());
-    console.log(client.id);
     clients.push(client);
-    app.get('/home', function (req, res) { return res.send("Hello"); });
     ws.on('message', function (message) {
-        switch (message.type) {
-            case 'writename':
-                console.log('Name: ', message);
+        console.log(JSON.parse(message));
+        switch (JSON.parse(message).Type) {
+            case 0:
+                var name_1 = JSON.parse(message);
+                client.setName(name_1.Name);
+                //  ws.send("I am here");
+                break;
+            case 1:
+                var nameRoom = JSON.parse(message);
+                client.setNameRoom(nameRoom.nameRoom);
+                var room = void 0;
                 break;
         }
     });
-    ws.on('close', function () {
-        clients.splice(clients.indexOf(client), 1);
-        console.log('stopping client interval');
-    });
+    /* ws.on('close', function () {
+         clients.splice(clients.indexOf(client), 1);
+         console.log('stopping client interval');
+     });*/
 });
-app.get('/any', function (req, res) { return res.send("Any"); });
 server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
@@ -36,6 +42,9 @@ var Client = /** @class */ (function () {
     }
     Client.prototype.setName = function (name) {
         this.name = name;
+    };
+    Client.prototype.setNameRoom = function (nameRoom) {
+        this.nameRoom = nameRoom;
     };
     return Client;
 }());
@@ -48,8 +57,8 @@ var DataGenerator = /** @class */ (function () {
     };
     return DataGenerator;
 }());
-var Message = /** @class */ (function () {
-    function Message() {
+var Room = /** @class */ (function () {
+    function Room() {
     }
-    return Message;
+    return Room;
 }());

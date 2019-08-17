@@ -147,7 +147,6 @@ export class Game {
         this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-        console.log(this.currentPlayer.getLives());
     }
 
     private changePlayer(): void {
@@ -187,7 +186,7 @@ export class Game {
     }
 
     public setPlayerNames(): void {
-        let namePlayer1: string = (ManipulationWithDOM.player1).value;
+        let namePlayer1: string = (ManipulationWithDOM.playerInit).value;
         let namePlayer2: string = (ManipulationWithDOM.player2).value;
         this.player1 = new Player(Identification.setName(namePlayer1, "Player 1"), Color.Red, 1, ManipulationWithDOM.canvas.height);
         this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), Color.Blue, ManipulationWithDOM.canvas.width, 1);
