@@ -1,4 +1,4 @@
-import {ManipulationWithDOM} from "../../controllers/manipulations-with-dom";
+import { ManipulationWithDOM } from "../../work-with-html/manipulations-with-dom";
 interface DiceTypes {
     span: Element;
 }
@@ -14,7 +14,7 @@ export let diceCollection: Array<Dice> = [];
 Elements.push({ 'span': ManipulationWithDOM.dice1, });
 Elements.push({ 'span': ManipulationWithDOM.dice2, });
 
-export let getRandomIntInclusive: Function = (min:number, max:number) => {
+export let getRandomIntInclusive: Function = (min: number, max: number) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor((Math.random() * (max - min + 1)) + min);

@@ -1,3 +1,5 @@
+import { send } from "q";
+
 const express = require('express');
 const path = require('path');
 const { createServer } = require('http');
@@ -14,15 +16,18 @@ wss.on('connection', function (ws: any) {
     let client = new Client(DataGenerator.idClient());
     console.log(client.id);
     clients.push(client);
-    ws.on('message', (message:any) => console.log('Message: ', message))
-    ws.on('close', function () {
+    ws.on('message', (message: any) => {
+        switch (message.type) {
+            case 'writename':
+                console.log('Name: ', message);
+                break;
+        }
+    })
+   /* ws.on('close', function () {
         clients.splice(clients.indexOf(client), 1);
         console.log('stopping client interval');
-    });
-
+    });*/
 });
-app.get('/home', (req: any, res: any) => res.render('index.html'));
-
 
 server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
@@ -43,7 +48,12 @@ class Client {
 
 class DataGenerator {
     public static idClient(): number {
-        let id: number = (Math.random()*(999999 - 100000 + 1) + 100000);
+        let id: number = (Math.random() * (999999 - 100000 + 1) + 100000);
         return Number(id.toPrecision(6));
     }
+}
+
+class Message {
+    public type: string;
+    public info: string;
 }

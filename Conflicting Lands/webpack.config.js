@@ -23,46 +23,46 @@ module.exports = {
                 ]
             },
 
-        {
-            
-        test: /\.jpe?g$/,
-        use:[{loader: 'file-loader?name=./images/jpg/[name].[ext]'}]
-        },
+            {
+                test: /\.jpe?g$/,
+                use: [{ loader: 'file-loader?name=./images/jpg/[name].[ext]' }]
+            },
 
-        {
-        test: /\.gif$/,
-        use:[{loader: 'file-loader?name=./images/gif/[name].[ext]'}]
-        },
-
-
-        {
-        test:/\.png$/,
-        use:[{loader: 'file-loader?name=./images/png/[name].[ext]'}]
-        },
+            {
+                test: /\.gif$/,
+                use: [{ loader: 'file-loader?name=./images/gif/[name].[ext]' }]
+            },
 
 
-        {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: [{ loader: 'file-loader?name=./fonts/[name].[ext]'}]
-        },
+            {
+                test: /\.png$/,
+                use: [{ loader: 'file-loader?name=./images/png/[name].[ext]' }]
+            },
 
 
-        {
-        test:/\.wav$/,
-        use: [{ loader: 'file-loader?name=./sounds/[name].[ext]'}]
-        },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                use: [{ loader: 'file-loader?name=./fonts/[name].[ext]' }]
+            },
 
-    ]},
+
+            {
+                test: /\.wav$/,
+                use: [{ loader: 'file-loader?name=./sounds/[name].[ext]' }]
+            },
+
+        ]
+    },
 
     plugins: [
         new MiniCssExtractPlugin({ filename: 'main.css' }),
-         new HtmlWebpackPlugin({ 
-           title: 'Conflicting Lands',
-           hash: false,
-           template: './src/modules/start/ux/html/start.html',
-           filename: 'index.html',
+        new HtmlWebpackPlugin({
+            title: 'Conflicting Lands',
+            hash: false,
+            template: './src/modules/ux/html/start.html',
+            filename: 'index.html',
         }),
-       ],
+    ],
 
     resolve: {
         extensions: ['.tsx', '.ts', '.js']

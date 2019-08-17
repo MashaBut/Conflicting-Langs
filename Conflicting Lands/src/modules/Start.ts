@@ -1,41 +1,42 @@
 import { Game } from "./controllers/controller-main-module"
 import { fromEvent } from "rxjs";
-import { ManipulationWithDOM } from "./controllers/manipulations-with-dom";
-import { ConcealCanvas } from "./start/ux/scripts/hide-function";
+import { ManipulationWithDOM } from "./work-with-html/manipulations-with-dom";
+import { ConcealCanvas } from "./work-with-html/hide-function";
 import { DiceRoller } from "./game/dice/dice-roller";
 import { diceCollection } from "./game/dice/dice";
-import { PushImage } from "./game/ux/scripts/push-image";
-import { Timer } from "./game/ux/scripts/timer";
-import { Media } from "./controllers/path-to-multimedia";
-import "./controllers/path-to-multimedia";
-
+import { PushImage } from "./work-with-html/push-image";
+import { Timer } from "./game/timer/timer";
+import { Media } from "./work-with-html/media";
+import "./work-with-html/path-to-multimedia";
+import * as $ from 'jquery';
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:')
-const echoSocketUrl = socketProtocol + '//' + location.host;
-const socket = new WebSocket(echoSocketUrl);
-
+let echoSocketUrl = socketProtocol + '//' + location.host;
+//const socket = new WebSocket(echoSocketUrl);
 console.log(echoSocketUrl);
-socket.readyState
-socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
-});
-
-/*import "./start/ux/css/main.css";
-import "./start/ux/css/players.css";
-import "./start/ux/css/canvas.css";
-import "./start/ux/css/blocks-for-players.css";*/
+let maps: [];
 ConcealCanvas.hideGamePage();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
-        socket.send("Look am me");
+       // let ob=new Message();
+      //  ob.type ="message";
+
+
+        
+        //socket.send(ob);
+        // echoSocketUrl = socketProtocol + '//' + location.host+'/home;'
+       // socket.send("Look am me");
         game.setPlayerNames();
         ConcealCanvas.hideStartPage();
         ManipulationWithDOM.playSound(Media.playGame);
         PushImage.createImage();
         ManipulationWithDOM.initSounds();
     })
-
+class Message {
+    public type: string;
+    public message: string;
+}
 fromEvent(ManipulationWithDOM.tossDice, 'click')
     .subscribe(() => {
         PushImage.returmAnimate();
@@ -63,3 +64,15 @@ function timer() {
     game.turnTime();
     game.createPositionsBlockForMap(DiceRoller.numberOfDices());
 }
+
+$.ajax({
+    type: "GET",
+    url: "api/allRounds",
+    contentType: "text/plain",
+    success: function (result: []) {
+        maps = result;
+    },
+    error: function (xhr: any, resp: any, text: any) {
+        console.log("error");
+    }
+});

@@ -1,6 +1,6 @@
-import { ManipulationWithDOM } from "../../../controllers/manipulations-with-dom";
-import { DiceRoller } from "../../dice/dice-roller";
-import { Media } from "../../../controllers/path-to-multimedia";
+import { ManipulationWithDOM } from "./manipulations-with-dom";
+import { DiceRoller } from "../game/dice/dice-roller";
+import { Media } from "./media";
 
 export class PushImage {
     private static image = document.createElement('img');

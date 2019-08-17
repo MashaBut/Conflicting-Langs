@@ -1,14 +1,14 @@
-import {Dice,getRandomIntInclusive} from "./dice";
+import { Dice, getRandomIntInclusive } from "./dice";
 
 export class DiceRoller {
   private static dices = new Array();
 
   public static roll(diceCollection: Array<Dice>) {
-    let i=0;
-      diceCollection.forEach((item) => {
-            this.dices[i] = getRandomIntInclusive(1,6);
-            i++;
-      });
+    let i = 0;
+    diceCollection.forEach((item) => {
+      this.dices[i] = getRandomIntInclusive(1, 6);
+      i++;
+    });
   }
 
   public static numberOfDices(): number[] {

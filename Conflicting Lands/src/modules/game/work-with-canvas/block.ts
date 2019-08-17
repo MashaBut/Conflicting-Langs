@@ -4,8 +4,8 @@ export class Block {
     public width: number;
     public height: number;
     public color: string;
-    
-    constructor(x: number, y: number, width: number, height: number,color: string) {
+
+    constructor(x: number, y: number, width: number, height: number, color: string) {
         this.x = x;
         this.y = y;
         this.width = width;

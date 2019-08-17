@@ -1,3 +1,5 @@
+"use strict";
+exports.__esModule = true;
 var express = require('express');
 var path = require('path');
 var createServer = require('http').createServer;
@@ -11,13 +13,20 @@ wss.on('connection', function (ws) {
     var client = new Client(DataGenerator.idClient());
     console.log(client.id);
     clients.push(client);
-    ws.on('message', function (message) { return console.log('Message: ', message); });
+    app.get('/home', function (req, res) { return res.send("Hello"); });
+    ws.on('message', function (message) {
+        switch (message.type) {
+            case 'writename':
+                console.log('Name: ', message);
+                break;
+        }
+    });
     ws.on('close', function () {
         clients.splice(clients.indexOf(client), 1);
         console.log('stopping client interval');
     });
 });
-app.get('/home', function (req, res) { return res.render('index.html'); });
+app.get('/any', function (req, res) { return res.send("Any"); });
 server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
@@ -38,4 +47,9 @@ var DataGenerator = /** @class */ (function () {
         return Number(id.toPrecision(6));
     };
     return DataGenerator;
+}());
+var Message = /** @class */ (function () {
+    function Message() {
+    }
+    return Message;
 }());

@@ -49,14 +49,14 @@ export class Draw {
 		this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 	}
 
-	private drawBlockOnMap(block: Block, colorBlock:string): void {
+	private drawBlockOnMap(block: Block, colorBlock: string): void {
 		this.canvasContext.fillStyle = colorBlock;
 		this.canvasContext.fillRect(block.x, block.y, block.width, block.height);
 	}
 
-	public redraw(block: Block, color:string): void {
+	public redraw(block: Block, color: string): void {
 		this.clearCanvas();
 		this.unloadingImageOnCanvas();
-		this.drawBlockOnMap(block,color);
+		this.drawBlockOnMap(block, color);
 	}
 }

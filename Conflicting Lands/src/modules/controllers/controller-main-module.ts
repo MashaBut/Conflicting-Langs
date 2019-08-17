@@ -1,16 +1,16 @@
-import { Player } from "../player";
-import { Identification } from "../start/write-names";
-import { ManipulationWithDOM } from "./manipulations-with-dom";
+import { Player } from "../game/player/player";
+import { Identification } from "../game/player/write-names";
+import { ManipulationWithDOM } from "../work-with-html/manipulations-with-dom";
 import { fromEvent, Observable } from "rxjs";
-import { KeyDesignations } from './key-designations';
+import { KeyDesignations } from '../key-designations/key-designations';
 import { Draw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/coordinate-transformation";
 import { Position } from "../game/work-with-canvas/position";
 import { Block } from "../game/work-with-canvas/block";
 import { Color } from "../game/work-with-canvas/color";
-import { Timer } from "../game/ux/scripts/timer";
-import { PlayersLives } from "../game/ux/scripts/calculate-lives";
-import { Media } from "./path-to-multimedia";
+import { Timer } from "../game/timer/timer";
+import { PlayersLives } from "../game/lives/players-lives";
+import { Media } from "../work-with-html/media";
 
 export class Game {
 

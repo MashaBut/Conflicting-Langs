@@ -1,12 +1,11 @@
-import "../start/ux/css/main.css";
-import "../start/ux/css/players.css";
-import "../start/ux/css/start-page.css";
+import "../ux/css/main.css";
+import "../ux/css/players.css";
+import "../ux/css/start-page.css";
 
 import "../game/ux/css/game-page.css";
 import "../game/ux/css/canvas.css";
 import "../game/ux/css/blocks-for-players.css";
 
-//#region "dices"
 import "../../assets/images/dices/1_1.png";
 import "../../assets/images/dices/1_2.png";
 import "../../assets/images/dices/1_3.png";
@@ -43,18 +42,3 @@ import "../../assets/images/dices/6_3.png";
 import "../../assets/images/dices/6_4.png";
 import "../../assets/images/dices/6_5.png";
 import "../../assets/images/dices/6_6.png";
-//#endregion "dices"
-
-export class Media {
-    static pathToAnimate = require ('../../assets/images/dicesAnimation.gif');
-    static volumeImage = require ('../../assets/images/volume.jpg');
-    static noVolumeImage = require ('../../assets/images/no_volume.jpg');
-    
-    static playGame = require ('../../assets/sounds/playGame.wav');
-    static soundForDice = require ('../../assets/sounds/rollTheDice.wav');
-    static enterSound = require ('../../assets/sounds/soundForBlock3.wav');
-    static movementsOfBlock = require ('../../assets/sounds/moveblock2.wav');
-    static endOfTheGame = require ('../../assets/sounds/endOfTheGame.wav');
-    static lostLife = require ('../../assets/sounds/lostLife.wav');
-    static clock = require ('../../assets/sounds/clock.wav');
-}

@@ -1,5 +1,5 @@
-import { KeyDesignations } from './key-designations';
-import { Media } from "./path-to-multimedia";
+import { KeyDesignations } from '../key-designations/key-designations';
+import { Media } from "./media";
 
 export class ManipulationWithDOM {
     static imageFlag: boolean = false;

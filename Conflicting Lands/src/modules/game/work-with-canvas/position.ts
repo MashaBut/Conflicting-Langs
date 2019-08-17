@@ -129,7 +129,7 @@ export class Position {
         }
         return false;
     }
-    
+
     public checkPosition(newBlock: Block): boolean {
         if (this.isBlockInOtherBlock(newBlock) && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))) {
             return true;
