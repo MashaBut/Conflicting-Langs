@@ -1,4 +1,4 @@
-export enum KeyDesignations {
+export enum KeyCodes {
     Up = 38,
     Down = 40,
     Left = 37,

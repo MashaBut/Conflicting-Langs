@@ -1,16 +1,16 @@
 "use strict";
 exports.__esModule = true;
-var express = require('express');
-var path = require('path');
-var createServer = require('http').createServer;
+var express = require("express");
 var webSocket = require('ws');
+var createServer = require('http').createServer;
 var app = express();
-app.use(express.static('dist'));
 var server = createServer(app);
 var wss = new webSocket.Server({ server: server });
+app.use(express.static('dist'));
 var clients = new Array();
 var rooms = new Array();
 wss.on('connection', function (ws) {
+    ws.room;
     var client = new Client(DataGenerator.idClient());
     clients.push(client);
     ws.on('message', function (message) {

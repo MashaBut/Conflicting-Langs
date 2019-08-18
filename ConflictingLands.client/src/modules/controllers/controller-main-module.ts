@@ -2,7 +2,7 @@ import { Player } from "../game/player/player";
 import { Identification } from "../game/player/write-names";
 import { ManipulationWithDOM } from "../work-with-html/manipulations-with-dom";
 import { fromEvent, Observable } from "rxjs";
-import { KeyDesignations } from '../key-designations/key-designations';
+import { KeyCodes } from '../key-codes/key-codes';
 import { Draw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/coordinate-transformation";
 import { Position } from "../game/work-with-canvas/position";
@@ -205,9 +205,9 @@ export class Game {
 
     private setBlockPositionOnMap(keyCode: KeyboardEvent): void {
         switch (keyCode.keyCode) {
-            case KeyDesignations.Space:
-            case KeyDesignations.Up:
-            case KeyDesignations.Down: {
+            case KeyCodes.Space:
+            case KeyCodes.Up:
+            case KeyCodes.Down: {
                 if (this.flag) {
                     this.size = CoordinateTransformation.turnSize();
                     if (!this.currentPlayer.isFirstMove()) {
@@ -223,7 +223,7 @@ export class Game {
                 ManipulationWithDOM.playSound(Media.movementsOfBlock);
                 break;
             }
-            case KeyDesignations.Right: {
+            case KeyCodes.Right: {
                 if (this.flag) {
                     if (!this.currentPlayer.isFirstMove()) {
                         this.counterBlocksInArray++;
@@ -240,7 +240,7 @@ export class Game {
                 ManipulationWithDOM.playSound(Media.movementsOfBlock);
                 break;
             }
-            case KeyDesignations.Left: {
+            case KeyCodes.Left: {
                 if (this.flag) {
                     if (!this.currentPlayer.isFirstMove()) {
                         this.counterBlocksInArray--;
@@ -257,7 +257,7 @@ export class Game {
                 ManipulationWithDOM.playSound(Media.movementsOfBlock);
                 break;
             }
-            case KeyDesignations.Enter: {
+            case KeyCodes.Enter: {
                 if (this.flag) {
                     ManipulationWithDOM.playSound(Media.enterSound);
                     Timer.flagForTimer = false;

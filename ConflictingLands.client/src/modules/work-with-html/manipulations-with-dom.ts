@@ -1,4 +1,4 @@
-import { KeyDesignations } from '../key-designations/key-designations';
+import { KeyCodes } from '../key-codes/key-codes';
 import { Media } from "./media";
 
 export class ManipulationWithDOM {
@@ -50,7 +50,7 @@ export class ManipulationWithDOM {
     }
 
     public static disableStandardKeyOperation(e: KeyboardEvent): void {
-        if ([KeyDesignations.Enter, KeyDesignations.Down, KeyDesignations.Left, KeyDesignations.Right, KeyDesignations.Up].indexOf(e.keyCode) > -1) {
+        if ([KeyCodes.Enter, KeyCodes.Down, KeyCodes.Left, KeyCodes.Right, KeyCodes.Up].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
     }

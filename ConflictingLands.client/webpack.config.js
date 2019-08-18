@@ -57,7 +57,7 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({ filename: 'main.css' }),
         new HtmlWebpackPlugin({
-            title: 'Conflicting Lands',
+            title: 'ConflictingLands.client',
             hash: false,
             template: './src/modules/ux/html/start.html',
             filename: 'index.html',

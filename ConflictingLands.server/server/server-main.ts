@@ -1,19 +1,20 @@
-import { MessageSetName } from "../src/modules/message-modules/message-set-name";
-import { MessageSetNameRoom } from "../src/modules/message-modules/message-set-name-room";
-
-const express = require('express');
-const path = require('path');
-const { createServer } = require('http');
+import { MessageSetName } from "../message-modules/message-set-name";
+import { MessageSetNameRoom } from "../message-modules/message-set-name-room";
+import * as express from "express";
 const webSocket = require('ws');
-const app = express();
+const { createServer } = require('http'); 
 
-app.use(express.static('dist'));
+const app = express();
 const server = createServer(app);
 const wss = new webSocket.Server({ server });
 
+app.use(express.static('ConflictingLands.client/dist'));
+
 let clients = new Array<Client>();
 let rooms = new Array<Room>();
+
 wss.on('connection', function (ws: any) {
+    ws.room;
     let client = new Client(DataGenerator.idClient());
     clients.push(client);
     ws.on('message', (message: any) => {
