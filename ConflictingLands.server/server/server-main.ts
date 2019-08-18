@@ -2,7 +2,7 @@ import { MessageSetName } from "../message-modules/message-set-name";
 import { MessageSetNameRoom } from "../message-modules/message-set-name-room";
 import * as express from "express";
 const webSocket = require('ws');
-const { createServer } = require('http'); 
+const { createServer } = require('http');
 
 const app = express();
 const server = createServer(app);

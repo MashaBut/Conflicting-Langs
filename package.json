@@ -1,0 +1,23 @@
+{
+    "name": "conflicting-langs",
+    "version": "1.0.0",
+    "description": "https://t.me/conflicting_lands",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "create": "tsc ConflictingLands.server/server/server-main.ts",
+        "server": "node ConflictingLands.server/server/server-main.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MashaBut/Conflicting-Langs.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MashaBut/Conflicting-Langs/issues"
+    },
+    "homepage": "https://github.com/MashaBut/Conflicting-Langs#readme"
+}

@@ -6,7 +6,8 @@ var createServer = require('http').createServer;
 var app = express();
 var server = createServer(app);
 var wss = new webSocket.Server({ server: server });
-app.use(express.static('dist'));
+console.log('ConflictingLands.client/dist');
+app.use(express.static('ConflictingLands.client/dist'));
 var clients = new Array();
 var rooms = new Array();
 wss.on('connection', function (ws) {
