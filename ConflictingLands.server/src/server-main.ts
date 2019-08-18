@@ -1,9 +1,8 @@
-import { MessageSetName } from "../message-modules/message-set-name";
-import { MessageSetNameRoom } from "../message-modules/message-set-name-room";
-import * as express from "express";
+import { MessageFactory } from "./message-factory";
+//import express from "express";
+const express = require('express');
 const webSocket = require('ws');
 const { createServer } = require('http');
-
 const app = express();
 const server = createServer(app);
 const wss = new webSocket.Server({ server });
@@ -11,24 +10,33 @@ const wss = new webSocket.Server({ server });
 app.use(express.static('ConflictingLands.client/dist'));
 
 let clients = new Array<Client>();
-let rooms = new Array<Room>();
+let messageFactory = new MessageFactory();
+wss.room = new Array<Room>();
 
 wss.on('connection', function (ws: any) {
-    ws.room;
     let client = new Client(DataGenerator.idClient());
     clients.push(client);
     ws.on('message', (message: any) => {
-        console.log(JSON.parse(message));
-        switch (JSON.parse(message).Type) {
+        let info: any = JSON.parse(message);
+        switch (info.Type) {
             case 0:
-                let name: MessageSetName = JSON.parse(message);
-                client.setName(name.Name);
-                //  ws.send("I am here");
+                client.setName(info.Name);
+                wss.room.forEach((room: Room) => {
+                    if (room.countUsers === 1) {
+                        wss.clients.forEach((cl: any) => {
+                            if(cl===client)
+                                cl.send(messageFactory.createMessageSetNameRoom(room.name));
+                        })
+                    }
+                });
                 break;
             case 1:
-                let nameRoom: MessageSetNameRoom = JSON.parse(message);
-                client.setNameRoom(nameRoom.nameRoom);
-                let room;
+                client.setNameRoom(info.nameRoom);
+                let creator: Room = new Room(info.nameRoom, client.id);
+                wss.room.push(creator);
+                wss.clients.forEach((client: any) => {
+                    client.send(messageFactory.createMessageSetNameRoom(info.nameRoom));
+                })
                 break;
         }
     })
@@ -69,4 +77,13 @@ class DataGenerator {
 
 class Room {
     public name: string;
+    public countUsers: number;
+    public fisrtClient: number;
+    public secondClient: number;
+
+    constructor(name: string, firstClient: number) {
+        this.name = name;
+        this.fisrtClient = firstClient;
+        this.countUsers = 1;
+    }
 }

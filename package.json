@@ -7,8 +7,8 @@
         "doc": "docs"
     },
     "scripts": {
-        "create": "tsc ConflictingLands.server/server/server-main.ts",
-        "server": "node ConflictingLands.server/server/server-main.js"
+        "create": "tsc ConflictingLands.server/src/server-main.ts",
+        "server": "node ConflictingLands.server/src/server-main.js"
     },
     "repository": {
         "type": "git",

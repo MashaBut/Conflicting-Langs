@@ -1,31 +1,41 @@
 "use strict";
 exports.__esModule = true;
-var express = require("express");
+var message_factory_1 = require("./message-factory");
+//import express from "express";
+var express = require('express');
 var webSocket = require('ws');
 var createServer = require('http').createServer;
 var app = express();
 var server = createServer(app);
 var wss = new webSocket.Server({ server: server });
-console.log('ConflictingLands.client/dist');
 app.use(express.static('ConflictingLands.client/dist'));
 var clients = new Array();
-var rooms = new Array();
+var messageFactory = new message_factory_1.MessageFactory();
+wss.room = new Array();
 wss.on('connection', function (ws) {
-    ws.room;
     var client = new Client(DataGenerator.idClient());
     clients.push(client);
     ws.on('message', function (message) {
-        console.log(JSON.parse(message));
-        switch (JSON.parse(message).Type) {
+        var info = JSON.parse(message);
+        switch (info.Type) {
             case 0:
-                var name_1 = JSON.parse(message);
-                client.setName(name_1.Name);
-                //  ws.send("I am here");
+                client.setName(info.Name);
+                wss.room.forEach(function (room) {
+                    if (room.countUsers === 1) {
+                        wss.clients.forEach(function (cl) {
+                            if (cl === client)
+                                cl.send(messageFactory.createMessageSetNameRoom(room.name));
+                        });
+                    }
+                });
                 break;
             case 1:
-                var nameRoom = JSON.parse(message);
-                client.setNameRoom(nameRoom.nameRoom);
-                var room = void 0;
+                client.setNameRoom(info.nameRoom);
+                var creator = new Room(info.nameRoom, client.id);
+                wss.room.push(creator);
+                wss.clients.forEach(function (client) {
+                    client.send(messageFactory.createMessageSetNameRoom(info.nameRoom));
+                });
                 break;
         }
     });
@@ -59,7 +69,10 @@ var DataGenerator = /** @class */ (function () {
     return DataGenerator;
 }());
 var Room = /** @class */ (function () {
-    function Room() {
+    function Room(name, firstClient) {
+        this.name = name;
+        this.fisrtClient = firstClient;
+        this.countUsers = 1;
     }
     return Room;
 }());

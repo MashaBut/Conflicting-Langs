@@ -20,9 +20,32 @@ let messageFactory = new MessageFactory();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
 
-socket.onmessage = function (event) {
-    console.log(event.data);
+socket.onmessage = function (message: any) {
+    let info: any = JSON.parse(message.data);
+    switch (info.Type) {
+        case 1:
+            clearDivForViewRoom();
+            viewRoom(info.nameRoom);
+            break;
+    }
 };
+
+function viewRoom(nameRoom: string): void {
+    var d1 = <HTMLElement>document.getElementById('rooms');
+    d1.insertAdjacentHTML('afterend', "<button type='button' id='clientRoom' value=" + nameRoom + ">" + nameRoom + "</button>");
+}
+function click() {
+    alert("Maxa");
+}
+
+document.body.addEventListener('click', function (event: any) {
+    if (event.srcElement.id == 'clientRoom') {
+        click();
+    };
+});
+function clearDivForViewRoom(): void {
+    (<HTMLElement>document.getElementById("rooms")).innerHTML = "";
+}
 
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {

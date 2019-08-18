@@ -12,6 +12,7 @@ export class ManipulationWithDOM {
     static endGame: HTMLElement = <HTMLElement>document.getElementById("endGame");
     static goToStartPage: HTMLElement = <HTMLElement>document.getElementById("goToStartPage");
     static createRoom: HTMLElement = <HTMLElement>document.getElementById("createRoom");
+    static clientRoom: HTMLElement = <HTMLElement>document.getElementById("clientRoom");
 
     //dices
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
