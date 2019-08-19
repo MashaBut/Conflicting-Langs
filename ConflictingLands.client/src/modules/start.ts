@@ -44,6 +44,11 @@ document.body.addEventListener('click', function (event: any) {
         for (let room of rooms) {
             if (room === event.srcElement.value) {
                 socket.send(messageFactory.createMessageJoiningRoom(room, name));
+                View.GamePage();
+                game.setPlayer2(name);
+                ManipulationWithDOM.playSound(Media.playGame);
+                PushImage.createImage();
+                ManipulationWithDOM.initSounds();
             }
         }
     };
@@ -63,18 +68,18 @@ fromEvent(ManipulationWithDOM.writeNames, 'click')
             rooms.length = 0;
             clearDivForViewRoom();
         }
-        /* game.setPlayerNames();
-         ManipulationWithDOM.playSound(Media.playGame);
-         PushImage.createImage();
-         ManipulationWithDOM.initSounds();*/
-    })
+    });
 
 fromEvent(ManipulationWithDOM.createRoom, 'click')
     .subscribe(() => {
         let nameRoom: string = (ManipulationWithDOM.nameRoom).value;
         if (nameRoom !== "") {
             socket.send(messageFactory.createMessageSetNameRoom(nameRoom));
+            game.setPlayer1(name);
             View.GamePage();
+            ManipulationWithDOM.playSound(Media.playGame);
+            PushImage.createImage();
+            ManipulationWithDOM.initSounds();
             rooms.length = 0;
         }
     });
@@ -87,18 +92,18 @@ fromEvent(ManipulationWithDOM.tossDice, 'click')
         DiceRoller.roll(diceCollection);
         DiceRoller.getPathOfImage();
         setTimeout(timer, 1790);
-    })
+    });
 
 fromEvent(ManipulationWithDOM.soundOff, 'click')
     .subscribe(() => {
         ManipulationWithDOM.soundsOff();
-    })
+    });
 
 fromEvent(ManipulationWithDOM.endGame, 'click')
     .subscribe(() => {
         View.GamePage();
         ManipulationWithDOM.playSound(Media.endOfTheGame);
-    })
+    });
 
 function timer() {
     PushImage.returnImage();

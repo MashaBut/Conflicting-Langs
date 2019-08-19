@@ -54,7 +54,7 @@ export class Game {
         this.arrayCurrentPosition.length = 0;
         if (this.currentPlayer.isFirstMove()) {
             let coord: number[] = this.firstStep(this.size);
-            let block = new Block(coord[0], coord[1], this.size[0], this.size[1],this.currentPlayer.getColor());
+            let block = new Block(coord[0], coord[1], this.size[0], this.size[1], this.currentPlayer.getColor());
             this.currentPosition = block;
             this.draw();
         }
@@ -119,13 +119,13 @@ export class Game {
                 alert("Oh, no. Sorry:(");
                 this.currentPlayer.setLives();
                 ManipulationWithDOM.playSound(Media.lostLife);
-                if(this.currentPlayer === this.player1) {
+                if (this.currentPlayer === this.player1) {
                     PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
-                    Timer.flagForTimer = false;            
+                    Timer.flagForTimer = false;
                 }
-                else if(this.currentPlayer === this.player2) {
+                else if (this.currentPlayer === this.player2) {
                     PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
-                    Timer.flagForTimer = false;             
+                    Timer.flagForTimer = false;
                 }
                 if (this.currentPlayer.getLives() === 0) {
                     alert(this.currentPlayer.getName() + " loser");
@@ -138,7 +138,7 @@ export class Game {
 
     private repetitionAtCompletion(): void {
         this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
-        this.currentPosition.color=this.currentPlayer.getColor();
+        this.currentPosition.color = this.currentPlayer.getColor();
         this.position.saveBlockOnMap(this.currentPosition);
         this.canvasDraw.saveCanvasToImage();
     }
@@ -170,29 +170,24 @@ export class Game {
         this.flag = true;
     }
 
-    private initComponentOnMapForPlayers(): void {
-
-        ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
-        ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
-
-        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
-        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-
-        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
-        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
-
-        PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
-        PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
-    }
-
-    public setPlayerNames(): void {
-        let namePlayer1: string = (ManipulationWithDOM.playerInit).value;
-        let namePlayer2: string = (ManipulationWithDOM.player2).value;
-        this.player1 = new Player(Identification.setName(namePlayer1, "Player 1"), Color.Red, 1, ManipulationWithDOM.canvas.height);
-        this.player2 = new Player(Identification.setName(namePlayer2, "Player 2"), Color.Blue, ManipulationWithDOM.canvas.width, 1);
-        this.initComponentOnMapForPlayers();
+    public setPlayer1(name: string): void {
+        this.player1 = new Player(name, Color.Red, 1, ManipulationWithDOM.canvas.height);
         this.currentPlayer = this.player1;
         ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
+        ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
+        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
+        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
+        PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
+    }
+
+    public setPlayer2(name: string): void {
+        this.player2 = new Player(name, Color.Blue, ManipulationWithDOM.canvas.width, 1);
+        this.currentPlayer = this.player1;
+        ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
+        ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
+        ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
+        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
+        PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
     }
 
     public manipulationKeyBoard(): void {
