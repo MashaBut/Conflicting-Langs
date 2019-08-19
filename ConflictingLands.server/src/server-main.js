@@ -14,7 +14,6 @@ var messageFactory = new message_factory_1.MessageFactory();
 wss.room = new Array();
 wss.on('connection', function (ws) {
     var client = new Client(DataGenerator.idClient());
-    clients.push(client);
     ws.on('message', function (message) {
         var info = JSON.parse(message);
         switch (info.Type) {
@@ -23,8 +22,7 @@ wss.on('connection', function (ws) {
                 wss.room.forEach(function (room) {
                     if (room.countUsers === 1) {
                         wss.clients.forEach(function (cl) {
-                            if (cl === client)
-                                cl.send(messageFactory.createMessageSetNameRoom(room.name));
+                            cl.send(messageFactory.createMessageSetNameRoom(room.name, client.name));
                         });
                     }
                 });
@@ -34,7 +32,21 @@ wss.on('connection', function (ws) {
                 var creator = new Room(info.nameRoom, client.id);
                 wss.room.push(creator);
                 wss.clients.forEach(function (client) {
-                    client.send(messageFactory.createMessageSetNameRoom(info.nameRoom));
+                    client.send(messageFactory.createMessageNewRoom(info.nameRoom));
+                });
+                break;
+            case 2:
+                var idClient_1;
+                clients.forEach(function (c) {
+                    if (c.name === info.client) {
+                        idClient_1 = c.id;
+                    }
+                });
+                wss.room.forEach(function (room) {
+                    if (room.name == info.nameRoom) {
+                        room.secondClient = idClient_1;
+                        room.countUsers = 2;
+                    }
                 });
                 break;
         }

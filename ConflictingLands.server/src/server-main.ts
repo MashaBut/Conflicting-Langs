@@ -12,10 +12,8 @@ app.use(express.static('ConflictingLands.client/dist'));
 let clients = new Array<Client>();
 let messageFactory = new MessageFactory();
 wss.room = new Array<Room>();
-
 wss.on('connection', function (ws: any) {
     let client = new Client(DataGenerator.idClient());
-    clients.push(client);
     ws.on('message', (message: any) => {
         let info: any = JSON.parse(message);
         switch (info.Type) {
@@ -24,8 +22,7 @@ wss.on('connection', function (ws: any) {
                 wss.room.forEach((room: Room) => {
                     if (room.countUsers === 1) {
                         wss.clients.forEach((cl: any) => {
-                            if(cl===client)
-                                cl.send(messageFactory.createMessageSetNameRoom(room.name));
+                            cl.send(messageFactory.createMessageSetNameRoom(room.name,client.name));
                         })
                     }
                 });
@@ -35,8 +32,22 @@ wss.on('connection', function (ws: any) {
                 let creator: Room = new Room(info.nameRoom, client.id);
                 wss.room.push(creator);
                 wss.clients.forEach((client: any) => {
-                    client.send(messageFactory.createMessageSetNameRoom(info.nameRoom));
+                    client.send(messageFactory.createMessageNewRoom(info.nameRoom));
+                });
+                break;
+            case 2:
+                let idClient:number;
+                clients.forEach((c: Client) => {
+                    if(c.name===info.client) {
+                        idClient = c.id;
+                    }
                 })
+                wss.room.forEach((room: Room) => {
+                    if (room.name == info.nameRoom) {
+                        room.secondClient = idClient;
+                        room.countUsers = 2;
+                    }
+                });
                 break;
         }
     })
@@ -45,6 +56,7 @@ wss.on('connection', function (ws: any) {
          console.log('stopping client interval');
      });*/
 });
+
 
 server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');

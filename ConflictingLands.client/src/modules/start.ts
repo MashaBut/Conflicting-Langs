@@ -9,50 +9,59 @@ import { Timer } from "./game/timer/timer";
 import { Media } from "./work-with-html/media";
 import "./work-with-html/path-to-multimedia";
 import { MessageFactory } from "./message-factory";
-
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:')
 let echoSocketUrl = socketProtocol + '//' + location.host;
 const socket = new WebSocket(echoSocketUrl);
 
 View.StartPage();
-
+let rooms = new Array<string>();
 let messageFactory = new MessageFactory();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
+let name: string;
 
 socket.onmessage = function (message: any) {
     let info: any = JSON.parse(message.data);
     switch (info.Type) {
         case 1:
-            clearDivForViewRoom();
-            viewRoom(info.nameRoom);
+            if (info.nameClient == name) {
+                viewRoom(info.nameRoom);
+            }
             break;
+        case 3:
+            viewRoom(info.nameRoom);
     }
 };
 
 function viewRoom(nameRoom: string): void {
-    var d1 = <HTMLElement>document.getElementById('rooms');
-    d1.insertAdjacentHTML('afterend', "<button type='button' id='clientRoom' value=" + nameRoom + ">" + nameRoom + "</button>");
-}
-function click() {
-    alert("Maxa");
+    var btnRoom = <HTMLElement>document.getElementById('rooms');
+    btnRoom.insertAdjacentHTML('afterend', "<button type='button' id='clientRoom' value=" + nameRoom + ">" + nameRoom + "</button>");
+    rooms.push(nameRoom);
 }
 
 document.body.addEventListener('click', function (event: any) {
     if (event.srcElement.id == 'clientRoom') {
-        click();
+        for (let room of rooms) {
+            if (room === event.srcElement.value) {
+                socket.send(messageFactory.createMessageJoiningRoom(room, name));
+            }
+        }
     };
 });
+
 function clearDivForViewRoom(): void {
-    (<HTMLElement>document.getElementById("rooms")).innerHTML = "";
+    let nodeRoom: any = document.getElementById("rooms");
+    nodeRoom.Nodes.clear();
 }
 
 fromEvent(ManipulationWithDOM.writeNames, 'click')
     .subscribe(() => {
-        let name: string = (ManipulationWithDOM.playerInit).value;
+        name = (ManipulationWithDOM.playerInit).value;
         if (name !== "") {
             socket.send(messageFactory.createMessageSetName(name));
             View.HollPage();
+            rooms.length = 0;
+            clearDivForViewRoom();
         }
         /* game.setPlayerNames();
          ManipulationWithDOM.playSound(Media.playGame);
@@ -66,6 +75,7 @@ fromEvent(ManipulationWithDOM.createRoom, 'click')
         if (nameRoom !== "") {
             socket.send(messageFactory.createMessageSetNameRoom(nameRoom));
             View.GamePage();
+            rooms.length = 0;
         }
     });
 
