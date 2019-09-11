@@ -11,18 +11,13 @@
     background-repeat: no-repeat;
 }
 
-.player1 {
+.player {
     /* ------------------Block model--------------------- */
-    float: left;
-    width: 50%;
-    height: 100%;
-}
-
-.player2 {
-    /* ------------------Block model--------------------- */
-    float: right;
-    width: 50%;
-    height: 100%;
+    position: absolute;
+    top: 82%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
 
 @media screen and (min-width: 1224px) {

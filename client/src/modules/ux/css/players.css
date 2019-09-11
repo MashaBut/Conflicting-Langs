@@ -1,97 +1,31 @@
-.player1 { position: relative; }
+.label {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 280px;
+    left: 16%;
+    margin-right: -50%;
 
-.player2 { position: relative; }
-
-.center {
-    /* ------------------Positioning--------------------- */
-    position: absolute;
-    top: 82%;
-    left: 50%;
-    margin: 0;
-    margin-left: -.5em;
-    margin-top: -.5em;
 }
 
 .input {
-    /* ------------------Block model--------------------- */
-    width: 50%;
-    /* ------------------Typography--------------------- */
-    font-size: 20px;
-    font-size: 1.5vw;
+    -webkit-appearance: none;
+    width: 65%;
+    border: 0;
+    padding: 0;
+    height: 30px;
+    font-size: 14px;
+    font-size: 1.2vw;
     font-weight: 700;
-    padding: 1.2%;
-    color: #fff;
-    /* ------------------Display--------------------- */
-    background-color: transparent;
-    border: none;
+    text-transform: uppercase;
+    border-bottom: 2px solid #525252;
+    background: none;
+    border-radius: 0;
+    color: white;
+    text-align: center;
 }
 
 .input:focus { outline: none; }
-
-.label {
-    /* ------------------Positioning--------------------- */
-    position: absolute;
-    left: 1%;
-    top: 1%;
-    /* ------------------Typography--------------------- */
-    font-size: 18px;
-    color: #fff;
-    /* ------------------Animation--------------------- */
-    pointer-events: none;
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-}
-
-/* active state */
-.input:focus ~ .label,
-.input:valid ~ .label {
-    /* ------------------Positioning--------------------- */
-    top: -75%;
-    /* ------------------Typography--------------------- */
-    font-size: 20px;
-    font-size: 1.5vw;
-    color: #fff;
-}
-
-/* BOTTOM BARS */
-.bar {
-    /* ------------------Positioning--------------------- */
-    position: relative;
-    display: block;
-    width: 25%;
-    margin-left: 14%;
-}
-
-.bar:before,
-.bar:after {
-    /* ------------------Positioning--------------------- */
-    position: absolute;
-    bottom: 0;
-    /* ------------------Block model--------------------- */
-    height: 2px;
-    width: 0;
-    /* ------------------Animation--------------------- */
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-    /* ------------------ Other --------------------- */
-    content: "";
-
-}
-
-.player1 .bar:before, 
-.player1 .bar:after { background: #ed1818; }
-
-.player2 .bar:before, 
-.player2 .bar:after { background: #0719e6; }
-
-.bar:before { left: 50%; }
-.bar:after { right: 50%; }
-
-/* active state */
-.input:focus ~ .bar:before, 
-.input:focus ~ .bar:after { width: 100%; }  
 
 .click button {
     /* ------------------Block model--------------------- */

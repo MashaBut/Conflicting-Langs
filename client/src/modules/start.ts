@@ -118,7 +118,13 @@ fromEvent(ManipulationWithDOM.endGame, 'click')
 
 function viewRoom(nameRoom: string): void {
     let roomsDiv = ManipulationWithDOM.rooms;
-    roomsDiv.insertAdjacentHTML('afterend', "<button type='button' id='clientRoom' value=" + nameRoom + ">" + nameRoom + "</button>");
+    let newButton = document.createElement('button');
+    newButton.id = "clientRoom";
+    newButton.value = nameRoom;
+    newButton.textContent = nameRoom;
+    roomsDiv.appendChild(newButton);
+
+   // roomsDiv.insertAdjacentHTML('afterend', "<button type='button' id='clientRoom' value=" + nameRoom + ">" + nameRoom + "</button>");
     rooms.push(nameRoom);
 }
 

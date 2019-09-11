@@ -59,7 +59,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'client',
             hash: false,
-            template: './src/modules/ux/html/start.html',
+            template: './src/modules/ux/index.html',
             filename: 'index.html',
         }),
     ],
