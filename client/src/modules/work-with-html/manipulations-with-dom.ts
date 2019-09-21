@@ -7,6 +7,7 @@ export class ManipulationWithDOM {
     static nameRoom: HTMLInputElement = <HTMLInputElement>document.getElementById("nameRoom");
 
     //buttons
+    static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
     static soundOff: HTMLElement = <HTMLElement>document.getElementById("soundOff");
     static endGame: HTMLElement = <HTMLElement>document.getElementById("endGame");
@@ -21,9 +22,7 @@ export class ManipulationWithDOM {
     static imageHolder: HTMLElement = <HTMLElement>document.getElementById('dice');
 
     //players
-    static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static playerInit: HTMLInputElement = <HTMLInputElement>document.getElementById("player");
-    static player2: HTMLInputElement = <HTMLInputElement>document.getElementById("player2");
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
 
@@ -63,12 +62,14 @@ export class ManipulationWithDOM {
         let sound3 = new Audio(PathToMedia.enterSound);
         let sound4 = new Audio(PathToMedia.movementsOfBlock);
         let sound5 = new Audio(PathToMedia.endOfTheGame);
+        let sound6 = new Audio (PathToMedia.clock);
 
         this.arrayOfAudios.push(sound1);
         this.arrayOfAudios.push(sound2);
         this.arrayOfAudios.push(sound3);
         this.arrayOfAudios.push(sound4);
         this.arrayOfAudios.push(sound5);
+        this.arrayOfAudios.push(sound6);
     }
 
     public static playSound(path: string): void {

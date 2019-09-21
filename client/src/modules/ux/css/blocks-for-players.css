@@ -2,7 +2,7 @@
     display: block;
     border-radius: 50%;
     background-color: ghostwhite;
-    background-image: url('../../../../assets/images/icon1.jpg');
+    background-image: url('../../../assets/images/icon1.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -17,7 +17,7 @@
     display: block;
     border-radius: 50%;
     background-color: ghostwhite;
-    background-image: url('../../../../assets/images/icon2.jpg');
+    background-image: url('../../../assets/images/icon2.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -96,7 +96,7 @@
         text-transform: uppercase;
         color: #fff;
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/volume.jpg');
+        background-image: url('../../../assets/images/volume.jpg');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -110,7 +110,7 @@
 
     .sound #goToStartPage {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/exit.png');
+        background-image: url('../../../assets/images/exit.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -118,7 +118,7 @@
 
     .sound #endGame {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/stopGame.png');
+        background-image: url('../../../assets/images/stopGame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -138,7 +138,7 @@
         font-size: 18px;
         font-weight: 700;
         background-color: #010428;
-        background-image: url('../../../../assets/images/frame.png');
+        background-image: url('../../../assets/images/frame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -232,7 +232,7 @@
         text-transform: uppercase;
         color: #fff;
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/volume.jpg');
+        background-image: url('../../../assets/images/volume.jpg');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -246,7 +246,7 @@
 
     .sound #goToStartPage {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/exit.png');
+        background-image: url('../../../assets/images/exit.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -254,7 +254,7 @@
 
     .sound #endGame {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/stopGame.png');
+        background-image: url('../../../assets/images/stopGame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -274,7 +274,7 @@
         font-size: 18px;
         font-weight: 700;
         background-color: #010428;
-        background-image: url('../../../../assets/images/frame.png');
+        background-image: url('../../../assets/images/frame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -344,7 +344,7 @@
 
     .player1ForGame {
         display: block;
-        background-image: url('../../../../assets//images/icon1.jpg');
+        background-image: url('../../../assets/images/icon1.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         width: 69%;
@@ -355,7 +355,7 @@
     
     .player2ForGame {
         display: block;
-        background-image: url('../../../../assets//images/icon2.jpg');
+        background-image: url('../../../assets/images/icon2.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         width: 69%;
@@ -389,7 +389,7 @@
         text-transform: uppercase;
         color: #fff;
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/volume.jpg');
+        background-image: url('../../../assets/images/volume.jpg');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -403,7 +403,7 @@
 
     .sound #goToStartPage {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/exit.png');
+        background-image: url('../../../assets/images/exit.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -411,7 +411,7 @@
 
     .sound #endGame {
         /* ------------------Display--------------------- */
-        background-image: url('../../../../assets/images/stopGame.png');
+        background-image: url('../../../assets/images/stopGame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -431,7 +431,7 @@
         font-size: 18px;
         font-weight: 700;
         background-color: #010428;
-        background-image: url('../../../../assets/images/frame.png');
+        background-image: url('../../../assets/images/frame.png');
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;

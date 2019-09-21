@@ -9,5 +9,5 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "moduleResolution": "node"
-  },
+  }
 }
