@@ -28,6 +28,7 @@
         "@types/socket.io": "^2.1.2",
         "express": "^4.17.1",
         "jquery": "^3.4.1",
+        "messages-for-conglicting-lands": "^1.0.0",
         "rxjs": "^6.5.2",
         "socket.io": "^2.2.0",
         "wav": "^1.0.2",

@@ -1,0 +1,13 @@
+{
+    "name": "messages-for-conglicting-lands",
+    "version": "1.0.1",
+    "description": "Library for communicate from client to server and reverse",
+    "main": "dist / index.js",
+    "types ": " dist / index.d.ts ",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lib": "tsc"
+    },
+    "author": "",
+    "license": "ISC"
+}

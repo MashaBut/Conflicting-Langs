@@ -1,13 +1,17 @@
+import { Player } from "./player";
+
 export class Room {
     public name: string;
-    public countUsers: number;
-    public fisrtClient: number = 0;
-    public secondClient: number = 0;
+    public id: string;
+    public players: Map<number, string> = new Map();
 
-    constructor(name: string, firstClient: number) {
+    constructor(name: string, player: Player) {
         this.name = name;
-        this.fisrtClient = firstClient;
-        this.countUsers = 1;
-        this.secondClient = 0;
+        this.id = player.id;
+        this.players.set(1, player.id);
+    }
+
+    public add(player: Player): void {
+        this.players.set(2, player.id);
     }
 }

@@ -1,8 +1,9 @@
-import { MessageFactory } from "./message-factory";
-import { MessageType } from "./message-modules/message-type";
-import { DataGenerator } from "./data-generator";
+
+import { MessageFactory } from "../../library/dist/message-factory";
+import { MessageType } from "../../library/dist/index";
 import { Room } from "./room";
-import { Client } from "./client";
+import { Player } from "./player";
+import { RoomControl } from "./room-control";
 
 const express = require('express');
 const webSocket = require('ws');
@@ -10,47 +11,52 @@ const { createServer } = require('http');
 const app = express();
 const server = createServer(app);
 const wss = new webSocket.Server({ server });
+const uuidv1 = require('uuid/v1');
 
 app.use(express.static('client/dist'));
 wss.room = new Array<Room>();
-let currentRoom: Room;
+let rooms =  new RoomControl();
 let messageFactory = new MessageFactory();
 
-let user: any = [];
-let clients = new Array<Client>();
-
-let flagforSecondclient: boolean = false;
-let flagForFirstClient: boolean = false;
+let sockets: Map<string, any> = new Map();
+let clients = new Array<Player>();
 
 wss.on('connection', function (ws: any) {
-    let numb = DataGenerator.idClient();
-    user[numb] = ws;
-    let client = new Client(numb);
-    clients.push(client);
+    let id: string = String(uuidv1());
     ws.on('message', (message: any) => {
-        let info: any = JSON.parse(message);
-        switch (info.type) {
+        let msg: any = JSON.parse(message);
+        switch (msg.type) {
             case MessageType.SetName:
-                client.setName(info.name);
-                wss.room.forEach((room: Room) => {
-                    if (room.countUsers === 1) {
-                        user[numb].send(messageFactory.createMessageSetNameRoom(room.name, client.name));
-                    }
-                });
+
+                let client = new Player(id, msg.name);
+                sockets.set(id, ws);
+                clients.push(client);
+                console.log(client);
+                /* wss.room.forEach((room: Room) => {
+                     if (room.countUsers === 1) {
+                         user[numb].send(messageFactory.createMessageSetNameRoom(room.name, client.name));
+                     }
+                 });*/
                 break;
             case MessageType.SetNameRoom:
-                client.setNameRoom(info.nameRoom);
-                addRoom(info,client);
-                break;
-            case MessageType.JoiningToRoom:
-                JoiningToRoom(info, numb);
-                break;
-            case MessageType.TossDice:
-                tossDice(info.dices);
-                break;
-            case MessageType.KeyCode:
-                keyDown(info.e);
-                break;
+                // client.setNameRoom(msg.nameRoom);
+
+                //first
+                wss.room = new Room(msg.nameRoom, find(id,clients));
+
+                //second
+                rooms.add(new Room(msg.nameRoom, find(id,clients)));
+                // addRoom(msg, client);
+                break;/*
+              case MessageType.JoiningToRoom:
+                  JoiningToRoom(msg, numb);
+                  break;
+              case MessageType.TossDice:
+                  tossDice(msg.dices);
+                  break;
+              case MessageType.KeyCode:
+                  keyDown(msg.e);
+                  break;*/
         }
     })
     /*ws.on('close', function () {
@@ -63,7 +69,15 @@ server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
 
-function addRoom(info:any,client:Client): void {
+function find(id: string, clients: Array<Player>): any {
+    clients.forEach((client: Player) => {
+        if (client.id === id) {
+            return client;
+        }
+        return undefined;
+    })
+}
+/*function addRoom(info:any,client:Client): void {
     let creator: Room = new Room(info.nameRoom, client.id);
     wss.room.push(creator);
     currentRoom = creator;
@@ -114,4 +128,4 @@ function JoiningToRoom(info: any, id: number): void {
             user[room.fisrtClient].send(messageFactory.craeteMessageConnectionUser(info.client));
         }
     });
-}
+}*/
