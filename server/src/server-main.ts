@@ -1,4 +1,3 @@
-
 import { MessageFactory } from "../../library/dist/message-factory";
 import { MessageType } from "../../library/dist/index";
 import { Room } from "./room";
@@ -15,7 +14,7 @@ const uuidv1 = require('uuid/v1');
 
 app.use(express.static('client/dist'));
 wss.room = new Array<Room>();
-let rooms =  new RoomControl();
+let rooms = new RoomControl();
 let messageFactory = new MessageFactory();
 
 let sockets: Map<string, any> = new Map();
@@ -27,36 +26,31 @@ wss.on('connection', function (ws: any) {
         let msg: any = JSON.parse(message);
         switch (msg.type) {
             case MessageType.SetName:
-
                 let client = new Player(id, msg.name);
                 sockets.set(id, ws);
                 clients.push(client);
                 console.log(client);
-                /* wss.room.forEach((room: Room) => {
-                     if (room.countUsers === 1) {
-                         user[numb].send(messageFactory.createMessageSetNameRoom(room.name, client.name));
-                     }
-                 });*/
+                pushRooms();
                 break;
             case MessageType.SetNameRoom:
-                // client.setNameRoom(msg.nameRoom);
-
                 //first
-                wss.room = new Room(msg.nameRoom, find(id,clients));
-
+                // wss.room = new Room(msg.nameRoom, find(id,clients));
                 //second
-                rooms.add(new Room(msg.nameRoom, find(id,clients)));
-                // addRoom(msg, client);
-                break;/*
-              case MessageType.JoiningToRoom:
-                  JoiningToRoom(msg, numb);
-                  break;
-              case MessageType.TossDice:
-                  tossDice(msg.dices);
-                  break;
-              case MessageType.KeyCode:
-                  keyDown(msg.e);
-                  break;*/
+                rooms.add(new Room(msg.name, find(id, clients)));
+                pushRooms();
+                break;
+            case MessageType.JoinRoom:
+                rooms.joinRoom(find(id ,clients),msg.id);
+                console.log(msg.id);
+                console.log("Cuurent Id:  "+ id);
+                break;
+            /*
+          case MessageType.TossDice:
+              tossDice(msg.dices);
+              break;
+          case MessageType.KeyCode:
+              keyDown(msg.e);
+              break;*/
         }
     })
     /*ws.on('close', function () {
@@ -69,24 +63,21 @@ server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
 
-function find(id: string, clients: Array<Player>): any {
-    clients.forEach((client: Player) => {
+function find(id: string, clients: Array<Player>): Player {//map
+    for (let client of clients) {
         if (client.id === id) {
             return client;
         }
-        return undefined;
-    })
-}
-/*function addRoom(info:any,client:Client): void {
-    let creator: Room = new Room(info.nameRoom, client.id);
-    wss.room.push(creator);
-    currentRoom = creator;
-    flagForFirstClient = true;
-    wss.clients.forEach((client: any) => {
-        client.send(messageFactory.createMessageNewRoom(info.nameRoom));
-    });
+    }
+    return new Player("non", "non");
 }
 
+function pushRooms(): void {
+    clients.forEach((client: Player) => {
+        sockets.get(client.id).send(messageFactory.createMessageCreateRoom(rooms.pushToClient()));
+    })
+}
+/*
 function tossDice(dices: number[]): void {
     if (flagForFirstClient) {
         user[currentRoom.fisrtClient].send(messageFactory.createMessageTossDice(dices));

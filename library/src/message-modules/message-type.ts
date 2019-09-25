@@ -1,12 +1,10 @@
 export enum MessageType {
     SetName,
     SetNameRoom,
-    JoiningToRoom,
-    NewRoom,
-    PushNameToRoom,
+    JoinRoom,
     ConnectionUser,
     TossDice,
     KeyCode,
     Disconnect,
-    GetId
+    CreateRoom
 }
