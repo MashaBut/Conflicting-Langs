@@ -1,4 +1,3 @@
-
 export { MessageTossDice } from "./message-modules/message-toss-dice";
 export { MessageSetName } from "./message-modules/message-set-name";
 export { MessageSetNameRoom } from "./message-modules/message-set-name-room";

@@ -13,7 +13,7 @@ export class RoomControl {
         return this.openRooms;
     }
 
-    joinRoom(client: Player, idRoom: string): void {
+    /*joinRoom(client: Player, idRoom: string): void {
         for (let room of this.openRooms) {
             if (room.id = idRoom) {
             //    this.openRooms.
@@ -24,5 +24,5 @@ export class RoomControl {
                 room.add(client);
             }
         }
-    }
+    }*/
 }

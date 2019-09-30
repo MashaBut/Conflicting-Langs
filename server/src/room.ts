@@ -5,10 +5,10 @@ export class Room {
     public id: string;
     public players: Map<number, string> = new Map();
 
-    constructor(name: string, player: Player) {
+    constructor(name: string, id:string) {
         this.name = name;
-        this.id = player.id;
-        this.players.set(1, player.id);
+        this.id = id;
+        this.players.set(1, id);
     }
 
     public add(player: Player): void {

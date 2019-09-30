@@ -25,7 +25,7 @@ let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
 let name: string = "";
 let dices: number[];
-let arrayRooms: any;
+let arrayRooms: Map<string,string>;
 View.StartPage();
 
 socket.onmessage = function (message: any) {
@@ -33,18 +33,21 @@ socket.onmessage = function (message: any) {
     switch (msg.type) {
         case MessageType.CreateRoom:
             clearRooms();
-            arrayRooms = msg.rooms;
-            arrayRooms.forEach((room: any) => {
-                viewRoom(room.id, room.name);
-                console.log(room.id, room.name);
-            });
+            let a = JSON.parse(msg)
+            console.log("a   :"+ a);
+            for (const a of msg.rooms) {
+               console.log(a.next());
+            }
+            
+            a.forEach((value: string, key: string, map: Map<string, string>) => {
+                console.log("Key:" + key + " value: " + value);
+            })
+
+            /*arrayRooms.forEach((room: any) => {
+              //  viewRoom(room.id, room.name);
+                console.log(room);
+            });*/
             break;
-        /*  case MessageType.NewRoom:
-              if (name !== "")
-                  break;
-          case MessageType.PushNameToRoom:
-              game.setPlayer1(msg.name);
-              break;*/
         case MessageType.ConnectionUser:
             game.setPlayer2(msg.name);
             break;
@@ -100,7 +103,7 @@ function clearRooms(): void {//+
     }
 }
 
-document.body.addEventListener('click', function (event: any) {//+
+/*document.body.addEventListener('click', function (event: any) {//+
     let idJoinRoom = event.srcElement.value;
     for (let room of arrayRooms) {
         if (room.id === idJoinRoom) {
@@ -113,7 +116,7 @@ document.body.addEventListener('click', function (event: any) {//+
             break;
         }
     }
-});
+});*/
 
 fromEvent(document, 'keydown')
     .subscribe((e: KeyboardEvent) => {

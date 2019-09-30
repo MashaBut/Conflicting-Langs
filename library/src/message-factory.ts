@@ -23,7 +23,7 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageCreateRoom(rooms: any): string {//+
+    public createMessageCreateRoom(rooms: any) {//+
         let message = new MessageCreateRoom();
         message.rooms = rooms;
         message.type = MessageType.CreateRoom;
