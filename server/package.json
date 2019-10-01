@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "tsc src/server-main.ts --outDir dist",
+        "build": "tsc src/main.ts --outDir dist",
         "postinstall": "link-module-alias"
     },
     "author": "",

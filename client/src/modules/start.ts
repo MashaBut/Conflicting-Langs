@@ -25,7 +25,8 @@ let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
 let name: string = "";
 let dices: number[];
-let arrayRooms: Map<string,string>;
+let arrayRooms: any;
+let currentPlayer: boolean = false;
 View.StartPage();
 
 socket.onmessage = function (message: any) {
@@ -33,23 +34,14 @@ socket.onmessage = function (message: any) {
     switch (msg.type) {
         case MessageType.CreateRoom:
             clearRooms();
-            let a = JSON.parse(msg)
-            console.log("a   :"+ a);
-            for (const a of msg.rooms) {
-               console.log(a.next());
-            }
-            
-            a.forEach((value: string, key: string, map: Map<string, string>) => {
-                console.log("Key:" + key + " value: " + value);
-            })
-
-            /*arrayRooms.forEach((room: any) => {
-              //  viewRoom(room.id, room.name);
-                console.log(room);
-            });*/
+            arrayRooms = msg.rooms;
+            arrayRooms.forEach((room: any) => {
+                viewRoom(room.id, room.name);
+            });
             break;
-        case MessageType.ConnectionUser:
-            game.setPlayer2(msg.name);
+        case MessageType.PushNamesToRoom:
+            game.setPlayer1(msg.name1);
+            game.setPlayer2(msg.name2);
             break;
         case MessageType.TossDice:
             dices = msg.dices;
@@ -59,7 +51,6 @@ socket.onmessage = function (message: any) {
             game.keyCode(msg.e);
             break;
         case MessageType.Disconnect:
-            alert(msg.connect);
             View.HollPage();
             break;
     }
@@ -103,31 +94,32 @@ function clearRooms(): void {//+
     }
 }
 
-/*document.body.addEventListener('click', function (event: any) {//+
+DOM.rooms.addEventListener('click', function (event: any) {//+
     let idJoinRoom = event.srcElement.value;
     for (let room of arrayRooms) {
         if (room.id === idJoinRoom) {
             socket.send(messageFactory.createMessageJoinRoom(idJoinRoom));
             View.GamePage();
-            game.setPlayer2(name);
             DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
             DOM.initSounds();
             break;
         }
     }
-});*/
+});
 
-fromEvent(document, 'keydown')
-    .subscribe((e: KeyboardEvent) => {
-        socket.send(messageFactory.createMessageKeyCode(e));
-    })
+if (currentPlayer) {
+    fromEvent(document, 'keydown')
+        .subscribe((e: KeyboardEvent) => {
+            socket.send(messageFactory.createMessageKeyCode(e));
+        })
 
-fromEvent(DOM.tossDice, 'click')
-    .subscribe(() => {
-        DiceRoller.roll(diceCollection);
-        socket.send(messageFactory.createMessageTossDice(DiceRoller.numberOfDices()));
-    });
+    fromEvent(DOM.tossDice, 'click')
+        .subscribe(() => {
+            DiceRoller.roll(diceCollection);
+            socket.send(messageFactory.createMessageTossDice(DiceRoller.numberOfDices()));
+        });
+}
 
 fromEvent(DOM.soundOff, 'click')
     .subscribe(() => {

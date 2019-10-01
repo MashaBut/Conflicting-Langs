@@ -5,7 +5,7 @@ export class DiceRoller {
 
   public static roll(diceCollection: Array<Dice>) {
     let i = 0;
-    diceCollection.forEach((item) => {
+    diceCollection.forEach(() => {
       this.dices[i] = getRandomIntInclusive(1, 6);
       i++;
     });
