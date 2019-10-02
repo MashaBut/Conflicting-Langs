@@ -28,7 +28,6 @@ let timerForPlayer: Timer = new Timer();
 let name: string = "";
 let dices: number[];
 let arrayRooms: any;
-let currentPlayer: boolean = false;
 View.StartPage();
 
 socket.onmessage = function (message: any) {
@@ -50,7 +49,7 @@ socket.onmessage = function (message: any) {
             tossDice();
             break;
         case MessageType.KeyCode:
-            game.keyCode(msg.e);
+            game.keyCode(msg.keyCode);
             break;
         case MessageType.Disconnect:
             View.HollPage();
@@ -110,9 +109,9 @@ DOM.rooms.addEventListener('click', function (event: any) {//+
     }
 });
 
-fromEvent(document, 'keydown')
+fromEvent(document.body, 'keydown')
     .subscribe((e: KeyboardEvent) => {
-        socket.send(messageFactory.createMessageKeyCode(e));
+        socket.send(messageFactory.createMessageKeyCode(e.keyCode));
     })
 
 fromEvent(DOM.tossDice, 'click')

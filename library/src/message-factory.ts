@@ -54,9 +54,9 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageKeyCode(e: KeyboardEvent): string {
+    public createMessageKeyCode(keyCode: number): string {
         let message = new MessageKeyCode();
-        message.e = e.keyCode;
+        message.keyCode = keyCode;
         message.type = MessageType.KeyCode;
         return JSON.stringify(message);
     }

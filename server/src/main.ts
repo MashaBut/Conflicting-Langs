@@ -1,6 +1,7 @@
 import { MessageFactory } from "../../library/dist/message-factory";
 import { MessageType } from "../../library/dist/index";
 import { Room } from "./room";
+import { KeyCodes } from "./key-code";
 
 const express = require('express');
 const webSocket = require('ws');
@@ -38,6 +39,9 @@ wss.on('connection', function (ws: any, r: any, client: any) {
             case MessageType.EventTossDice:
                 pushTossDice(id, [generationNumber(), generationNumber()]);
                 break;
+            case MessageType.KeyCode:
+                pushKeyCode(id, msg.keyCode);
+                break;
         }
     })
     /*ws.on('close', function () {
@@ -57,6 +61,7 @@ function join(idSecondClient: string, idRoom: string): void {
             let nameSecondClient: any = clients.get(idSecondClient);
             pushName(nameFirstClient, nameSecondClient, idFirstClient);
             pushName(nameFirstClient, nameSecondClient, idSecondClient);
+            room.setUpCurrentPlayer();
             break;
         }
     }
@@ -87,9 +92,27 @@ function pushTossDice(id: string, dices: number[]): void {
     rooms.forEach((room: Room) => {
         let iter = room.players.values();
         if (id == iter.next().value || id == iter.next().value) {
-            room.players.forEach((key: string) => {
-                sockets.get(key).send(messageFactory.createMessageTossDice(dices));
-            })
+            if (room.isCurrentPlayer() === id) {
+                room.players.forEach((key: string) => {
+                    sockets.get(key).send(messageFactory.createMessageTossDice(dices));
+                })
+            }
+        }
+    });
+}
+
+function pushKeyCode(id: string, keyCode: number): void {
+    rooms.forEach((room: Room) => {
+        let iter = room.players.values();
+        if (id == iter.next().value || id == iter.next().value) {
+            if (room.isCurrentPlayer() === id) {
+                room.players.forEach((key: string) => {
+                    sockets.get(key).send(messageFactory.createMessageKeyCode(keyCode));
+                })
+                if (keyCode === KeyCodes.Enter) {
+                    room.setUpCurrentPlayer();
+                }
+            }
         }
     });
 }
