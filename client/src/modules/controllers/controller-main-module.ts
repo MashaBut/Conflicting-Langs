@@ -172,7 +172,6 @@ export class Game {
         ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
-        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer1, this.player1.getCoints());
         PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
     }
 
@@ -182,7 +181,6 @@ export class Game {
         ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
-        ManipulationWithDOM.engagedCoins(ManipulationWithDOM.coinsplayer2, this.player2.getCoints());
         PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
     }
     public keyCode(e: KeyboardEvent) {

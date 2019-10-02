@@ -1,6 +1,5 @@
 export class Player {
     private name: string;
-    private coins: number;
     private color: string;
     private firstMove: boolean;
     public soundsForPlayer: boolean;
@@ -11,7 +10,6 @@ export class Player {
 
     public constructor(name: string, color: string, xStart: number, yStart: number) {
         this.name = name;
-        this.coins = 1200;
         this.color = color;
         this.firstMove = true;
         this.soundsForPlayer = true;
@@ -32,11 +30,6 @@ export class Player {
     public getColor(): string {
         return this.color;
     }
-
-    public getCoints(): number {
-        return this.coins;
-    }
-
     public getName(): string {
         return this.name;
     }
@@ -55,10 +48,6 @@ export class Player {
 
     public getOccupiedArea(): number {
         return this.occupiedArea;
-    }
-
-    public setCoints(coins: number): void {
-        this.coins = coins;
     }
 
     public setLives(): void {

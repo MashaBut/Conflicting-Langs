@@ -1,36 +1,42 @@
 .player1ForGame {
     display: block;
+    position: absolute;
+    top: 14%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
-    background-color: ghostwhite;
-    background-image: url('../../../assets/images/icon1.jpg');
+    border-style: solid;
+    border-color: #c1a940;
+    background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 50%;
-    height: 18%;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    margin-left: 25%;
+    width: 130px;
+    height: 130px;
 }
 
 .player2ForGame {
     display: block;
+    position: absolute;
+    top: 14%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
-    background-color: ghostwhite;
-    background-image: url('../../../assets/images/icon2.jpg');
+    border-color: #c1a940;
+    background-color: transparent;
+    border-style: solid;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 50%;
-    height: 18%;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    margin-left: 25%;
+    width: 130px;
+    height: 130px;
 }
 
 .divForLives {
     position: absolute;
-    top: 29%;
+    top: 30%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
@@ -40,6 +46,32 @@
     background-position: center;
     height: 35px;
     width: 64%;
+}
+
+.card {
+    display: block;
+    position: absolute;
+    top: 49%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 25%;
+    width: 70%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    border-style: solid;
+    border-color: #c1a940;
+    border-radius: 20px;
+    background-color: #010428;
+    color: black;
+}
+
+.card label {
+    color: #ff7e00;
+    font-size: 16px;
+    font-weight: bolder;
+    margin-top: 3%; 
 }
 
 @media screen and (min-width : 1224px) { /*Настольные компьютеры и ноутбуки*/
@@ -74,7 +106,7 @@
     .sound {
         /* ------------------Positioning--------------------- */
         position: absolute;
-        bottom: 1%;
+        bottom: 5%;
         margin-left: 20%;
         height: 9%;
         width: 65%;
@@ -122,34 +154,6 @@
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
-    }
-    
-    .card {
-        display: block;
-        position: absolute;
-        top: 53%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        height: 35%;
-        width: 73%;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        background-color: #010428;
-        background-image: url('../../../assets/images/frame.png');
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: black;
-    }
-    
-    .card label {
-        color: #ff7e00;
-        font-size: 16px;
-        font-weight: bolder;
-        margin-top: 3%; 
     }
 
     .divForPlayerOne .card .territoryplayer1 p, 
@@ -258,34 +262,6 @@
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
-    }
-    
-    .card {
-        display: block;
-        position: absolute;
-        top: 43%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        height: 35%;
-        width: 73%;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        background-color: #010428;
-        background-image: url('../../../assets/images/frame.png');
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: black;
-    }
-    
-    .card label {
-        color: #ff7e00;
-        font-size: 12px;
-        font-weight: bolder;
-        margin-top: 3%; 
     }
 
     .divForPlayerOne .card .territoryplayer1 p, 
@@ -415,34 +391,6 @@
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
-    }
-    
-    .card {
-        display: block;
-        position: absolute;
-        top: 38%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        height: 35%;
-        width: 73%;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        background-color: #010428;
-        background-image: url('../../../assets/images/frame.png');
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: black;
-    }
-
-    .card label {
-        color: #ff7e00;
-        font-size: 10px;
-        font-weight: bolder;
-        margin-top: 3%; 
     }
 
     .divForPlayerOne .card .territoryplayer1 p, 

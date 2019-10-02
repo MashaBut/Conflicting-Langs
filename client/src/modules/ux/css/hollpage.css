@@ -18,60 +18,35 @@
     transform: translate(-50%, -50%);
 }
 
-.frameForRooms {
-    display: block;
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    height: 25%;
-    background-color: #010428;
-    width: 96%;
-    background-image: url("../../../assets/images/frame4.png");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
 .rooms {
-    display: block;
     position: absolute;
-    top: 15%;
+    display: block;
+    top: 10%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    height: 20%;
+    height: 15%;
     width: 92%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-style: solid;
+    border-color: #c1a940;
+    border-radius: 20px;
+    background-color: #010428;
     text-align: center;
     font-size: 18px;
     font-weight: 700;
-    background-color: #010428;
     color: black;
-    padding-left: 1%;
-    padding-right: 1%;
     overflow-y: auto;
 }
 
-::-webkit-scrollbar {
-    width: 15px;
-}
+::-webkit-scrollbar { width: 15px; }
 
-::-webkit-scrollbar-track {
-    background-color: #080c3e;
-} /* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-track { background-color: #080c3e; } /* the new scrollbar will have a flat appearance with the set background color */
 
-::-webkit-scrollbar-thumb {
-    background-color: #00021d; 
-} /* this will style the thumb, ignoring the track */
+::-webkit-scrollbar-thumb { background-color: #00021d;  } /* this will style the thumb, ignoring the track */
 
-/* ::-webkit-scrollbar-button {
-    background-color: #7c2929;
-} optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
-
-::-webkit-scrollbar-corner {
-    background-color: white;
-} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+::-webkit-scrollbar-corner { background-color: white; } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
 
 
 .rooms button {
@@ -96,4 +71,140 @@
     border-radius: 20px;
     /* ------------------ Other --------------------- */
     outline: none;
+}
+
+.properties {
+    position: relative;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 55%;
+    width: 25%;
+    text-align: center;
+    background-color: #010428;
+    border-style: solid;
+    border-color: #c1a940;
+    border-radius: 20px;
+}
+
+.properties p {
+    color: #fff;
+    font-size: 14px;
+    font-size: 1.2vw; 
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.greenButton, 
+.redButton, 
+.yellowButton, 
+.blueButton,
+.blueMap, 
+.blackMap, 
+.brownMap, 
+.whiteMap,
+.smallMap,
+.mediumMap,
+.bigMap {
+    outline: none;
+    border: 0px;
+    height: 50px;
+    width: 50px;
+    margin-right:15px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+    font-size: 1.2vw; 
+    font-weight: 700;
+    color: #fff;
+}
+
+.greenButton { background-color: green; }
+
+.redButton { background-color: red; }
+
+.yellowButton { background-color: yellow; }
+
+.blueButton { background-color: blue; }
+
+.greenButton:hover { background: rgb(67, 223, 72); }
+
+.redButton:hover { background: rgb(232,95,76); }
+
+.yellowButton:hover { background: rgb(215, 230, 86); }
+
+.blueButton:hover { background: rgb(52, 60, 213); }
+
+.blueMap { 
+    background-image: url("../../../assets/images/map1.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.blackMap {     
+    background-image: url("../../../assets/images/map2.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.brownMap { 
+    background-image: url("../../../assets/images/map3.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.whiteMap { 
+    background-image: url("../../../assets/images/map4.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.properties button:focus {
+    outline: none;
+    -webkit-box-shadow: inset 0px 0px 5px #1b1b1b;
+       -moz-box-shadow: inset 0px 0px 5px #1b1b1b;
+            box-shadow: inset 0px 0px 5px #1b1b1b;
+}
+
+.smallMap:focus,
+.mediumMap:focus,
+.bigMap:focus { 
+    outline: none;
+    -webkit-box-shadow: inset 0px 0px 5px #ffffff;
+       -moz-box-shadow: inset 0px 0px 5px #ffffff;
+            box-shadow: inset 0px 0px 5px #ffffff;
+}
+
+.smallMap,
+.mediumMap,
+.bigMap { 
+    background-image: url("../../../assets/images/map1.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.smallMap{
+    height: 30px;
+    width: 30px;
+    font-size: 6px;
+    font-weight: 700;
+}
+
+.mediumMap {
+    height: 50px;
+    width: 50px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.bigMap {
+    height: 70px;
+    width: 70px;
 }

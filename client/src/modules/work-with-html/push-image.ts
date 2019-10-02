@@ -15,10 +15,13 @@ export class PushImage {
         this.image.src = PathToMedia.pathToAnimate;
     }
 
-    public static returnImage(dices:number[]) {
+    public static returnImage(dices :number[]) {
         let path = DiceRoller.getPathOfImage(dices);
         let pathToImage = "./images/png/" + path;
         this.image.src = pathToImage;
     }
 
+    public static setPlayersPhoto(pathToPhoto :string, player: HTMLElement) {
+        player.style.cssText = "background-image: url(" + pathToPhoto + ");";
+    }
 }

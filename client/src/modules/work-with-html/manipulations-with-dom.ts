@@ -25,6 +25,9 @@ export class ManipulationWithDOM {
     static playerInit: HTMLInputElement = <HTMLInputElement>document.getElementById("player");
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
+    
+    static photoPlayer1: HTMLElement = <HTMLElement>document.getElementById("player1ForGame");
+    static photoPlayer2: HTMLElement = <HTMLElement>document.getElementById("player2ForGame");
 
     //canvas element
     static canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
@@ -34,8 +37,6 @@ export class ManipulationWithDOM {
     static livesForPlayerTwo: HTMLElement = <HTMLElement>document.getElementById("divForLives2");
     static territoryplayer1: HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
     static territoryplayer2: HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
-    static coinsplayer1: HTMLElement = <HTMLElement>document.getElementById("coinsplayer1");
-    static coinsplayer2: HTMLElement = <HTMLElement>document.getElementById("coinsplayer2");
 
     //timer
     static timer: HTMLElement = <HTMLElement>document.getElementById("timer");
@@ -99,9 +100,5 @@ export class ManipulationWithDOM {
 
     public static setupNamePlayer(path: HTMLElement, name: string): void {
         path.innerHTML = name;
-    }
-
-    public static engagedCoins(path: HTMLElement, coins: number): void {
-        path.innerHTML = String(coins);
     }
 }
