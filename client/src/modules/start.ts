@@ -12,7 +12,7 @@ import { DiceRoller } from "./game/dice/dice-roller";
 
 import { Timer } from "./game/timer/timer";
 
-import { Game } from "./controllers/controller-main-module"
+import { Game } from "./controllers/controller-main-module";
 
 //import { MessageFactory } from "@message-facroty/message-factory";
 import { MessageFactory } from "../../../library/dist/message-factory";
