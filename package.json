@@ -7,7 +7,7 @@
         "doc": "docs"
     },
     "scripts": {
-        "server": "node server/dist/server-main.js"
+        "server": "node server/dist/main.js"
     },
     "repository": {
         "type": "git",
@@ -18,5 +18,8 @@
     "bugs": {
         "url": "https://github.com/MashaBut/Conflicting-Langs/issues"
     },
-    "homepage": "https://github.com/MashaBut/Conflicting-Langs#readme"
+    "homepage": "https://github.com/MashaBut/Conflicting-Langs#readme",
+    "dependencies": {
+        "messages-for-conglicting-lands": "^1.0.0"
+    }
 }

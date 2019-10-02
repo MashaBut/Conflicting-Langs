@@ -1,5 +1,5 @@
 import { MessageBase } from "./message-base";
 
-export class MessageConnectedUser extends MessageBase {
+export class MessageSetNameRoom extends MessageBase {
     public name: string;
 }
