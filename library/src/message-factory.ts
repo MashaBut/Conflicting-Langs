@@ -7,6 +7,7 @@ import { MessageKeyCode } from "./message-modules/message-key-code";
 import { MessageDisconnect } from "./message-modules/message-disconnect";
 import { MessageCreateRoom } from "./message-modules/message-create-room";
 import { MessagePushNamesToRoom } from "./message-modules/message-push-names-to-room";
+import { MessageEventTossDice } from "./message-modules/message-event-toos-dice";
 
 export class MessageFactory {
     public createMessageSetName(name: string): string {//+
@@ -57,6 +58,12 @@ export class MessageFactory {
         let message = new MessageKeyCode();
         message.e = e.keyCode;
         message.type = MessageType.KeyCode;
+        return JSON.stringify(message);
+    }
+
+    public createMessageEventTossDice(): string {
+        let message = new MessageEventTossDice();
+        message.type = MessageType.EventTossDice;
         return JSON.stringify(message);
     }
 

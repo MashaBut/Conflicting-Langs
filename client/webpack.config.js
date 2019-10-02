@@ -65,6 +65,9 @@ module.exports = {
     ],
 
     resolve: {
+        alias: {
+            "@node-modules": "../client/node_modules"
+        },
         extensions: ['.tsx', '.ts', '.js']
     },
 

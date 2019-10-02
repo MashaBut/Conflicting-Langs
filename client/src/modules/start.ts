@@ -5,14 +5,16 @@ import { View } from "./work-with-html/view";
 import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
 import { PushImage } from "./work-with-html/push-image";
 
-import { fromEvent } from "rxjs";
+import { fromEvent } from 'rxjs';
+//import { fromEvent } from "@node-modules/rxjs/index";
 
 import { DiceRoller } from "./game/dice/dice-roller";
-import { diceCollection } from "./game/dice/dice";
+
 import { Timer } from "./game/timer/timer";
 
 import { Game } from "./controllers/controller-main-module"
 
+//import { MessageFactory } from "@message-facroty/message-factory";
 import { MessageFactory } from "../../../library/dist/message-factory";
 import { MessageType } from "../../../library/dist/index";
 
@@ -59,7 +61,7 @@ socket.onmessage = function (message: any) {
 fromEvent(DOM.writeNames, 'click')//+
     .subscribe(() => {
         name = (DOM.playerInit).value;
-        if (name !== "") {
+        if (name != "") {
             View.HollPage();
             socket.send(messageFactory.createMessageSetName(name));
         }
@@ -67,8 +69,8 @@ fromEvent(DOM.writeNames, 'click')//+
 
 fromEvent(DOM.createRoom, 'click')//+
     .subscribe(() => {
-        let nameRoom = (DOM.nameRoom).value;
-        if (nameRoom !== "") {
+        const nameRoom = (DOM.nameRoom).value;
+        if (nameRoom != "") {
             socket.send(messageFactory.createMessageSetNameRoom(nameRoom));
             game.setPlayer1(name);
             View.GamePage();
@@ -108,18 +110,15 @@ DOM.rooms.addEventListener('click', function (event: any) {//+
     }
 });
 
-if (currentPlayer) {
-    fromEvent(document, 'keydown')
-        .subscribe((e: KeyboardEvent) => {
-            socket.send(messageFactory.createMessageKeyCode(e));
-        })
+fromEvent(document, 'keydown')
+    .subscribe((e: KeyboardEvent) => {
+        socket.send(messageFactory.createMessageKeyCode(e));
+    })
 
-    fromEvent(DOM.tossDice, 'click')
-        .subscribe(() => {
-            DiceRoller.roll(diceCollection);
-            socket.send(messageFactory.createMessageTossDice(DiceRoller.numberOfDices()));
-        });
-}
+fromEvent(DOM.tossDice, 'click')
+    .subscribe(() => {
+        socket.send(messageFactory.createMessageEventTossDice());
+    });
 
 fromEvent(DOM.soundOff, 'click')
     .subscribe(() => {

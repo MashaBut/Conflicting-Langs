@@ -1,6 +1,7 @@
 import { MessageFactory } from "../../library/dist/message-factory";
 import { MessageType } from "../../library/dist/index";
 import { Room } from "./room";
+
 const express = require('express');
 const webSocket = require('ws');
 const { createServer } = require('http');
@@ -34,8 +35,8 @@ wss.on('connection', function (ws: any, r: any, client: any) {
                 join(id, msg.id);
                 pushRooms();
                 break;
-            case MessageType.TossDice:
-                pushTossDice(id, msg.dices);
+            case MessageType.EventTossDice:
+                pushTossDice(id, [generationNumber(), generationNumber()]);
                 break;
         }
     })
@@ -61,6 +62,10 @@ function join(idSecondClient: string, idRoom: string): void {
     }
 }
 
+function generationNumber(): number {
+    return Math.floor((Math.random() * 6) + 1);
+}
+
 function pushName(nameFisrtClient: string, nameSecondClient: string, idClient: string): void {
     sockets.get(idClient).send(messageFactory.createMessagePushNamesToRoom(nameFisrtClient, nameSecondClient));
 }
@@ -78,17 +83,7 @@ function pushRooms(): void {
     openRooms.length = 0;
 }
 
-function getClientInRoom(): Array<Room> {
-    let playingRoom = new Array<Room>();
-    rooms.forEach((room: Room) => {
-        if (room.players.size === 2) {
-            playingRoom.push(room);
-        }
-    });
-    return playingRoom;
-}
-
-function pushTossDice(id: string, dices: []): void {
+function pushTossDice(id: string, dices: number[]): void {
     rooms.forEach((room: Room) => {
         let iter = room.players.values();
         if (id == iter.next().value || id == iter.next().value) {

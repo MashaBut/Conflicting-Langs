@@ -6,5 +6,6 @@ export enum MessageType {
     KeyCode,
     Disconnect,
     CreateRoom,
-    PushNamesToRoom
+    PushNamesToRoom,
+    EventTossDice
 }
