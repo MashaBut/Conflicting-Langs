@@ -52,6 +52,8 @@ socket.onmessage = function (message: any) {
             game.keyCode(msg.keyCode);
             break;
         case MessageType.Disconnect:
+            alert("Извените ваш опонент вышел");
+            game.clearFuildForPlayerData();
             View.HollPage();
             break;
     }
@@ -130,6 +132,13 @@ fromEvent(DOM.endGame, 'click')
         DOM.playSound(PathToMedia.endOfTheGame);
     });
 
+fromEvent(DOM.endGame, 'click')
+    .subscribe(() => {
+        View.HollPage();
+        game.clearFuildForPlayerData();
+        socket.send(messageFactory.createMessageMoveToHollPage());
+    })
+
 function tossDice(): void {
     PushImage.returmAnimate();
     DOM.playSound(PathToMedia.soundForDice);
@@ -138,9 +147,17 @@ function tossDice(): void {
     setTimeout(timer, 1790);
 }
 
+
+
 function timer() {
     PushImage.returnImage(dices);
     timerForPlayer.Timer();
     game.turnTime();
     game.createPositionsBlockForMap(dices);
+}
+
+export class Change {
+    public static changePlayer(): void {
+        socket.send(messageFactory.createMessageChangePlayer());
+    }
 }

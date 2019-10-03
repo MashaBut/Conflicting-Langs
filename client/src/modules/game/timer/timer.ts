@@ -1,10 +1,11 @@
 import { ManipulationWithDOM } from "../../work-with-html/manipulations-with-dom";
 import { PathToMedia } from "../../work-with-html/path-to-media";
+import {Change} from "../../start";
 
 export class Timer {
     static flagForTimer: boolean = true;
     static soundOfClock = new Audio(PathToMedia.clock);
-    constructor(public counter = 20) { }
+    public counter = 20;
     async Timer() {
         let intervalId = setInterval(() => {
             this.counter = this.counter - 1;
@@ -17,6 +18,7 @@ export class Timer {
             }
             if (this.counter === 0) {
                 clearInterval(intervalId);
+                Change.changePlayer();
                 Timer.soundOfClock.pause();
                 Timer.soundOfClock.currentTime = 0;
                 this.counter = 20;

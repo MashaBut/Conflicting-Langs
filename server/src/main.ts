@@ -17,7 +17,7 @@ let messageFactory = new MessageFactory();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
 let rooms = new Array<Room>();
-
+let a = 0;
 wss.on('connection', function (ws: any, r: any, client: any) {
     let id: string = String(uuidv1());
     ws.on('message', (message: any) => {
@@ -41,6 +41,12 @@ wss.on('connection', function (ws: any, r: any, client: any) {
                 break;
             case MessageType.KeyCode:
                 pushKeyCode(id, msg.keyCode);
+                break;
+            case MessageType.ChangePlayer:
+                changePlayerInCurrentRoom(id);
+                break;
+            case MessageType.MoveToHollPage:
+                moveToHollPage(id);
                 break;
         }
     })
@@ -101,6 +107,16 @@ function pushTossDice(id: string, dices: number[]): void {
     });
 }
 
+function changePlayerInCurrentRoom(id: string): void {
+    for (let room of rooms) {
+        let iter = room.players.values();
+        if (id === room.isCurrentPlayer()) {
+            room.setUpCurrentPlayer();
+            break;
+        }
+    }
+}
+
 function pushKeyCode(id: string, keyCode: number): void {
     rooms.forEach((room: Room) => {
         let iter = room.players.values();
@@ -115,4 +131,21 @@ function pushKeyCode(id: string, keyCode: number): void {
             }
         }
     });
+}
+
+function moveToHollPage(id: string): void {
+    let a=0;
+    for (let room of rooms) {
+        let iter = room.players.values();
+        if (id == iter.next().value || id == iter.next().value) {
+            room.players.forEach((key: string) => {
+                if (key != id) {
+                    sockets.get(key).send(messageFactory.createMessageDisconnect());
+                }
+            })
+            rooms.slice(a,1);
+            break;
+        }
+        a++;
+    }
 }
