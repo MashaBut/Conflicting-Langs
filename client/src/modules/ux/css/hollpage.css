@@ -19,14 +19,12 @@
 }
 
 .rooms {
-    position: absolute;
     display: block;
-    top: 10%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    height: 15%;
-    width: 92%;
+    float: left;
+    margin-top: 5%;
+    margin-left: 5%;
+    height: 70%;
+    width: 30%;
     padding-left: 1%;
     padding-right: 1%;
     border-style: solid;
@@ -74,14 +72,12 @@
 }
 
 .properties {
-    position: relative;
     display: block;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    height: 55%;
-    width: 25%;
+    float: right;
+    margin-right: 5%;
+    margin-top: 5%;
+    height: 70%;
+    width: 30%;
     text-align: center;
     background-color: #010428;
     border-style: solid;
@@ -97,12 +93,10 @@
     text-transform: uppercase;
 }
 
-.greenButton, 
+.orangeButton, 
 .redButton, 
-.yellowButton, 
 .blueButton,
 .blueMap, 
-.blackMap, 
 .brownMap, 
 .whiteMap,
 .smallMap,
@@ -121,31 +115,20 @@
     color: #fff;
 }
 
-.greenButton { background-color: green; }
+.orangeButton { background-color: #F5780B; }
 
 .redButton { background-color: red; }
 
-.yellowButton { background-color: yellow; }
-
 .blueButton { background-color: blue; }
 
-.greenButton:hover { background: rgb(67, 223, 72); }
+.orangeButton:hover { background: #F79844; }
 
 .redButton:hover { background: rgb(232,95,76); }
-
-.yellowButton:hover { background: rgb(215, 230, 86); }
 
 .blueButton:hover { background: rgb(52, 60, 213); }
 
 .blueMap { 
     background-image: url("../../../assets/images/map1.jpg"); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.blackMap {     
-    background-image: url("../../../assets/images/map2.jpg"); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

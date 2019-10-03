@@ -58,6 +58,7 @@ server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
 
+//prisoedenitsya_k_komnate :)
 function join(idSecondClient: string, idRoom: string): void {
     for (let room of rooms) {
         if (room.id === idRoom) {
@@ -73,14 +74,17 @@ function join(idSecondClient: string, idRoom: string): void {
     }
 }
 
+//sgenerirovat_chisla :)
 function generationNumber(): number {
     return Math.floor((Math.random() * 6) + 1);
 }
 
+//otpravit_spisock_imen :)
 function pushName(nameFisrtClient: string, nameSecondClient: string, idClient: string): void {
     sockets.get(idClient).send(messageFactory.createMessagePushNamesToRoom(nameFisrtClient, nameSecondClient));
 }
 
+//otpravit_spisock_otkritix_komnat :)
 function pushRooms(): void {
     let openRooms = new Array<Room>();
     rooms.forEach((room: Room) => {
@@ -94,6 +98,7 @@ function pushRooms(): void {
     openRooms.length = 0;
 }
 
+//otpravit_podkinutie_kubicki :)
 function pushTossDice(id: string, dices: number[]): void {
     rooms.forEach((room: Room) => {
         let iter = room.players.values();
@@ -117,6 +122,7 @@ function changePlayerInCurrentRoom(id: string): void {
     }
 }
 
+//otpravit_nomer_klavishi :)
 function pushKeyCode(id: string, keyCode: number): void {
     rooms.forEach((room: Room) => {
         let iter = room.players.values();
@@ -149,3 +155,4 @@ function moveToHollPage(id: string): void {
         a++;
     }
 }
+//ps.masha and nastya with huge love
