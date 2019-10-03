@@ -9,6 +9,7 @@ import { Color } from "../game/work-with-canvas/color";
 import { Timer } from "../game/timer/timer";
 import { PlayersLives } from "../game/lives/lives";
 import { PathToMedia } from "../work-with-html/path-to-media";
+import { Change } from "../start";
 
 export class Game {
 
@@ -100,6 +101,7 @@ export class Game {
     }
 
     private endOfturn() {
+
         ManipulationWithDOM.undisabledButtonDice();
         clearTimeout(this.timer);
         this.flag = false;
@@ -113,6 +115,7 @@ export class Game {
             }
             else if (!this.possiblePositions) {
                 alert("Oh, no. Sorry:(");
+                Change.changePlayer();
                 this.currentPlayer.setLives();
                 ManipulationWithDOM.playSound(PathToMedia.lostLife);
                 if (this.currentPlayer === this.player1) {
@@ -125,6 +128,7 @@ export class Game {
                 }
                 if (this.currentPlayer.getLives() === 0) {
                     alert(this.currentPlayer.getName() + " loser");
+
                 }
             }
         }
@@ -186,6 +190,11 @@ export class Game {
     public keyCode(e: KeyboardEvent) {
         ManipulationWithDOM.disableStandardKeyOperation(e);
         this.setBlockPositionOnMap(e);
+    }
+
+    public clearFuildForPlayerData(): void {
+        this.setPlayer1("");
+        this.setPlayer2("");
     }
 
     private setBlockPositionOnMap(keyCode: any): void {

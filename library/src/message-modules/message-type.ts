@@ -7,5 +7,8 @@ export enum MessageType {
     Disconnect,
     CreateRoom,
     PushNamesToRoom,
-    EventTossDice
+    EventTossDice,
+    ChangePlayer,
+    MoveToHollPage,
+    
 }

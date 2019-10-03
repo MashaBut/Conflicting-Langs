@@ -8,7 +8,8 @@ import { MessageDisconnect } from "./message-modules/message-disconnect";
 import { MessageCreateRoom } from "./message-modules/message-create-room";
 import { MessagePushNamesToRoom } from "./message-modules/message-push-names-to-room";
 import { MessageEventTossDice } from "./message-modules/message-event-toos-dice";
-
+import { MessageChangePlayer } from "./message-modules/message-change-player";
+import { MessageMoveToHollPage } from "./message-modules/message-move-to-holl-page";
 export class MessageFactory {
     public createMessageSetName(name: string): string {//+
         let message = new MessageSetName();
@@ -39,7 +40,7 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessagePushNamesToRoom(name1: string, name2: string): string {
+    public createMessagePushNamesToRoom(name1: string, name2: string): string {//+
         let message = new MessagePushNamesToRoom();
         message.name1 = name1;
         message.name2 = name2;
@@ -47,29 +48,40 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageTossDice(dices: number[]): string {
+    public createMessageTossDice(dices: number[]): string {//+
         let message = new MessageTossDice();
         message.dices = dices;
         message.type = MessageType.TossDice;
         return JSON.stringify(message);
     }
 
-    public createMessageKeyCode(keyCode: number): string {
+    public createMessageKeyCode(keyCode: number): string {//+
         let message = new MessageKeyCode();
         message.keyCode = keyCode;
         message.type = MessageType.KeyCode;
         return JSON.stringify(message);
     }
 
-    public createMessageEventTossDice(): string {
+    public createMessageEventTossDice(): string {//+
         let message = new MessageEventTossDice();
         message.type = MessageType.EventTossDice;
         return JSON.stringify(message);
     }
 
-    public createDisconnect(report: string): string {
+    public createMessageChangePlayer(): string {//+
+        let message = new MessageChangePlayer();
+        message.type = MessageType.ChangePlayer;
+        return JSON.stringify(message);
+    }
+
+    public createMessageMoveToHollPage(): string {
+        let message = new MessageMoveToHollPage();
+        message.type = MessageType.MoveToHollPage;
+        return JSON.stringify(message);
+    }
+
+    public createMessageDisconnect(): string {
         let message = new MessageDisconnect();
-        message.connect = report;
         message.type = MessageType.Disconnect;
         return JSON.stringify(message);
     }
