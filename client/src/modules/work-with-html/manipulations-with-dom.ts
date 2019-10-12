@@ -61,6 +61,11 @@ export class ManipulationWithDOM {
 
     //div
     static gamePage: HTMLElement = <HTMLElement>document.getElementById("gamepage");
+    //info
+    static infoButton: any = <HTMLElement>document.getElementById("information");
+    static informationAboutGame: any = <HTMLElement>document.getElementById("informationAboutGame");
+    static hideInformationAboutGame: any = <HTMLElement>document.getElementById("hideInfo");
+    
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
