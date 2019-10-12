@@ -1,8 +1,6 @@
-import { MessageFactory } from "../../library/dist/message-factory";
 import { MessageType } from "../../library/dist/index";
 import { Room } from "./room";
-import { KeyCodes } from "./key-code";
-
+import { ServerMessages } from "./server-messages";
 const express = require('express');
 const webSocket = require('ws');
 const { createServer } = require('http');
@@ -13,40 +11,42 @@ const uuidv1 = require('uuid/v1');
 
 app.use(express.static('client/dist'));
 
-let messageFactory = new MessageFactory();
+let serverMessages = new ServerMessages();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
 let rooms = new Array<Room>();
-let a = 0;
-wss.on('connection', function (ws: any, r: any, client: any) {
+
+wss.on('connection', function (ws: any) {
     let id: string = String(uuidv1());
     ws.on('message', (message: any) => {
-        let msg: any = JSON.parse(message);
+        const msg = JSON.parse(message);
         switch (msg.type) {
             case MessageType.SetName:
                 sockets.set(id, ws);
                 clients.set(id, msg.name);
-                pushRooms();
+                serverMessages.sendRooms(rooms, sockets);
                 break;
             case MessageType.SetNameRoom:
-                rooms.push(new Room(msg.name, id));
-                pushRooms();
+                let room = new Room(msg.name, id, clients.get(id));
+                room.settingsRoom(msg.properties);
+                rooms.push(room);
+                serverMessages.sendRooms(rooms, sockets);
                 break;
             case MessageType.JoinRoom:
-                join(id, msg.id);
-                pushRooms();
+                serverMessages.sendRooms(rooms, sockets);
+                serverMessages.gameStart(rooms, sockets, clients, id, msg.id);
                 break;
             case MessageType.EventTossDice:
-                pushTossDice(id, [generationNumber(), generationNumber()]);
+                serverMessages.sendTossDice(id, rooms, sockets);
                 break;
-            case MessageType.KeyCode:
-                pushKeyCode(id, msg.keyCode);
+            case MessageType.Event:
+                serverMessages.sendEvent(id, msg.event, rooms, sockets);
                 break;
             case MessageType.ChangePlayer:
-                changePlayerInCurrentRoom(id);
+                serverMessages.changePlayerInCurrentRoom(id, rooms);
                 break;
             case MessageType.MoveToHollPage:
-                moveToHollPage(id);
+                // navigateToHollPage(id);
                 break;
         }
     })
@@ -58,89 +58,8 @@ server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
 
-//prisoedenitsya_k_komnate :)
-function join(idSecondClient: string, idRoom: string): void {
-    for (let room of rooms) {
-        if (room.id === idRoom) {
-            room.add(idSecondClient);
-            let idFirstClient: any = room.players.get(1);
-            let nameFirstClient: any = clients.get(idFirstClient);
-            let nameSecondClient: any = clients.get(idSecondClient);
-            pushName(nameFirstClient, nameSecondClient, idFirstClient);
-            pushName(nameFirstClient, nameSecondClient, idSecondClient);
-            room.setUpCurrentPlayer();
-            break;
-        }
-    }
-}
-
-//sgenerirovat_chisla :)
-function generationNumber(): number {
-    return Math.floor((Math.random() * 6) + 1);
-}
-
-//otpravit_spisock_imen :)
-function pushName(nameFisrtClient: string, nameSecondClient: string, idClient: string): void {
-    sockets.get(idClient).send(messageFactory.createMessagePushNamesToRoom(nameFisrtClient, nameSecondClient));
-}
-
-//otpravit_spisock_otkritix_komnat :)
-function pushRooms(): void {
-    let openRooms = new Array<Room>();
-    rooms.forEach((room: Room) => {
-        if (room.players.size === 1) {
-            openRooms.push(room);
-        }
-    });
-    sockets.forEach((value: string, key: string, map: Map<string, string>) => {
-        sockets.get(key).send(messageFactory.createMessageCreateRoom(openRooms));
-    })
-    openRooms.length = 0;
-}
-
-//otpravit_podkinutie_kubicki :)
-function pushTossDice(id: string, dices: number[]): void {
-    rooms.forEach((room: Room) => {
-        let iter = room.players.values();
-        if (id == iter.next().value || id == iter.next().value) {
-            if (room.isCurrentPlayer() === id) {
-                room.players.forEach((key: string) => {
-                    sockets.get(key).send(messageFactory.createMessageTossDice(dices));
-                })
-            }
-        }
-    });
-}
-
-function changePlayerInCurrentRoom(id: string): void {
-    for (let room of rooms) {
-        let iter = room.players.values();
-        if (id === room.isCurrentPlayer()) {
-            room.setUpCurrentPlayer();
-            break;
-        }
-    }
-}
-
-//otpravit_nomer_klavishi :)
-function pushKeyCode(id: string, keyCode: number): void {
-    rooms.forEach((room: Room) => {
-        let iter = room.players.values();
-        if (id == iter.next().value || id == iter.next().value) {
-            if (room.isCurrentPlayer() === id) {
-                room.players.forEach((key: string) => {
-                    sockets.get(key).send(messageFactory.createMessageKeyCode(keyCode));
-                })
-                if (keyCode === KeyCodes.Enter) {
-                    room.setUpCurrentPlayer();
-                }
-            }
-        }
-    });
-}
-
-function moveToHollPage(id: string): void {
-    let a=0;
+/*function navigateToHollPage(id: string): void {
+    let a = 0;
     for (let room of rooms) {
         let iter = room.players.values();
         if (id == iter.next().value || id == iter.next().value) {
@@ -149,10 +68,9 @@ function moveToHollPage(id: string): void {
                     sockets.get(key).send(messageFactory.createMessageDisconnect());
                 }
             })
-            rooms.slice(a,1);
+            rooms.slice(a, 1);
             break;
         }
         a++;
     }
-}
-//ps.masha and nastya with huge love
+}*/

@@ -3,7 +3,7 @@ import { MessageSetName } from "./message-modules/message-set-name";
 import { MessageSetNameRoom } from "./message-modules/message-set-name-room";
 import { MessageJoinRoom } from "./message-modules/message-join-room";
 import { MessageTossDice } from "./message-modules/message-toss-dice";
-import { MessageKeyCode } from "./message-modules/message-key-code";
+import { MessageEvent } from "./message-modules/message-event";
 import { MessageDisconnect } from "./message-modules/message-disconnect";
 import { MessageCreateRoom } from "./message-modules/message-create-room";
 import { MessagePushNamesToRoom } from "./message-modules/message-push-names-to-room";
@@ -18,20 +18,20 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageSetNameRoom(name: string): string {//+
+    public createMessageSetNameRoom(name: string, properties: Array<any>): string {//+
         let message = new MessageSetNameRoom();
         message.name = name;
+        message.properties = properties;
         message.type = MessageType.SetNameRoom;
         return JSON.stringify(message);
     }
 
-    public createMessageCreateRoom(rooms: any) {//+
+    public createMessageCreateRoom(rooms: Array<Object>) {//+
         let message = new MessageCreateRoom();
         message.rooms = rooms;
         message.type = MessageType.CreateRoom;
         return JSON.stringify(message);
     }
-
 
     public createMessageJoinRoom(idRoom: string): string {//+
         let message = new MessageJoinRoom();
@@ -40,10 +40,12 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessagePushNamesToRoom(name1: string, name2: string): string {//+
+    public createMessagePushNamesToRoom(name1: string, name2: string, currentPlayer: number, settings: Array<any>): string {//+
         let message = new MessagePushNamesToRoom();
         message.name1 = name1;
         message.name2 = name2;
+        message.settings = settings;
+        message.currentPlayer = currentPlayer;
         message.type = MessageType.PushNamesToRoom;
         return JSON.stringify(message);
     }
@@ -55,10 +57,10 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageKeyCode(keyCode: number): string {//+
-        let message = new MessageKeyCode();
-        message.keyCode = keyCode;
-        message.type = MessageType.KeyCode;
+    public createMessageEvent(event: string): string {//+
+        let message = new MessageEvent();
+        message.event = event;
+        message.type = MessageType.Event;
         return JSON.stringify(message);
     }
 
