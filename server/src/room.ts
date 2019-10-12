@@ -1,26 +1,39 @@
 export class Room {
+    public currentPlayerId: string;
+    public setUpCurrentPlayerNumb: number;
     public name: string;
     public id: string;
-    public players: Map<number, string> = new Map();
-    private currentPlayer: string;
-    private numb: number = 2;
+    public creator: string;
+    public players: Array<string> = new Array();
+    public settings: Array<any> = new Array();
 
-    constructor(name: string, id: string) {
+    constructor(name: string, id: string, creator: any) {
         this.name = name;
         this.id = id;
-        this.players.set(1, id);
+        this.creator = creator;
+        this.players.push(id);
+        this.firstPlayerNumb();
     }
 
-    public add(id: string): void {
-        this.players.set(2, id);
+    public join(id: string): void {
+        this.players.push(id);
+        this.setUpCurrentPlayer();
     }
 
     public isCurrentPlayer(): string {
-        return this.currentPlayer;
+        return this.currentPlayerId;
     }
 
     public setUpCurrentPlayer(): void {
-        this.numb == 2 ? this.numb = 1 : this.numb = 2;
-        this.currentPlayer = String(this.players.get(this.numb));
+        this.setUpCurrentPlayerNumb == 1 ? this.setUpCurrentPlayerNumb = 0 : this.setUpCurrentPlayerNumb = 1;
+        this.currentPlayerId = this.players[this.setUpCurrentPlayerNumb];
+    }
+
+    public settingsRoom(properties: Array<any>): void {
+        this.settings = properties;
+    }
+
+    private firstPlayerNumb(): void {
+        this.setUpCurrentPlayerNumb = Math.floor(Math.random() * 2);
     }
 }

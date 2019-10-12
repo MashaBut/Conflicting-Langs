@@ -17,6 +17,8 @@
         "@types/node": "^12.7.4",
         "express": "^4.17.1",
         "link-module-alias": "^1.2.0",
+        "messages-factory": "^1.0.1",
+        "messages-for-conglicting-lands": "^1.0.1",
         "module-alias": "^2.2.1",
         "shortid": "^2.2.15",
         "socket.io": "^2.2.0",

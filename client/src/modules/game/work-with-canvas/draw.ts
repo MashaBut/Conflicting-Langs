@@ -1,21 +1,24 @@
 import { Block } from "./block";
-import { Color } from "./color";
 
 export class Draw {
 
 	public readonly aspectRatio: number;
 
-	private readonly numberOfHorizontalLines: number = 25;
-	private readonly numberOfVerticalLines: number = 50;
+	private numberOfHorizontalLines: number = 25;
+	private numberOfVerticalLines: number = 50;
 
 	private canvasElement: HTMLCanvasElement;
 	private canvasContext: CanvasRenderingContext2D;
 	private image = new Image();
 
-	public constructor(canvasObj: HTMLCanvasElement) {
+	public constructor(canvasObj: HTMLCanvasElement, sizeX: number, sizeY: number, colorMap: string, colorGrid: string) {
 		this.canvasContext = <CanvasRenderingContext2D>canvasObj.getContext('2d');
 		this.canvasElement = canvasObj;
-		this.canvasContext.strokeStyle = Color.Grey;
+		this.canvasContext.fillStyle = colorMap;
+		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
+		this.canvasContext.strokeStyle = colorGrid;
+		this.numberOfHorizontalLines = sizeX;
+		this.numberOfVerticalLines =sizeY;
 		this.aspectRatio = this.setAspectRatio();
 		this.drawGrid();
 		this.saveCanvasToImage();

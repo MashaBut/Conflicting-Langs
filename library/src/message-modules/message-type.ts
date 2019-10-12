@@ -3,12 +3,11 @@ export enum MessageType {
     SetNameRoom,
     JoinRoom,
     TossDice,
-    KeyCode,
+    Event,
     Disconnect,
     CreateRoom,
     PushNamesToRoom,
     EventTossDice,
     ChangePlayer,
     MoveToHollPage,
-    
 }

@@ -1,14 +1,13 @@
 import { Player } from "../game/player/player";
 import { ManipulationWithDOM } from "../work-with-html/manipulations-with-dom";
-import { KeyCodes } from '../key-codes/key-codes';
 import { Draw } from "../game/work-with-canvas/draw";
 import { CoordinateTransformation } from "../game/work-with-canvas/coordinate-transformation";
 import { Position } from "../game/work-with-canvas/position";
 import { Block } from "../game/work-with-canvas/block";
-import { Color } from "../game/work-with-canvas/color";
 import { Timer } from "../game/timer/timer";
 import { PlayersLives } from "../game/lives/lives";
 import { PathToMedia } from "../work-with-html/path-to-media";
+import { ColorPlayers } from "../game/enums/color-players";
 import { Change } from "../start";
 
 export class Game {
@@ -30,15 +29,13 @@ export class Game {
 
     private x: number;
     private y: number;
-    private currentColor: string = Color.Green;
+    private currentColor: string = ColorPlayers.Green;
     private possiblePositions = false;
 
-    constructor() {
-        this.initCanvas();
-    }
+    constructor() { }
 
-    private initCanvas(): void {
-        this.canvasDraw = new Draw(ManipulationWithDOM.canvas);
+    public initCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
+        this.canvasDraw = new Draw(ManipulationWithDOM.canvas, sizeX, sizeY, colorMap, colorGrid);
     }
 
     public createPositionsBlockForMap(dice: number[]): void {
@@ -50,7 +47,7 @@ export class Game {
         this.counterBlocksInArray = 0;
         this.arrayCurrentPosition.length = 0;
         if (this.currentPlayer.isFirstMove()) {
-            let coord: number[] = this.firstStep(this.size);
+            let coord: number[] = this.firstStep();
             let block = new Block(coord[0], coord[1], this.size[0], this.size[1], this.currentPlayer.getColor());
             this.currentPosition = block;
             this.draw();
@@ -92,7 +89,7 @@ export class Game {
         }
     }
 
-    private firstStep(coordinates: number[]): number[] {
+    private firstStep(): number[] {
         this.x = this.currentPlayer.getXCoordinate() - this.size[0] - 1;
         this.y = this.currentPlayer.getYCoordinate() - this.size[1] - 1;
         this.x > 0 ? this.x : this.x = 1;
@@ -115,7 +112,6 @@ export class Game {
             }
             else if (!this.possiblePositions) {
                 alert("Oh, no. Sorry:(");
-                Change.changePlayer();
                 this.currentPlayer.setLives();
                 ManipulationWithDOM.playSound(PathToMedia.lostLife);
                 if (this.currentPlayer === this.player1) {
@@ -134,6 +130,7 @@ export class Game {
         }
         this.repetititonAtEachTurn();
         this.changePlayer();
+        Change.changePlayer();
     }
 
     private repetitionAtCompletion(): void {
@@ -153,15 +150,15 @@ export class Game {
         if (this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
-            ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
-            ManipulationWithDOM.nameplayer2.style.cssText = "color: yellow";
+          //  ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
+           // ManipulationWithDOM.nameplayer2.style.cssText = "color: yellow";
         }
-        else {
+        else { 
             this.flagGame = true;
             this.currentPlayer = this.player1;
             this.currentPlayer.soundsForPlayer = true;
-            ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
-            ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
+           // ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
+           // ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
         }
     }
 
@@ -170,99 +167,108 @@ export class Game {
         this.flag = true;
     }
 
-    public setPlayer1(name: string): void {
-        this.player1 = new Player(name, Color.Red, 1, ManipulationWithDOM.canvas.height);
+    public setPlayer1(name: string, color: string): void {
+        this.player1 = new Player(name, color, 1, ManipulationWithDOM.canvas.height);
         this.currentPlayer = this.player1;
-        ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
+        ManipulationWithDOM.nameplayer1.style.cssText = "color: " + color;
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
         PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
     }
 
-    public setPlayer2(name: string): void {
-        this.player2 = new Player(name, Color.Blue, ManipulationWithDOM.canvas.width, 1);
+    public setPlayer2(name: string, color: string): void {
+        this.player2 = new Player(name, color, ManipulationWithDOM.canvas.width, 1);
         this.currentPlayer = this.player1;
-        ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
+        ManipulationWithDOM.nameplayer2.style.cssText = "color: " + color;
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
         PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
     }
+
     public keyCode(e: KeyboardEvent) {
         ManipulationWithDOM.disableStandardKeyOperation(e);
-        this.setBlockPositionOnMap(e);
     }
 
-    public clearFuildForPlayerData(): void {
-        this.setPlayer1("");
-        this.setPlayer2("");
+    public clearFuildForPlayerData(color1: string, color2: string): void {
+        this.setPlayer1("", color1);
+        this.setPlayer2("", color2);
+    }
+    public rotateBlock() {
+        if (this.flag) {
+            this.size = CoordinateTransformation.turnSize();
+            if (!this.currentPlayer.isFirstMove()) {
+                this.currentPosition.width = this.size[0];
+                this.currentPosition.height = this.size[1];
+            }
+            this.calculatePosition();
+            this.draw();
+        }
+        else if (!this.flag) {
+            return;
+        }
+        ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
     }
 
-    private setBlockPositionOnMap(keyCode: any): void {
-        switch (keyCode) {
-            case KeyCodes.Space:
-            case KeyCodes.Up:
-            case KeyCodes.Down: {
-                if (this.flag) {
-                    this.size = CoordinateTransformation.turnSize();
-                    if (!this.currentPlayer.isFirstMove()) {
-                        this.currentPosition.width = this.size[0];
-                        this.currentPosition.height = this.size[1];
-                    }
-                    this.calculatePosition();
-                    this.draw();
+    public moveToRight(){
+        if (this.flag) {
+            if (!this.currentPlayer.isFirstMove()) {
+                this.counterBlocksInArray++;
+                if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
+                    this.counterBlocksInArray = 0;
                 }
-                else if (!this.flag) {
-                    return;
-                }
-                ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
-                break;
+                this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
+                this.draw();
             }
-            case KeyCodes.Right: {
-                if (this.flag) {
-                    if (!this.currentPlayer.isFirstMove()) {
-                        this.counterBlocksInArray++;
-                        if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
-                            this.counterBlocksInArray = 0;
-                        }
-                        this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
-                        this.draw();
-                    }
+        }
+        else if (!this.flag) {
+            return;
+        }
+        ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
+    }
+
+    public moveToLeft() {
+        if (this.flag) {
+            if (!this.currentPlayer.isFirstMove()) {
+                this.counterBlocksInArray--;
+                if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
+                    this.counterBlocksInArray = 0;
                 }
-                else if (!this.flag) {
-                    return;
-                }
-                ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
-                break;
+                this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
+                this.draw();
             }
-            case KeyCodes.Left: {
-                if (this.flag) {
-                    if (!this.currentPlayer.isFirstMove()) {
-                        this.counterBlocksInArray--;
-                        if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
-                            this.counterBlocksInArray = 0;
-                        }
-                        this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
-                        this.draw();
-                    }
-                }
-                else if (!this.flag) {
-                    return;
-                }
-                ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
+        }
+        else if (!this.flag) {
+            return;
+        }
+        ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
+    }
+
+    public setUpBlock() {
+        if (this.flag) {
+            ManipulationWithDOM.playSound(PathToMedia.enterSound);
+            Timer.flagForTimer = false;
+            this.endOfturn();
+            this.flag = false;
+        }
+        else if (!this.flag) {
+            return;
+        }
+    }
+
+    public setBlockPositionOnMap(event:string): void {
+        switch (event) {
+            case "rotateBlock":
+                this.rotateBlock();
                 break;
-            }
-            case KeyCodes.Enter: {
-                if (this.flag) {
-                    ManipulationWithDOM.playSound(PathToMedia.enterSound);
-                    Timer.flagForTimer = false;
-                    this.endOfturn();
-                    this.flag = false;
-                }
-                else if (!this.flag) {
-                    return;
-                }
+            case "moveToRight":
+                this.moveToRight();
                 break;
-            }
+            case "moveToLeft":
+                this.moveToLeft();
+                break;
+            case "setUpBlock":
+                this.setUpBlock();
+                break;
         }
     }
 

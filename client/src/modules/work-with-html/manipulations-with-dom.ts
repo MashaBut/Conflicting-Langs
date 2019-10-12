@@ -15,6 +15,24 @@ export class ManipulationWithDOM {
     static createRoom: HTMLElement = <HTMLElement>document.getElementById("createRoom");
     static clientRoom: HTMLElement = <HTMLElement>document.getElementById("clientRoom");
     static rooms: HTMLElement = <HTMLElement>document.getElementById('rooms');
+    static properties: HTMLElement = <HTMLElement>document.getElementById('properties');
+
+    //buttons properties
+    static orangeBtnForYou: HTMLElement = <HTMLElement>document.getElementById('orangeButton1');
+    static redBtnForYou: HTMLElement = <HTMLElement>document.getElementById('redButton1');
+    static blueBtnForYou: HTMLElement = <HTMLElement>document.getElementById('blueButton1');
+    
+    static orangeBtnForYourOpponent: HTMLElement = <HTMLElement>document.getElementById('orangeButton2');
+    static redBtnForYourOpponent: HTMLElement = <HTMLElement>document.getElementById('redButton2');
+    static blueBtnForYourOpponent: HTMLElement = <HTMLElement>document.getElementById('blueButton2');
+    
+    static blueMap: HTMLElement = <HTMLElement>document.getElementById('blueMap');
+    static brownMap: HTMLElement = <HTMLElement>document.getElementById('brownMap');
+    static whiteMap: HTMLElement = <HTMLElement>document.getElementById('whiteMap');
+
+    static smallMap: HTMLElement = <HTMLElement>document.getElementById('smallMap');
+    static mediumMap: HTMLElement = <HTMLElement>document.getElementById('mediumMap');
+    static bigMap: HTMLElement = <HTMLElement>document.getElementById('bigMap');
 
     //dices
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
@@ -40,6 +58,9 @@ export class ManipulationWithDOM {
 
     //timer
     static timer: HTMLElement = <HTMLElement>document.getElementById("timer");
+
+    //div
+    static gamePage: HTMLElement = <HTMLElement>document.getElementById("gamepage");
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
