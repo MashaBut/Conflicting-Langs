@@ -2,6 +2,7 @@ import "./work-with-html/path-to-dices";
 import "./work-with-html/path-to-css";
 import { PathToMedia } from "./work-with-html/path-to-media";
 import { View } from "./work-with-html/view";
+import { Allerts } from "./work-with-html/work-with-allerts";
 import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
 import { PushImage } from "./work-with-html/push-image";
 
@@ -81,6 +82,14 @@ fromEvent(DOM.createRoom, 'click')//+
         }
     });
 
+DOM.infoButton.addEventListener('click', function (event: any) {
+    Allerts.viewInfo();
+});
+
+DOM.hideInformationAboutGame.addEventListener('click', function (event: any) {
+    Allerts.hideInfo();
+});
+
 function viewRoom(id: string, name: string): void {//+
     let roomsDiv = DOM.rooms;
     let newButton = document.createElement('button');
@@ -146,8 +155,6 @@ function tossDice(): void {
     DiceRoller.getPathOfImage(dices);
     setTimeout(timer, 1790);
 }
-
-
 
 function timer() {
     PushImage.returnImage(dices);

@@ -8,51 +8,69 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" type="image/png" href="stopGame.png" />
     <link href="main.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
     <div class="startpage" id="startpage">
+        <div class="gridForStartPage">
         <div class="player">
             <label for="input" class="label">
                 <input type="text" required class="input" id="player" value="">
             </label>
         </div>
         <div class="click">
-            <button type="button" id="writeNames">Play Game</button>
+            <button type="button" class="writeNames" id="writeNames">Play Game</button>
+        </div>
         </div>
     </div>
 
     <div class="hollpage" id="hollpage">
-        <p class="VS">Enter the ready room or create your own!</p>
-        <div class="rooms" id="rooms"></div>
-        <div class="properties" id="properties">
-            <p>Choose your color!</p>
-            <button type="button" class="orangeButton" id="greenButton"></button>
-            <button type="button" class="redButton" id="redButton"></button>
-            <button type="button" class="blueButton" id="blueButton"></button>       
+        <div class="gridForHollPage">
+                <p class="VS">Enter the ready room or create your own!</p>
+                <div class="rooms" id="rooms"></div>
+                <div class="aboutGame">
+                    <button type="button" class="information" id="information">i</button>
+                </div>
+                <div class="informationAboutGame" id="informationAboutGame">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
+                            in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                        <button type="button" class="hideInfo" id="hideInfo">OK</button>
+                </div>            
+                <div class="properties" id="properties">
+                    <p>Choose your color!</p>
+                    <button type="button" class="orangeButton" id="greenButton"></button>
+                    <button type="button" class="redButton" id="redButton"></button>
+                    <button type="button" class="blueButton" id="blueButton"></button>       
+                            
+                    <p>Choose the color of your opponent!</p>
+                    <button type="button" class="orangeButton" id="greenButton"></button>
+                    <button type="button" class="redButton" id="redButton"></button>
+                    <button type="button" class="blueButton" id="blueButton"></button>       
+        
+                    <p>Choose the color of map!</p>
+                    <button type="button" class="blueMap" id="blueMap"></button>
+                    <button type="button" class="brownMap" id="brownMap"></button>
+                    <button type="button" class="whiteMap" id="whiteMap"></button>              
                     
-            <p>Choose the color of your opponent!</p>
-            <button type="button" class="orangeButton" id="greenButton"></button>
-            <button type="button" class="redButton" id="redButton"></button>
-            <button type="button" class="blueButton" id="blueButton"></button>       
-
-            <p>Choose the color of map!</p>
-            <button type="button" class="blueMap" id="blueMap"></button>
-            <button type="button" class="brownMap" id="brownMap"></button>
-            <button type="button" class="whiteMap" id="whiteMap"></button>              
-            
-            <p>Choose the size of map!</p>
-            <button type="button" class="smallMap" id="smallMap">Small</button>
-            <button type="button" class="mediumMap" id="mediumMap">Medium</button>
-            <button type="button" class="bigMap" id="bigMap">Big</button>
-        </div>
-        <div class="enterNameOfRoom">
-            <label for="input" class="label">
-                <input type="text" required class="input" id="nameRoom" value="">
-            </label>            
-        </div>
-        <div class="click">
-            <button type="button" class="createRoom" id="createRoom">Create Room</button>
+                    <p>Choose the size of map!</p>
+                    <button type="button" class="smallMap" id="smallMap">Small</button>
+                    <button type="button" class="mediumMap" id="mediumMap">Medium</button>
+                    <button type="button" class="bigMap" id="bigMap">Big</button>
+                </div>
+                <div class="enterNameOfRoom">
+                    <label for="input" class="label">
+                        <input type="text" required class="input" id="nameRoom" value="">
+                    </label>            
+                </div>
+                <div class="click">
+                    <button type="button" class="createRoom" id="createRoom">Create Room</button>
+                </div>
         </div>
     </div>
 

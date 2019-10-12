@@ -1,18 +1,23 @@
+.player {
+    margin-top: 115%;
+    grid-column: 2/3;
+}
+
 .label {
     position: relative;
     margin: auto;
     width: 100%;
     max-width: 280px;
     left: 16%;
-    margin-right: -50%;
 }
 
 .input {
     -webkit-appearance: none;
-    width: 65%;
+    width: 35%;
+    height: 30px;
     border: 0;
     padding: 0;
-    height: 30px;
+    margin-left: 18.4%;
     font-size: 1.3vw;
     font-weight: 700;
     border-bottom: 2px solid #525252;
@@ -23,29 +28,3 @@
 }
 
 .input:focus { outline: none; }
-
-.click button {
-    /* ------------------Block model--------------------- */
-    height: 40%;
-    width: 17%;
-    margin-top: 3.2%;
-    padding-top: 3px;
-    /* ------------------Typography--------------------- */
-    font-size: 14px;
-    font-size: 1.2vw; 
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #fff;
-    /* ------------------Display--------------------- */
-    background-color: #0e0e0e;
-    border : 0.5%;
-    border-color: #8b8b8b;
-    border-radius: 20px;
-    /* ------------------ Other --------------------- */
-    outline: none;
-}
-
-.click button:hover {
-    background-color: #202125;
-    color: #fff;
-}

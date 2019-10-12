@@ -41,6 +41,12 @@ export class ManipulationWithDOM {
     //timer
     static timer: HTMLElement = <HTMLElement>document.getElementById("timer");
 
+    //info
+    static infoButton: any = <HTMLElement>document.getElementById("information");
+    static informationAboutGame: any = <HTMLElement>document.getElementById("informationAboutGame");
+    static hideInformationAboutGame: any = <HTMLElement>document.getElementById("hideInfo");
+    
+
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
         this.tossDice.style.cssText = "background-color: #2c2d32;"

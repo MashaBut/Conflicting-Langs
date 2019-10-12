@@ -11,57 +11,69 @@
     background-repeat: no-repeat;
 }
 
-.player {
+.gridForStartPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.startpage .click {
+    grid-column: 2/3;
+    padding-top: 6%;
+    padding-bottom: 2%;
+    padding-left: 35%;
+    width: 35%;
+    height: 60%;
+    text-align: center;
+}
+
+.click .writeNames {
     /* ------------------Block model--------------------- */
-    position: absolute;
-    top: 82%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+    height: 66%;
+    width: 84%;
+    /* ------------------Typography--------------------- */
+    font-size: 1.2vw; 
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    /* ------------------Display--------------------- */
+    background-color: #0e0e0e;
+    border-color: #8b8b8b;
+    border-radius: 20px;
+    /* ------------------ Other --------------------- */
+    outline: none;
 }
 
-@media screen and (min-width: 1224px) {
-    /*Настольные компьютеры и ноутбуки*/
-    .click {
-        /* ------------------Positioning--------------------- */
-        position: absolute;
-        left: 50%;
-        bottom: -7%;
-        transform: translate(-50%, -50%);
-        /* ------------------Block model--------------------- */
-        width: 65%;
-        height: 15%;
-        /* ------------------Typography--------------------- */
-        text-align: center;
+.click button:hover {
+    background-color: #202125;
+    color: #fff;
+}
+
+
+@media only screen and (max-width: 1336px) {
+    .gridForStartPage {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: minmax(80px, auto);
+    }
+
+    .player {
+        margin-top: 130%;
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1224px) {
-    /*Смартфоны (ландшафтный)*/
-    .click {
-        /* ------------------Positioning--------------------- */
-        position: absolute;
-        left: 0;
-        bottom: 5%;
-        /* ------------------Block model--------------------- */
-        width: 100%;
-        height: 15%;
-        /* ------------------Typography--------------------- */
-        text-align: center;
+@media only screen and (max-width: 1090px) {
+    .gridForStartPage {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: minmax(80px, auto);
     }
-}
 
-@media screen and (min-width: 480px) and (max-width: 768px) {
-    /*Смартфоны (ландшафтный)*/
-    .click {
-        /* ------------------Positioning--------------------- */
-        position: absolute;
-        left: 0;
-        bottom: 20%;
-        /* ------------------Block model--------------------- */
-        width: 100%;
-        height: 15%;
-        /* ------------------Typography--------------------- */
-        text-align: center;
+    .player {
+        margin-top: 135%;
+    }
+
+    .startpage .click {
+        padding-left: 34%;
     }
 }
