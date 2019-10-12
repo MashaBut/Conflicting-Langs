@@ -21,8 +21,9 @@
     }
 }
 
-@media screen and (min-width : 768px) and (max-width : 1224px) {  /*Смартфоны (ландшафтный)*/
-    canvas {
+
+/*@media screen and (min-width : 768px) and (max-width : 1224px) {  /*Смартфоны (ландшафтный)*/
+/*    canvas {
         margin-left: 1%;
         margin-top: 10%;
         width: 680px;
@@ -32,9 +33,9 @@
     .dice {
         margin-top: 131%;
         /* ------------------Block model--------------------- */    
-        width: 100%;
+        /*width: 100%;
         /* ------------------Typography--------------------- */
-        text-align: center;
+        /*text-align: center;
     }
 
     img {
@@ -44,7 +45,7 @@
 }
 
 @media screen and (min-width : 480px) and (max-width : 768px) {  /*Смартфоны (ландшафтный)*/
-    canvas {
+ /*   canvas {
         margin-left: 1.4%;
         margin-top: 12%;
         width: 460px;
@@ -54,13 +55,13 @@
     .dice {
         margin-top: 138%;
         /* ------------------Block model--------------------- */    
-        width: 100%;
+      /*  width: 100%;
         /* ------------------Typography--------------------- */
-        text-align: center;
+ /*       text-align: center;
     }
 
     img {
         width: 50%;
         height: 50%;
     }
-}
+}*/

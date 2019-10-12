@@ -9,7 +9,15 @@
     background-color: #010428; 
  }
 
+/* .gridForGamePage {
+    display: grid;
+    grid-template-columns: 17% auto 17%;
+    grid-template-rows: minmax(100px, auto);
+ } */
+
  .timer {
+    /* grid-column: 2/3;
+    grid-row: 1/3; */
     position: absolute;
     top: 4%;
     left: 50%;
