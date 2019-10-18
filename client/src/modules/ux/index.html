@@ -74,23 +74,24 @@
     </div>
 
     <div class="gamepage" id="gamepage">
-        <!-- <div class="gridForGamePage"> -->
+        <div class="gridForGamePage">
+
             <p class="timer" id="timer">00:00</p>
 
+            <div class="player1ForGame"></div>
             <div class="divForPlayerOne">
-                <div class="player1ForGame"></div>
                 <div class="divForLives" id="divForLives1"></div>
                 <div class="card">
                     <p id="nameplayer1" value=""></p>
                     <div class="territoryplayer1">
                         <label>Engaged territory: </label>
                         <p id="territoryplayer1" value=""></p>
-                    </div>
+                 </div>
                 </div>
             </div>
-    
+
+            <div class="player2ForGame"></div>
             <div class="divForPlayerTwo">
-                <div class="player2ForGame"></div>
                 <div class="divForLives" id="divForLives2"></div>
                 <div class="card">
                     <p id="nameplayer2" value=""></p>
@@ -98,23 +99,26 @@
                         <label>Engaged territory: </label>
                         <p id="territoryplayer2" value=""></p>
                     </div>
-            </div>
-            <div class="dice" id="dice"> </div>
-                <div class="sound">
-                    <button type="button" class="floated" id="soundOff"></button>
-                    <button type="button" class="floated" id="endGame"></button>
-                    <button type="button" class="floated" id="goToStartPage"></button>
                 </div>
             </div>
-    
+
+            <div class="dice" id="dice"> </div>
+
+            <div class="sound">
+                <button type="button" id="soundOff"></button>
+                <button type="button" id="endGame"></button>
+                <button type="button" id="goToStartPage"></button>
+            </div>
+
             <div class="canvas" id="canvas">
-                <canvas class="canvas" height=500px width=1000px id="fuildGame" style="background-color: #010428"></canvas>
+                <canvas class="canvas" id="fuildGame" style="background-color: #010428"></canvas>
             </div>
     
             <div class="click">
                 <button type="button" id="rollTheDice">Roll the dice</button>
-            </div>   
-        <!-- </div> -->
+            </div>
+
+        </div>
     </div>
 </body>
 
