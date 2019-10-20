@@ -7,6 +7,8 @@ export class Draw {
 	private numberOfHorizontalLines: number = 25;
 	private numberOfVerticalLines: number = 50;
 
+	private CanvasHolder: HTMLElement = <HTMLElement>document.getElementById("canvas");
+
 	private canvasElement: HTMLCanvasElement;
 	private canvasContext: CanvasRenderingContext2D;
 	private image = new Image();
@@ -15,10 +17,14 @@ export class Draw {
 		this.canvasContext = <CanvasRenderingContext2D>canvasObj.getContext('2d');
 		this.canvasElement = canvasObj;
 		this.canvasContext.fillStyle = colorMap;
+
+		// this.canvasElement.width = this.CanvasHolder.offsetWidth;
+		// this.canvasElement.height = this.CanvasHolder.offsetHeight;
+		
 		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
 		this.canvasContext.strokeStyle = colorGrid;
 		this.numberOfHorizontalLines = sizeX;
-		this.numberOfVerticalLines =sizeY;
+		this.numberOfVerticalLines = sizeY;
 		this.aspectRatio = this.setAspectRatio();
 		this.drawGrid();
 		this.saveCanvasToImage();
