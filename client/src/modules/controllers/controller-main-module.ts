@@ -130,7 +130,7 @@ export class Game {
         }
         this.repetititonAtEachTurn();
         this.changePlayer();
-        Change.changePlayer();
+        //Change.changePlayer();
     }
 
     private repetitionAtCompletion(): void {

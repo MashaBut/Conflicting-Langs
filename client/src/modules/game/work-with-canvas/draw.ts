@@ -18,7 +18,7 @@ export class Draw {
 		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
 		this.canvasContext.strokeStyle = colorGrid;
 		this.numberOfHorizontalLines = sizeX;
-		this.numberOfVerticalLines =sizeY;
+		this.numberOfVerticalLines = sizeY;
 		this.aspectRatio = this.setAspectRatio();
 		this.drawGrid();
 		this.saveCanvasToImage();

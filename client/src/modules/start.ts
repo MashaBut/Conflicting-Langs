@@ -9,16 +9,13 @@ import { ColorPlayers } from "./game/enums/color-players";
 import { ColorMap } from "./game/enums/color-map";
 import { SizeMap } from "./game/enums/size-map";
 
-import { fromEvent } from 'rxjs';
-//import { fromEvent } from "@node-modules/rxjs/index";
+import { fromEvent } from "rxjs";
 
 import { DiceRoller } from "./game/dice/dice-roller";
 
 import { Timer } from "./game/timer/timer";
 
 import { Game } from "./controllers/controller-main-module";
-
-//import { MessageFactory } from "@message-facroty/message-factory";
 import { MessageFactory } from "../../../library/dist/message-factory";
 import { MessageType } from "../../../library/dist/index";
 import { KeyCodes } from "./key-codes/key-codes";
@@ -27,8 +24,14 @@ const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:');
 let socketUrl = socketProtocol + '//' + location.host;
 const socket = new WebSocket(socketUrl);
 
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    createButtonForMobileVersion();
+} else {
+    createDivMobVersion();
+}
+
 let messageFactory = new MessageFactory();
-let game: Game = new Game();
+let game: Game;
 let timerForPlayer: Timer = new Timer();
 let properties: Array<any> = new Array();
 let name: string = "";
@@ -47,6 +50,7 @@ socket.onmessage = function (message: any) {
             });
             break;
         case MessageType.PushNamesToRoom:
+            game = new Game();
             properties = msg.settings;
             game.initCanvas(properties[4], properties[5], properties[2], properties[3]);
             if (msg.currentPlayer == 0) {
@@ -88,6 +92,7 @@ fromEvent(DOM.createRoom, 'click')//+
         const nameRoom = (DOM.nameRoom).value;
         if (nameRoom != "" && (properties[0] != properties[1])) {
             socket.send(messageFactory.createMessageSetNameRoom(nameRoom, properties));
+            game = new Game();
             game.initCanvas(properties[4], properties[5], properties[2], properties[3]);
             game.setPlayer1(name, properties[0]);
             View.GamePage();
@@ -97,13 +102,49 @@ fromEvent(DOM.createRoom, 'click')//+
         }
     });
 
-DOM.infoButton.addEventListener('click', function (event: any) {
-    Allerts.viewInfo();
-});
+DOM.infoButton.addEventListener('click', Allerts.viewInfo());
 
-DOM.hideInformationAboutGame.addEventListener('click', function (event: any) {
-    Allerts.hideInfo();
-});
+DOM.hideInformationAboutGame.addEventListener('click', Allerts.hideInfo());
+
+function createButtonForMobileVersion(): void {
+    buttonForMobileVersion("moveToLeft", "←");
+    buttonForMobileVersion("moveToRight", "→");
+    buttonForMobileVersion("setUp", "Set Up");
+    buttonForMobileVersion("rotate", "Rotate");
+}
+
+function buttonForMobileVersion(id: string, text: string): void {
+    let div = DOM.divMobVersion;
+    let newButton = document.createElement('button');
+    newButton.id = id;
+    newButton.textContent = text;
+    div.appendChild(newButton);
+}
+
+function createDivMobVersion(): void {
+    let idDiv: any = DOM.divMobVersion;
+    while (idDiv.hasChildNodes()) {
+        idDiv.removeChild(idDiv.lastChild);
+    }
+}
+
+DOM.divMobVersion.addEventListener('click', (event: any) => {
+    let idBtn = event.srcElement.id;
+    switch(idBtn) {
+        case "moveToLeft":
+            socket.send(messageFactory.createMessageEvent("moveToLeft"));
+            break;
+        case "moveToRight":
+            socket.send(messageFactory.createMessageEvent("moveToRight"));
+            break;
+        case "setUp":
+            socket.send(messageFactory.createMessageEvent("setUpBlock"));
+            break;
+        case "rotate":
+            socket.send(messageFactory.createMessageEvent("rotateBlock"));
+            break;
+    }
+})
 
 function viewRoom(id: string, name: string): void {//+
     let roomsDiv = DOM.rooms;

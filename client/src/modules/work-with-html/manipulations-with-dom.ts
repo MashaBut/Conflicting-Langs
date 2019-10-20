@@ -17,23 +17,6 @@ export class ManipulationWithDOM {
     static rooms: HTMLElement = <HTMLElement>document.getElementById('rooms');
     static properties: HTMLElement = <HTMLElement>document.getElementById('properties');
 
-    //buttons properties
-    static orangeBtnForYou: HTMLElement = <HTMLElement>document.getElementById('orangeButton1');
-    static redBtnForYou: HTMLElement = <HTMLElement>document.getElementById('redButton1');
-    static blueBtnForYou: HTMLElement = <HTMLElement>document.getElementById('blueButton1');
-    
-    static orangeBtnForYourOpponent: HTMLElement = <HTMLElement>document.getElementById('orangeButton2');
-    static redBtnForYourOpponent: HTMLElement = <HTMLElement>document.getElementById('redButton2');
-    static blueBtnForYourOpponent: HTMLElement = <HTMLElement>document.getElementById('blueButton2');
-    
-    static blueMap: HTMLElement = <HTMLElement>document.getElementById('blueMap');
-    static brownMap: HTMLElement = <HTMLElement>document.getElementById('brownMap');
-    static whiteMap: HTMLElement = <HTMLElement>document.getElementById('whiteMap');
-
-    static smallMap: HTMLElement = <HTMLElement>document.getElementById('smallMap');
-    static mediumMap: HTMLElement = <HTMLElement>document.getElementById('mediumMap');
-    static bigMap: HTMLElement = <HTMLElement>document.getElementById('bigMap');
-
     //dices
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
     static dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
@@ -61,6 +44,8 @@ export class ManipulationWithDOM {
 
     //div
     static gamePage: HTMLElement = <HTMLElement>document.getElementById("gamepage");
+    static divMobVersion: HTMLElement = <HTMLElement>document.getElementById("MobVirsion");
+    
     //info
     static infoButton: any = <HTMLElement>document.getElementById("information");
     static informationAboutGame: any = <HTMLElement>document.getElementById("informationAboutGame");
