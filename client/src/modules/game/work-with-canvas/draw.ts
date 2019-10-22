@@ -2,12 +2,13 @@ import { Block } from "./block";
 
 export class Draw {
 
-	public readonly aspectRatio: number;
+	public aspectRatio: number; //width
+	public aspectRatio1: number; //height
 
 	private numberOfHorizontalLines: number = 25;
 	private numberOfVerticalLines: number = 50;
 
-	private CanvasHolder: HTMLElement = <HTMLElement>document.getElementById("canvas");
+	private CanvasHolder: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("fuildGame");
 
 	private canvasElement: HTMLCanvasElement;
 	private canvasContext: CanvasRenderingContext2D;
@@ -16,38 +17,29 @@ export class Draw {
 	public constructor(canvasObj: HTMLCanvasElement, sizeX: number, sizeY: number, colorMap: string, colorGrid: string) {
 		this.canvasContext = <CanvasRenderingContext2D>canvasObj.getContext('2d');
 		this.canvasElement = canvasObj;
-		this.canvasContext.fillStyle = colorMap;
-
-		this.canvasElement.width = this.CanvasHolder.offsetWidth;
-		this.canvasElement.height = this.CanvasHolder.offsetHeight;
-		
-		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
-		this.canvasContext.strokeStyle = colorGrid;
-		this.numberOfHorizontalLines = sizeX;
-		this.numberOfVerticalLines = sizeY;
-		this.aspectRatio = this.setAspectRatio();
-		this.drawGrid();
-		this.saveCanvasToImage();
+		this.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid);
 	}
 
 	public reDrawCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string) {
+		//this.clearCanvas();
 		this.canvasContext.fillStyle = colorMap;
-		//console.log(this.CanvasHolder.offsetWidth);
-		//console.log(this.CanvasHolder.offsetHeight);
 		this.canvasElement.width = this.CanvasHolder.offsetWidth;
 		this.canvasElement.height = this.CanvasHolder.offsetHeight;
 		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
 		this.canvasContext.strokeStyle = colorGrid;
 		this.numberOfHorizontalLines = sizeX;
 		this.numberOfVerticalLines = sizeY;
+		this.aspectRatio = this.setAspectRatioForVertical();
+		this.aspectRatio1 = this.setAspectRatioForHorizonal();
 		this.drawGrid();
 		this.saveCanvasToImage();
+		this.unloadingImageOnCanvas();
 	}
 
 	private drawGrid(): void {
 		for (let i = 0; i <= this.numberOfHorizontalLines; i++) {
-			this.canvasContext.moveTo(0, this.aspectRatio * i);
-			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatio * i);
+			this.canvasContext.moveTo(0, this.aspectRatio1 * i);
+			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatio1 * i);
 		}
 		for (let i = 0; i <= this.numberOfVerticalLines; i++) {
 			this.canvasContext.moveTo(this.aspectRatio * i, 0);
@@ -56,8 +48,12 @@ export class Draw {
 		this.canvasContext.stroke();
 	}
 
-	private setAspectRatio(): number {
+	private setAspectRatioForVertical(): number {
 		return this.canvasElement.width / this.numberOfVerticalLines;
+	}
+
+	private setAspectRatioForHorizonal(): number {
+		return this.canvasElement.height / this.numberOfHorizontalLines;
 	}
 
 	public saveCanvasToImage(): void {

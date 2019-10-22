@@ -43,7 +43,9 @@ export class Game {
     }
 
     public createPositionsBlockForMap(dice: number[]): void {
-        this.size = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio - 2, dice);
+        //this.position.blocksWithDices(dice);
+        this.position.InitDice(dice);
+        this.size = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio-2, this.canvasDraw.aspectRatio1-2, dice);
         this.calculatePosition();
     }
 
@@ -57,12 +59,13 @@ export class Game {
             this.draw();
         }
         else {
-            this.calculateAllPosition(this.size[0], this.size[1]);
+            this.calculateAllPosition(this.position.di);
             if (this.arrayCurrentPosition.length != 0) {
                 this.setFirstStep();
             }
             else {
-                this.calculateAllPosition(this.size[1], this.size[0]);
+                this.position.change();
+                this.calculateAllPosition(this.position.di);
                 if (this.arrayCurrentPosition.length != 0) {
                     this.setFirstStep();
                 }
@@ -80,11 +83,13 @@ export class Game {
         this.possiblePositions = true;
     }
 
-    private calculateAllPosition(xSize: number, ySize: number): void {
-        for (let y = 1; y <= ManipulationWithDOM.canvas.height - ySize; y += this.canvasDraw.aspectRatio) {
-            for (let x = 1; x <= ManipulationWithDOM.canvas.width - xSize; x += this.canvasDraw.aspectRatio) {
+    private calculateAllPosition(d:number[]): void {
+        const xSize = d[0];
+        const ySize = d[1];
+        for (let y = 1; y <= ManipulationWithDOM.canvas.height - ySize*this.canvasDraw.aspectRatio1; y += this.canvasDraw.aspectRatio1) {
+            for (let x = 1; x <= ManipulationWithDOM.canvas.width - xSize*this.canvasDraw.aspectRatio; x += this.canvasDraw.aspectRatio) {
                 if (x != ManipulationWithDOM.canvas.width + 1 && y != ManipulationWithDOM.canvas.height + 1) {
-                    let block = new Block(x, y, xSize, ySize, this.currentPlayer.getColor());
+                    let block = new Block(x, y, xSize*this.canvasDraw.aspectRatio, ySize*this.canvasDraw.aspectRatio1, this.currentPlayer.getColor());
                     if (this.position.checkPosition(block)) {
                         this.arrayCurrentPosition.push(block);
                     }
@@ -140,7 +145,8 @@ export class Game {
     private repetitionAtCompletion(): void {
         this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
         this.currentPosition.color = this.currentPlayer.getColor();
-        this.position.saveBlockOnMap(this.currentPosition);
+        let block = new Block (this.currentPosition.x,this.currentPosition.y, this.position.di[0],this.position.di[1],this.currentPosition.color);
+        this.position.saveBlockOnMap(block);
         this.canvasDraw.saveCanvasToImage();
     }
 
@@ -210,6 +216,7 @@ export class Game {
         if (this.flag) {
             this.size = CoordinateTransformation.turnSize();
             if (!this.currentPlayer.isFirstMove()) {
+                this.position.change();
                 this.currentPosition.width = this.size[0];
                 this.currentPosition.height = this.size[1];
             }
@@ -259,6 +266,7 @@ export class Game {
     public setUpBlock() {
         if (this.flag) {
             ManipulationWithDOM.playSound(PathToMedia.enterSound);
+            this.position.blocksWithDices();
             Timer.flagForTimer = false;
             this.endOfturn();
             this.flag = false;

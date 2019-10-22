@@ -1,21 +1,51 @@
 import { Block } from "./block";
+
+const coefArea: number = 5000;
+
 export class Position {
     private blocks = new Array<Block>();
-    private asperio: number = 20;
-    private coefArea: number = 5000;
+    private asperioWidth: number;
+    private asperioHeight: number;
+    private d = new Array();
+    private bool: boolean = true;
+    //b = [a, a = b][0];
 
     public saveBlockOnMap(block: Block): void {
         this.blocks.push(block);
+        console.log("set up block");
+        console.log(block);
     }
 
     public countingTheAreaOfTheCurrentPlayer(currentColor: string): number {
         let sum: number = 0;
         this.blocks.forEach(block => {
             if (block.color === currentColor) {
-                sum += (block.width * block.height) / this.coefArea;
+                sum += (block.width * block.height) / coefArea;
             }
         })
         return parseFloat((sum).toPrecision(3));
+    }
+
+    public blocksWithDices(): void {
+        this.d.push(this.di);
+    }
+
+    private calcPixels(asperio1: number, asperio2: number): void {
+        for(let block in this.di) {
+            
+        }
+    }
+
+    public change(): void {
+        console.log("Before");
+        console.log(this.di);
+        this.di = [this.di[1], this.di[0]];
+        console.log("After");
+        console.log(this.di);
+    }
+    di: any;
+    public InitDice(dices: number[]): void {
+        this.di = dices;
     }
 
     private isBlockInOtherBlock(newBlock: Block): boolean {
@@ -23,8 +53,8 @@ export class Position {
         let bottom = newBlock.y + newBlock.height;
         let oldX: number;
         for (let block of this.blocks) {
-            for (let x = block.x; x <= block.x + block.width; x += this.asperio) {
-                for (let y = block.y; y <= block.y + block.height; y += this.asperio) {
+            for (let x = block.x; x <= block.x + block.width; x++) {
+                for (let y = block.y; y <= block.y + block.height; y++) {
                     for (let newY = newBlock.y; newY <= bottom; newY++) {
                         if (y === newY) {
                             oldX = x;
