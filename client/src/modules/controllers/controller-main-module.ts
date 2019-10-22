@@ -38,6 +38,10 @@ export class Game {
         this.canvasDraw = new Draw(ManipulationWithDOM.canvas, sizeX, sizeY, colorMap, colorGrid);
     }
 
+    public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void{
+        this.canvasDraw.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid);
+    }
+
     public createPositionsBlockForMap(dice: number[]): void {
         this.size = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio - 2, dice);
         this.calculatePosition();
@@ -152,6 +156,8 @@ export class Game {
             this.currentPlayer = this.player2;
           //  ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
            // ManipulationWithDOM.nameplayer2.style.cssText = "color: yellow";
+           ManipulationWithDOM.rightPlayer.style.cssText = "display: block";
+           ManipulationWithDOM.leftPlayer.style.cssText = "display: none";
         }
         else { 
             this.flagGame = true;
@@ -159,6 +165,9 @@ export class Game {
             this.currentPlayer.soundsForPlayer = true;
            // ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
            // ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
+           ManipulationWithDOM.leftPlayer.style.cssText = "display: block";
+           ManipulationWithDOM.rightPlayer.style.cssText = "display: none";
+
         }
     }
 
@@ -174,6 +183,8 @@ export class Game {
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
         PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
+        //ManipulationWithDOM.rightPlayer.style.cssText = "display: block";
+        //ManipulationWithDOM.leftPlayer.style.cssText = "display: none";
     }
 
     public setPlayer2(name: string, color: string): void {
@@ -183,6 +194,8 @@ export class Game {
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
         PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
+       // ManipulationWithDOM.leftPlayer.style.cssText = "display: block";
+       // ManipulationWithDOM.rightPlayer.style.cssText = "display: none";
     }
 
     public keyCode(e: KeyboardEvent) {

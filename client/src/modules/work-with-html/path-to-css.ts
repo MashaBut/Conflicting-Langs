@@ -8,3 +8,4 @@ import "../ux/css/info.css";
 import "../ux/css/game-page.css";
 import "../ux/css/canvas.css";
 import "../ux/css/blocks-for-players.css";
+import "../ux/css/triangles.css";

@@ -1,0 +1,27 @@
+.left_triangle {
+    grid-column: 2/3;
+    grid-row: 1/1;
+    display: block;
+    margin-top: 4%;
+    margin-left: 35%;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-right: 50px solid #ffffff;
+    border-bottom: 20px solid transparent;
+
+}
+
+.right_triangle {
+    grid-column: 2/3;
+    grid-row: 1/1;
+    display: block;
+    margin-top: 4%;
+    margin-left: 60%;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-left: 50px solid #ffffff;
+    border-bottom: 20px solid transparent
+}
+

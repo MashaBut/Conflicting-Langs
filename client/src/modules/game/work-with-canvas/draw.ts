@@ -18,14 +18,28 @@ export class Draw {
 		this.canvasElement = canvasObj;
 		this.canvasContext.fillStyle = colorMap;
 
-		// this.canvasElement.width = this.CanvasHolder.offsetWidth;
-		// this.canvasElement.height = this.CanvasHolder.offsetHeight;
+		this.canvasElement.width = this.CanvasHolder.offsetWidth;
+		this.canvasElement.height = this.CanvasHolder.offsetHeight;
 		
 		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
 		this.canvasContext.strokeStyle = colorGrid;
 		this.numberOfHorizontalLines = sizeX;
 		this.numberOfVerticalLines = sizeY;
 		this.aspectRatio = this.setAspectRatio();
+		this.drawGrid();
+		this.saveCanvasToImage();
+	}
+
+	public reDrawCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string) {
+		this.canvasContext.fillStyle = colorMap;
+		//console.log(this.CanvasHolder.offsetWidth);
+		//console.log(this.CanvasHolder.offsetHeight);
+		this.canvasElement.width = this.CanvasHolder.offsetWidth;
+		this.canvasElement.height = this.CanvasHolder.offsetHeight;
+		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
+		this.canvasContext.strokeStyle = colorGrid;
+		this.numberOfHorizontalLines = sizeX;
+		this.numberOfVerticalLines = sizeY;
 		this.drawGrid();
 		this.saveCanvasToImage();
 	}

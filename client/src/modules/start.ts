@@ -97,6 +97,21 @@ fromEvent(DOM.createRoom, 'click')//+
         }
     });
 
+setTimeout(function(){
+    window.onresize = function(){
+        setTimeout(function(){
+            console.log("You change the size!");
+            // DOM.canvas.style.width='400px';
+                    game.drawNewCanvas(properties[4], properties[5], properties[2], properties[3]);
+
+         },20);
+     }
+ },200);
+
+// setTimeout(function(){  //Тестовое изменение размера. 
+//     DOM.canvas.style.width='200px';
+//   },3000);
+
 DOM.infoButton.addEventListener('click', function (event: any) {
     Allerts.viewInfo();
 });
