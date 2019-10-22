@@ -284,6 +284,6 @@ function timer() {
 
 export class Change {
     public static changePlayer(): void {
-        socket.send(messageFactory.createMessageChangePlayer());
+        socket.send(messageFactory.createMessageEvent("stopTimer"));
     }
 }

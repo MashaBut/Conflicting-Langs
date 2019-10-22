@@ -111,7 +111,7 @@ export class Game {
                 this.repetitionAtCompletion();
             }
             else if (!this.possiblePositions) {
-                alert("Oh, no. Sorry:(");
+                Change.changePlayer();
                 this.currentPlayer.setLives();
                 ManipulationWithDOM.playSound(PathToMedia.lostLife);
                 if (this.currentPlayer === this.player1) {
@@ -130,7 +130,6 @@ export class Game {
         }
         this.repetititonAtEachTurn();
         this.changePlayer();
-        //Change.changePlayer();
     }
 
     private repetitionAtCompletion(): void {
@@ -150,15 +149,11 @@ export class Game {
         if (this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
-          //  ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
-           // ManipulationWithDOM.nameplayer2.style.cssText = "color: yellow";
         }
         else { 
             this.flagGame = true;
             this.currentPlayer = this.player1;
             this.currentPlayer.soundsForPlayer = true;
-           // ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
-           // ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
         }
     }
 

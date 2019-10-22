@@ -18,7 +18,6 @@ export class Timer {
             }
             if (this.counter === 0) {
                 clearInterval(intervalId);
-              //  Change.changePlayer();
                 //Timer.soundOfClock.pause();
                // Timer.soundOfClock.currentTime = 0;
                 this.counter = 20;

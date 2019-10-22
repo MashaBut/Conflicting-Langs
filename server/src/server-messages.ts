@@ -68,7 +68,7 @@ export class ServerMessages {
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(this.messageFactory.createMessageEvent(event));
                 })
-                if (event === "setUpBlock") {
+                if (event === "setUpBlock" || event == "stopTimer") {
                     this.changePlayerInCurrentRoom(id, rooms);
                 }
                 break;
