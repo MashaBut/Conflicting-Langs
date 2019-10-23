@@ -21,51 +21,68 @@ export class Game {
 
     private position = new Position();
     private canvasDraw: Draw;
-    private size: number[];
+    private sizeBlock: number[];
+    private x: number;
+    private y: number;
 
-    private arrayCurrentPosition = new Array<Block>();
+    private arrayCurrentPosition = new Array<Block>();//должен приниматься с сервера
     private currentPosition: Block;
     private counterBlocksInArray: number = 0;
 
-    private x: number;
-    private y: number;
     private currentColor: string = ColorPlayers.Green;
     private possiblePositions = false;
 
     constructor() { }
 
     public initCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
-        this.canvasDraw = new Draw(ManipulationWithDOM.canvas, sizeX, sizeY, colorMap, colorGrid);
+        this.canvasDraw = new Draw(ManipulationWithDOM.canvas, sizeX, sizeY, colorMap, colorGrid, this.position.blockInNumber);
+        this.canvasDraw.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid, this.position.blockInNumber);
     }
 
-    public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void{
-        this.canvasDraw.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid);
+    public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
+        this.canvasDraw.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid, this.position.blockInNumber);
     }
 
     public createPositionsBlockForMap(dice: number[]): void {
-        //this.position.blocksWithDices(dice);
         this.position.InitDice(dice);
-        this.size = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatio-2, this.canvasDraw.aspectRatio1-2, dice);
+        this.sizeBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth - 2, this.canvasDraw.aspectRatioHeight - 2, dice);
         this.calculatePosition();
+        /*this.canvasDraw.canvasContext.fillStyle = ColorPlayers.Orange;
+        let a = 0; let b = 0;
+        for (let j = 1; j <= this.canvasDraw.canvasElement.height - 1; j += this.canvasDraw.aspectRatioHeight) { 
+            for (let i = 1; i <= this.canvasDraw.canvasElement.width - 1; i += this.canvasDraw.aspectRatioWidth) {            
+                if (a == 3 && b == 4) {
+                    this.canvasDraw.canvasContext.fillStyle = ColorPlayers.Green;
+                    let r1 = a * this.canvasDraw.aspectRatioWidth;
+                    let r2 = b * this.canvasDraw.aspectRatioHeight;
+                    alert(r1 +" "+ r2);
+                    this.canvasDraw.canvasContext.fillRect(r1+1, r2+1, this.canvasDraw.aspectRatioWidth-2, this.canvasDraw.aspectRatioHeight-2);
+                }
+                b++;
+            }
+            a++;
+            b = 0;
+        }*/
     }
 
     private calculatePosition() {
         this.counterBlocksInArray = 0;
         this.arrayCurrentPosition.length = 0;
         if (this.currentPlayer.isFirstMove()) {
-            let coord: number[] = this.firstStep();
-            let block = new Block(coord[0], coord[1], this.size[0], this.size[1], this.currentPlayer.getColor());
+            let coord: number[] = this.firstStepInNumbers(this.currentPlayer.getXCoordinate(), this.currentPlayer.getYCoordinate());
+            this.sizeBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth - 2, this.canvasDraw.aspectRatioHeight - 2, this.position.currentsizeBlock);
+            let block = new Block(coord[0], coord[1], this.sizeBlock[0], this.sizeBlock[1], this.currentPlayer.getColor());
             this.currentPosition = block;
             this.draw();
         }
         else {
-            this.calculateAllPosition(this.position.di);
+            this.calculateAllPosition(this.position.currentsizeBlock);
             if (this.arrayCurrentPosition.length != 0) {
                 this.setFirstStep();
             }
             else {
                 this.position.change();
-                this.calculateAllPosition(this.position.di);
+                this.calculateAllPosition(this.position.currentsizeBlock);
                 if (this.arrayCurrentPosition.length != 0) {
                     this.setFirstStep();
                 }
@@ -83,13 +100,14 @@ export class Game {
         this.possiblePositions = true;
     }
 
-    private calculateAllPosition(d:number[]): void {
-        const xSize = d[0];
-        const ySize = d[1];
-        for (let y = 1; y <= ManipulationWithDOM.canvas.height - ySize*this.canvasDraw.aspectRatio1; y += this.canvasDraw.aspectRatio1) {
-            for (let x = 1; x <= ManipulationWithDOM.canvas.width - xSize*this.canvasDraw.aspectRatio; x += this.canvasDraw.aspectRatio) {
+    private calculateAllPosition(sizeBlock: number[]): void {
+        const xSize = sizeBlock[0];
+        const ySize = sizeBlock[1];
+        this.position.setAsperio(this.canvasDraw.aspectRatioWidth, this.canvasDraw.aspectRatioHeight);
+        for (let y = 1; y <= ManipulationWithDOM.canvas.height - ySize * this.canvasDraw.aspectRatioHeight; y += this.canvasDraw.aspectRatioHeight) {
+            for (let x = 1; x <= ManipulationWithDOM.canvas.width - xSize * this.canvasDraw.aspectRatioWidth; x += this.canvasDraw.aspectRatioWidth) {
                 if (x != ManipulationWithDOM.canvas.width + 1 && y != ManipulationWithDOM.canvas.height + 1) {
-                    let block = new Block(x, y, xSize*this.canvasDraw.aspectRatio, ySize*this.canvasDraw.aspectRatio1, this.currentPlayer.getColor());
+                    let block = new Block(x, y, xSize * this.canvasDraw.aspectRatioWidth, ySize * this.canvasDraw.aspectRatioHeight, this.currentPlayer.getColor());
                     if (this.position.checkPosition(block)) {
                         this.arrayCurrentPosition.push(block);
                     }
@@ -98,16 +116,15 @@ export class Game {
         }
     }
 
-    private firstStep(): number[] {
-        this.x = this.currentPlayer.getXCoordinate() - this.size[0] - 1;
-        this.y = this.currentPlayer.getYCoordinate() - this.size[1] - 1;
-        this.x > 0 ? this.x : this.x = 1;
-        this.y > 0 ? this.y : this.y = 1;
-        return [this.x, this.y];
+    private firstStepInNumbers(x: number, y: number): number[] {
+        this.x = x == 0 ? x = 0 : x = this.canvasDraw.numberOfVerticalLines - this.position.currentsizeBlock[0];
+        this.y = y == 0 ? y = 0 : y = this.canvasDraw.numberOfHorizontalLines - this.position.currentsizeBlock[1];
+        let r1 = x * this.canvasDraw.aspectRatioWidth;
+        let r2 = y * this.canvasDraw.aspectRatioHeight;
+        return [r1, r2];
     }
 
     private endOfturn() {
-
         ManipulationWithDOM.undisabledButtonDice();
         clearTimeout(this.timer);
         this.flag = false;
@@ -133,7 +150,6 @@ export class Game {
                 }
                 if (this.currentPlayer.getLives() === 0) {
                     alert(this.currentPlayer.getName() + " loser");
-
                 }
             }
         }
@@ -143,11 +159,10 @@ export class Game {
     }
 
     private repetitionAtCompletion(): void {
-        this.canvasDraw.redraw(this.currentPosition, this.currentPlayer.getColor());
+        this.canvasDraw.redraw(this.currentPosition, this.position.blockInNumber, this.currentPlayer.getColor());
         this.currentPosition.color = this.currentPlayer.getColor();
-        let block = new Block (this.currentPosition.x,this.currentPosition.y, this.position.di[0],this.position.di[1],this.currentPosition.color);
+        let block = new Block(this.currentPosition.x, this.currentPosition.y, this.position.currentsizeBlock[0], this.position.currentsizeBlock[1], this.currentPosition.color);
         this.position.saveBlockOnMap(block);
-        this.canvasDraw.saveCanvasToImage();
     }
 
     private repetititonAtEachTurn(): void {
@@ -160,20 +175,15 @@ export class Game {
         if (this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
-          //  ManipulationWithDOM.nameplayer1.style.cssText = "color: #ed1818";
-           // ManipulationWithDOM.nameplayer2.style.cssText = "color: yellow";
-           ManipulationWithDOM.rightPlayer.style.cssText = "display: block";
-           ManipulationWithDOM.leftPlayer.style.cssText = "display: none";
+            ManipulationWithDOM.rightPlayer.style.cssText = "display: block";
+            ManipulationWithDOM.leftPlayer.style.cssText = "display: none";
         }
-        else { 
+        else {
             this.flagGame = true;
             this.currentPlayer = this.player1;
             this.currentPlayer.soundsForPlayer = true;
-           // ManipulationWithDOM.nameplayer2.style.cssText = "color: #0719e6";
-           // ManipulationWithDOM.nameplayer1.style.cssText = "color: yellow";
-           ManipulationWithDOM.leftPlayer.style.cssText = "display: block";
-           ManipulationWithDOM.rightPlayer.style.cssText = "display: none";
-
+            ManipulationWithDOM.leftPlayer.style.cssText = "display: block";
+            ManipulationWithDOM.rightPlayer.style.cssText = "display: none";
         }
     }
 
@@ -183,25 +193,21 @@ export class Game {
     }
 
     public setPlayer1(name: string, color: string): void {
-        this.player1 = new Player(name, color, 1, ManipulationWithDOM.canvas.height);
+        this.player1 = new Player(name, color, 0, 1);
         this.currentPlayer = this.player1;
         ManipulationWithDOM.nameplayer1.style.cssText = "color: " + color;
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer1, this.player1.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer1, this.player1.getOccupiedArea());
         PlayersLives.checkLife(this.player1.getLives(), ManipulationWithDOM.livesForPlayerOne);
-        //ManipulationWithDOM.rightPlayer.style.cssText = "display: block";
-        //ManipulationWithDOM.leftPlayer.style.cssText = "display: none";
     }
 
     public setPlayer2(name: string, color: string): void {
-        this.player2 = new Player(name, color, ManipulationWithDOM.canvas.width, 1);
+        this.player2 = new Player(name, color, 1, 0);
         this.currentPlayer = this.player1;
         ManipulationWithDOM.nameplayer2.style.cssText = "color: " + color;
         ManipulationWithDOM.setupNamePlayer(ManipulationWithDOM.nameplayer2, this.player2.getName());
         ManipulationWithDOM.engagedTerritory(ManipulationWithDOM.territoryplayer2, this.player2.getOccupiedArea());
         PlayersLives.checkLife(this.player2.getLives(), ManipulationWithDOM.livesForPlayerTwo);
-       // ManipulationWithDOM.leftPlayer.style.cssText = "display: block";
-       // ManipulationWithDOM.rightPlayer.style.cssText = "display: none";
     }
 
     public keyCode(e: KeyboardEvent) {
@@ -214,12 +220,12 @@ export class Game {
     }
     public rotateBlock() {
         if (this.flag) {
-            this.size = CoordinateTransformation.turnSize();
             if (!this.currentPlayer.isFirstMove()) {
-                this.position.change();
-                this.currentPosition.width = this.size[0];
-                this.currentPosition.height = this.size[1];
+                this.sizeBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth, this.canvasDraw.aspectRatioHeight, this.position.currentsizeBlock);
+                this.currentPosition.width = this.sizeBlock[0];
+                this.currentPosition.height = this.sizeBlock[1];
             }
+            this.position.change();
             this.calculatePosition();
             this.draw();
         }
@@ -229,7 +235,7 @@ export class Game {
         ManipulationWithDOM.playSound(PathToMedia.movementsOfBlock);
     }
 
-    public moveToRight(){
+    public moveToRight() {
         if (this.flag) {
             if (!this.currentPlayer.isFirstMove()) {
                 this.counterBlocksInArray++;
@@ -266,7 +272,7 @@ export class Game {
     public setUpBlock() {
         if (this.flag) {
             ManipulationWithDOM.playSound(PathToMedia.enterSound);
-            this.position.blocksWithDices();
+            this.position.save(this.x, this.y, this.currentPlayer.getColor());
             Timer.flagForTimer = false;
             this.endOfturn();
             this.flag = false;
@@ -276,7 +282,7 @@ export class Game {
         }
     }
 
-    public setBlockPositionOnMap(event:string): void {
+    public setBlockPositionOnMap(event: string): void {
         switch (event) {
             case "rotateBlock":
                 this.rotateBlock();
@@ -294,6 +300,6 @@ export class Game {
     }
 
     public draw(): void {
-        this.canvasDraw.redraw(this.currentPosition, this.currentColor);
+        this.canvasDraw.redraw(this.currentPosition, this.position.blockInNumber, this.currentColor);
     }
 }

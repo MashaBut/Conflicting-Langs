@@ -2,48 +2,51 @@ import { Block } from "./block";
 
 export class Draw {
 
-	public aspectRatio: number; //width
-	public aspectRatio1: number; //height
+	public aspectRatioWidth: number;
+	public aspectRatioHeight: number;
 
-	private numberOfHorizontalLines: number = 25;
-	private numberOfVerticalLines: number = 50;
+	public numberOfHorizontalLines: number = 25;
+	public numberOfVerticalLines: number = 50;
 
 	private CanvasHolder: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("fuildGame");
 
-	private canvasElement: HTMLCanvasElement;
-	private canvasContext: CanvasRenderingContext2D;
-	private image = new Image();
+	public canvasElement: HTMLCanvasElement;
+	public canvasContext: CanvasRenderingContext2D;
+	private colorMap: string;
+	private colorGrid: string;
 
-	public constructor(canvasObj: HTMLCanvasElement, sizeX: number, sizeY: number, colorMap: string, colorGrid: string) {
+	public constructor(canvasObj: HTMLCanvasElement, sizeX: number, sizeY: number, colorMap: string, colorGrid: string, blocks: any) {
 		this.canvasContext = <CanvasRenderingContext2D>canvasObj.getContext('2d');
 		this.canvasElement = canvasObj;
-		this.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid);
+		this.reDrawCanvas(sizeX, sizeY, colorMap, colorGrid, blocks);
 	}
 
-	public reDrawCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string) {
-		//this.clearCanvas();
+	public reDrawCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string, blocks: any) {
+		this.clearCanvas();
 		this.canvasContext.fillStyle = colorMap;
+		this.colorMap =colorMap;
+		this.colorGrid = colorGrid;
 		this.canvasElement.width = this.CanvasHolder.offsetWidth;
 		this.canvasElement.height = this.CanvasHolder.offsetHeight;
-		this.canvasContext.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
+		this.canvasContext.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 		this.canvasContext.strokeStyle = colorGrid;
 		this.numberOfHorizontalLines = sizeX;
 		this.numberOfVerticalLines = sizeY;
-		this.aspectRatio = this.setAspectRatioForVertical();
-		this.aspectRatio1 = this.setAspectRatioForHorizonal();
+		this.aspectRatioWidth = this.setAspectRatioForVertical();
+		this.aspectRatioHeight = this.setAspectRatioForHorizonal();
 		this.drawGrid();
-		this.saveCanvasToImage();
-		this.unloadingImageOnCanvas();
+		this.redrawBlocks(blocks);
 	}
 
 	private drawGrid(): void {
+		this.canvasContext.strokeStyle = this.colorGrid;
 		for (let i = 0; i <= this.numberOfHorizontalLines; i++) {
-			this.canvasContext.moveTo(0, this.aspectRatio1 * i);
-			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatio1 * i);
+			this.canvasContext.moveTo(0, this.aspectRatioHeight * i);
+			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatioHeight * i);
 		}
 		for (let i = 0; i <= this.numberOfVerticalLines; i++) {
-			this.canvasContext.moveTo(this.aspectRatio * i, 0);
-			this.canvasContext.lineTo(this.aspectRatio * i, this.canvasElement.height);
+			this.canvasContext.moveTo(this.aspectRatioWidth * i, 0);
+			this.canvasContext.lineTo(this.aspectRatioWidth * i, this.canvasElement.height);
 		}
 		this.canvasContext.stroke();
 	}
@@ -56,14 +59,6 @@ export class Draw {
 		return this.canvasElement.height / this.numberOfHorizontalLines;
 	}
 
-	public saveCanvasToImage(): void {
-		this.image.src = this.canvasElement.toDataURL("image/png");
-	}
-
-	private unloadingImageOnCanvas(): void {
-		this.canvasContext.drawImage(this.image, 0, 0);
-	}
-
 	private clearCanvas(): void {
 		this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 	}
@@ -73,9 +68,17 @@ export class Draw {
 		this.canvasContext.fillRect(block.x, block.y, block.width, block.height);
 	}
 
-	public redraw(block: Block, color: string): void {
+	public redrawBlocks(block: any): void {
+		block.forEach((b: Block) => {
+			this.canvasContext.fillStyle = b.color;
+			this.canvasContext.fillRect(b.x * this.aspectRatioWidth, b.y * this.aspectRatioHeight, b.width * this.aspectRatioWidth, b.height * this.aspectRatioHeight);
+		});
+	}
+
+	public redraw(block: Block, blocks: any, color: string): void {
 		this.clearCanvas();
-		this.unloadingImageOnCanvas();
+		this.drawGrid();
+		this.redrawBlocks(blocks);
 		this.drawBlockOnMap(block, color);
 	}
 }

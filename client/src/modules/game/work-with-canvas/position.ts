@@ -4,11 +4,16 @@ const coefArea: number = 5000;
 
 export class Position {
     private blocks = new Array<Block>();
-    private asperioWidth: number;
-    private asperioHeight: number;
-    private d = new Array();
+    public blockInNumber = new Array();
+    private asperioRatioWidth: number;
+    private asperioRatioHeight: number;
     private bool: boolean = true;
-    //b = [a, a = b][0];
+    public currentsizeBlock: any;
+
+    public setAsperio(widht: number, height: number): void {
+        this.asperioRatioHeight = height;
+        this.asperioRatioWidth = widht;
+    }
 
     public saveBlockOnMap(block: Block): void {
         this.blocks.push(block);
@@ -26,26 +31,31 @@ export class Position {
         return parseFloat((sum).toPrecision(3));
     }
 
-    public blocksWithDices(): void {
-        this.d.push(this.di);
+    public save(x: number, y: number, color: string): void {
+        let block = new Block(x, y, this.currentsizeBlock[0], this.currentsizeBlock[1], color);
+        this.blockInNumber.push(block);
     }
 
     private calcPixels(asperio1: number, asperio2: number): void {
-        for(let block in this.di) {
-            
+        for (let block in this.blocks) {
+
         }
     }
 
     public change(): void {
-        console.log("Before");
-        console.log(this.di);
-        this.di = [this.di[1], this.di[0]];
-        console.log("After");
-        console.log(this.di);
+        this.currentsizeBlock = [this.currentsizeBlock[1], this.currentsizeBlock[0]];
+        if (this.bool == true) {
+            this.bool = false;
+        }
+        else this.bool = true;
     }
-    di: any;
+
+    public isChange(): boolean {
+        return this.bool;
+    }
+
     public InitDice(dices: number[]): void {
-        this.di = dices;
+        this.currentsizeBlock = dices;
     }
 
     private isBlockInOtherBlock(newBlock: Block): boolean {

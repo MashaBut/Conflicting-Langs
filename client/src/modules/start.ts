@@ -10,7 +10,6 @@ import { ColorMap } from "./game/enums/color-map";
 import { SizeMap } from "./game/enums/size-map";
 
 import { fromEvent } from 'rxjs';
-//import { fromEvent } from "@node-modules/rxjs/index";
 
 import { DiceRoller } from "./game/dice/dice-roller";
 
@@ -18,7 +17,6 @@ import { Timer } from "./game/timer/timer";
 
 import { Game } from "./controllers/controller-main-module";
 
-//import { MessageFactory } from "@message-facroty/message-factory";
 import { MessageFactory } from "../../../library/dist/message-factory";
 import { MessageType } from "../../../library/dist/index";
 import { KeyCodes } from "./key-codes/key-codes";
