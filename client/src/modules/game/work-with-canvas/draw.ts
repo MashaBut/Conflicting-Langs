@@ -1,19 +1,18 @@
 import { Block } from "./block";
+import { ManipulationWithDOM } from "../../work-with-html/manipulations-with-dom";
 
 export class Draw {
 
 	public aspectRatioWidth: number;
 	public aspectRatioHeight: number;
 
-	public numberOfHorizontalLines: number = 25;
-	public numberOfVerticalLines: number = 50;
+	public numberOfHorizontalLines: number;
+	public numberOfVerticalLines: number;
 
 	private CanvasHolder: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("fuildGame");
 
 	public canvasElement: HTMLCanvasElement;
 	public canvasContext: CanvasRenderingContext2D;
-	private colorMap: string;
-	private colorGrid: string;
 
 	public constructor(canvasObj: HTMLCanvasElement, sizeX: number, sizeY: number, colorMap: string, colorGrid: string, blocks: any) {
 		this.canvasContext = <CanvasRenderingContext2D>canvasObj.getContext('2d');
@@ -22,24 +21,20 @@ export class Draw {
 	}
 
 	public reDrawCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string, blocks: any) {
-		this.clearCanvas();
-		this.canvasContext.fillStyle = colorMap;
-		this.colorMap =colorMap;
-		this.colorGrid = colorGrid;
+		ManipulationWithDOM.canvas.style.backgroundColor = colorMap;
 		this.canvasElement.width = this.CanvasHolder.offsetWidth;
 		this.canvasElement.height = this.CanvasHolder.offsetHeight;
-		this.canvasContext.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 		this.canvasContext.strokeStyle = colorGrid;
 		this.numberOfHorizontalLines = sizeX;
 		this.numberOfVerticalLines = sizeY;
 		this.aspectRatioWidth = this.setAspectRatioForVertical();
 		this.aspectRatioHeight = this.setAspectRatioForHorizonal();
+		this.clearCanvas();
 		this.drawGrid();
 		this.redrawBlocks(blocks);
 	}
 
 	private drawGrid(): void {
-		this.canvasContext.strokeStyle = this.colorGrid;
 		for (let i = 0; i <= this.numberOfHorizontalLines; i++) {
 			this.canvasContext.moveTo(0, this.aspectRatioHeight * i);
 			this.canvasContext.lineTo(this.canvasElement.width, this.aspectRatioHeight * i);
@@ -60,7 +55,7 @@ export class Draw {
 	}
 
 	private clearCanvas(): void {
-		this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+		this.canvasContext.clearRect(0, 0, this.CanvasHolder.offsetWidth, this.CanvasHolder.offsetHeight);
 	}
 
 	private drawBlockOnMap(block: Block, colorBlock: string): void {

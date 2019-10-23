@@ -99,6 +99,7 @@ setTimeout(function () {
     window.onresize = function () {
         setTimeout(function () {
             game.drawNewCanvas(properties[4], properties[5], properties[2], properties[3]);
+            game.calculatePosition();
         }, 20);
     }
 }, 200);

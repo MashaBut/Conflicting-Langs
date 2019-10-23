@@ -65,7 +65,7 @@ export class Game {
         }*/
     }
 
-    private calculatePosition() {
+    public calculatePosition() {
         this.counterBlocksInArray = 0;
         this.arrayCurrentPosition.length = 0;
         if (this.currentPlayer.isFirstMove()) {
