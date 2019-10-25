@@ -1,11 +1,19 @@
-.left_triangle {
+.flex-box {
     grid-column: 2/3;
     grid-row: 1/1;
-    display: block;
-    margin-top: 4%;
-    margin-left: 35%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    padding-top: 4%;
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+.left_triangle {
     width: 0;
     height: 0;
+    margin-right: 35px;
     border-top: 20px solid transparent;
     border-right: 50px solid #ffffff;
     border-bottom: 20px solid transparent;
@@ -13,15 +21,60 @@
 }
 
 .right_triangle {
-    grid-column: 2/3;
-    grid-row: 1/1;
-    display: block;
-    margin-top: 4%;
-    margin-left: 60%;
     width: 0;
     height: 0;
+    margin-left: 35px;
     border-top: 20px solid transparent;
     border-left: 50px solid #ffffff;
     border-bottom: 20px solid transparent
+}
+
+
+.timer {
+    margin-top: 1%;
+    text-transform: uppercase;
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+}
+
+
+@media only screen and (max-width: 1336px) {
+    .left_triangle {
+        border-top: 15px solid transparent;
+        border-right: 38px solid #ffffff;
+        border-bottom: 15px solid transparent;
+    
+    }
+    
+    .right_triangle {
+        border-top: 15px solid transparent;
+        border-left: 38px solid #ffffff;
+        border-bottom: 15px solid transparent
+    }
+
+    .flex-box {
+        padding-top: 5%;
+    }
+}
+
+
+@media only screen and (max-width: 870px) {
+    .left_triangle {
+        border-top: 10px solid transparent;
+        border-right: 26px solid #ffffff;
+        border-bottom: 10px solid transparent;
+    
+    }
+    
+    .right_triangle {
+        border-top: 10px solid transparent;
+        border-left: 26px solid #ffffff;
+        border-bottom: 10px solid transparent
+    }
+
+    .flex-box {
+        padding-top: 6%;
+    }
 }
 
