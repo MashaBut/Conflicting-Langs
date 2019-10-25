@@ -1,4 +1,4 @@
-import { KeyCodes } from '../key-codes/key-codes';
+import { KeyCodes } from '../key-codes';
 import { PathToMedia } from "./path-to-media";
 
 export class ManipulationWithDOM {

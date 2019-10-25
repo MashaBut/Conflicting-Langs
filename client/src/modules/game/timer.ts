@@ -1,6 +1,6 @@
-import { ManipulationWithDOM } from "../../work-with-html/manipulations-with-dom";
-import { PathToMedia } from "../../work-with-html/path-to-media";
-import {Change} from "../../start";
+import { ManipulationWithDOM } from "../work-with-html/manipulations-with-dom";
+import { PathToMedia } from "../work-with-html/path-to-media";
+import {Change} from "../start";
 
 export class Timer {
     static flagForTimer: boolean = true;

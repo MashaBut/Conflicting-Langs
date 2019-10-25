@@ -11,15 +11,15 @@ import { SizeMap } from "./game/enums/size-map";
 
 import { fromEvent } from 'rxjs';
 
-import { DiceRoller } from "./game/dice/dice-roller";
+import { DiceRoller } from "./game/dice-roller";
 
-import { Timer } from "./game/timer/timer";
+import { Timer } from "./game/timer";
 
-import { Game } from "./controllers/controller-main-module";
+import { Game } from "./controller-main-module";
 
 import { MessageFactory } from "../../../library/dist/message-factory";
 import { MessageType } from "../../../library/dist/index";
-import { KeyCodes } from "./key-codes/key-codes";
+import { KeyCodes } from "./key-codes";
 
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:');
 let socketUrl = socketProtocol + '//' + location.host;
@@ -102,7 +102,7 @@ setTimeout(function () {
             game.calculatePosition();
         }, 20);
     }
-}, 200);
+}, 200); 
 
 
 DOM.infoButton.addEventListener('click', function (event: any) {
@@ -135,7 +135,7 @@ DOM.rooms.addEventListener('click', function (event: any) {//+
         if (room.id === idJoinRoom) {
             socket.send(messageFactory.createMessageJoinRoom(idJoinRoom));
             View.GamePage();
-            DOM.playSound(PathToMedia.playGame);
+           // DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
             DOM.initSounds();
             break;
@@ -205,7 +205,7 @@ fromEvent(document.body, 'keydown')
             case KeyCodes.Left:
                 socket.send(messageFactory.createMessageEvent("moveToLeft"));
                 break;
-            case KeyCodes.Enter:
+            case KeyCodes.Enter: 
                 socket.send(messageFactory.createMessageEvent("setUpBlock"));
                 break;
         }
@@ -236,7 +236,7 @@ fromEvent(DOM.endGame, 'click')
 
 function tossDice(): void {
     PushImage.returmAnimate();
-    DOM.playSound(PathToMedia.soundForDice);
+    //DOM.playSound(PathToMedia.soundForDice);
     DOM.disabledButtonDice();
     DiceRoller.getPathOfImage(dices);
     setTimeout(timer, 1790);
