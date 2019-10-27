@@ -16,7 +16,7 @@
         <div class="gridForStartPage">
             <div class="player">
                 <label for="input" class="label">
-                <input type="text" required class="input" id="player" value="">
+                <input type="text" required class="input" id="player" value="" placeholder="Name">
             </label>
             </div>
             <div class="click">
@@ -27,42 +27,94 @@
 
     <div class="hollpage" id="hollpage">
         <div class="gridForHollPage">
-            <p class="VS">Enter the ready room or create your own!</p>
-            <div class="rooms" id="rooms"></div>
+
             <div class="aboutGame">
                 <button type="button" class="information" id="information">i</button>
             </div>
+
             <div class="informationAboutGame" id="informationAboutGame">
-                <p>
-                    Когда два противка сходяться в равном бою здесь поможет только удача и смекалка. Попробуй обыграть и завоеваеть большую часть територии не погибнув при этом. Ведь так высока вероятность проигрыша в одном неверном движении. Докажи, что ты лучший игрок
-                    здесь и сейчас!
-                </p>
-                <button type="button" class="hideInfo" id="hideInfo">OK</button>
+                <article id="slider">
+                        <input checked type="radio" name="slider" id="switch1">
+                        <input type="radio" name="slider" id="switch2">
+                        <input type="radio" name="slider" id="switch3">
+                        <div id="slides">
+                                <div id="overflow">
+                                    <div class="divesForInfo">
+                                        <article>
+                                            <div>
+                                            INTRODUCTION!<br><br>
+                                            When two opponents converge in an equal battle, only luck and ingenuity will help them. 
+                                            Try to beat your enemy and conquer most of the territory, not dying at the same time. 
+                                            Indeed, the probability of losing in one wrong move is so high. 
+                                            Prove that you are the best player here and now!
+                                            </div>
+                                        </article>
+                                        <article>
+                                            <div>
+                                            KEEP AN EYE OUT!<br><br>
+                                            The game begins when the first player rolls the dices. 
+                                            The block appears on the map and it can be rotated and moved to possible positions. 
+                                            You have only 20 seconds, after that the block will be fixed in the current position and the turn will pass to the opponent. 
+                                            If the block can not be placed on the map, your life is taken away and your turn ends. 
+                                            The game ends at the moment when all lives ends or the entire available surface is occupied.
+                                            </div>
+                                        </article>
+                                        <article>
+                                            <div>
+                                            CONTROLS :<br><br>
+                                            Rotation — up ▲ or down ▼ arrows<br><br>
+                                            Motion —  left ◄ or right ► arrows<br><br>
+                                            Fixing of block — Enter<br><br>
+                                            Roll the dices — BackSpace
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+                        </div> 
+                        <div id="controls">
+                            <label for="switch1"></label>
+                            <label for="switch2"></label>
+                            <label for="switch3"></label>
+                        </div>
+                </article>
+                <button type="button" class="hideInfo" id="hideInfo">OK</button>                        
+                <div id="active">
+                        <label for="switch1"></label>
+                        <label for="switch2"></label>
+                        <label for="switch3"></label>
+                </div>
             </div>
+            <p class="VS">Enter the ready room or create your own!</p>
+            <div class="rooms" id="rooms"></div>
             <div class="properties" id="properties">
                 <p>Choose your color!</p>
-                <button type="button" class="orangeButton" id="orangeButton1"></button>
-                <button type="button" class="redButton" id="redButton1"></button>
-                <button type="button" class="blueButton" id="blueButton1"></button>
-
+                <div class="flex">
+                    <button type="button" class="orangeButton" id="orangeButton1"></button>
+                    <button type="button" class="redButton" id="redButton1"></button>
+                    <button type="button" class="blueButton" id="blueButton1"></button>        
+                </div>
                 <p>Choose the color of your opponent!</p>
-                <button type="button" class="orangeButton" id="orangeButton2"></button>
-                <button type="button" class="redButton" id="redButton2"></button>
-                <button type="button" class="blueButton" id="blueButton2"></button>
-
+                <div class="flex">
+                    <button type="button" class="orangeButton" id="orangeButton2"></button>
+                    <button type="button" class="redButton" id="redButton2"></button>
+                    <button type="button" class="blueButton" id="blueButton2"></button>        
+                </div>
                 <p>Choose the color of map!</p>
-                <button type="button" class="blueMap" id="blueMap"></button>
-                <button type="button" class="brownMap" id="brownMap"></button>
-                <button type="button" class="whiteMap" id="whiteMap"></button>
-
+                <div class="flex">
+                    <button type="button" class="blueMap" id="blueMap"></button>
+                    <button type="button" class="brownMap" id="brownMap"></button>
+                    <button type="button" class="whiteMap" id="whiteMap"></button>
+                </div>
                 <p>Choose the size of map!</p>
-                <button type="button" class="smallMap" id="smallMap">Small</button>
-                <button type="button" class="mediumMap" id="mediumMap">Medium</button>
-                <button type="button" class="bigMap" id="bigMap">Big</button>
+                <div class="flex">
+                    <button type="button" class="smallMap" id="smallMap">Small</button>
+                    <button type="button" class="mediumMap" id="mediumMap">Medium</button>
+                    <button type="button" class="bigMap" id="bigMap">Big</button>        
+                </div>
             </div>
             <div class="enterNameOfRoom">
                 <label for="input" class="label">
-                        <input type="text" required class="input" id="nameRoom" value="">
+                        <input type="text" required class="input" id="nameRoom" value="" placeholder="Name of room">
                     </label>
             </div>
             <div class="click">

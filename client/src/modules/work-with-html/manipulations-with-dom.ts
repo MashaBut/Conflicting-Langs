@@ -17,6 +17,24 @@ export class ManipulationWithDOM {
     static rooms: HTMLElement = <HTMLElement>document.getElementById('rooms');
     static properties: HTMLElement = <HTMLElement>document.getElementById('properties');
 
+    //properties
+    static orangeButton1: HTMLElement = <HTMLButtonElement>document.getElementById('orangeButton1');
+    static redButton1: HTMLElement = <HTMLElement>document.getElementById("redButton1");
+    static blueButton1: HTMLElement = <HTMLElement>document.getElementById("blueButton1");
+
+    static orangeButton2: HTMLElement = <HTMLElement>document.getElementById("orangeButton2");
+    static redButton2: HTMLElement = <HTMLElement>document.getElementById("redButton2");
+    static blueButton2: HTMLElement = <HTMLElement>document.getElementById("blueButton2");
+
+    static blueMap: HTMLElement = <HTMLElement>document.getElementById("blueMap");
+    static brownMap: HTMLElement = <HTMLElement>document.getElementById('brownMap');
+    static whiteMap: HTMLElement = <HTMLElement>document.getElementById('whiteMap');
+    
+    static smallMap: HTMLElement = <HTMLButtonElement>document.getElementById('smallMap');
+    static mediumMap: HTMLElement = <HTMLElement>document.getElementById("mediumMap");
+    static bigMap: HTMLElement = <HTMLElement>document.getElementById("bigMap");
+
+
     //dices
     static dice1: HTMLElement = <HTMLElement>document.getElementById('dice1');
     static dice2: HTMLElement = <HTMLElement>document.getElementById('dice2');
