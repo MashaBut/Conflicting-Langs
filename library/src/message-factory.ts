@@ -10,6 +10,9 @@ import { MessagePushNamesToRoom } from "./message-modules/message-push-names-to-
 import { MessageEventTossDice } from "./message-modules/message-event-toos-dice";
 import { MessageChangePlayer } from "./message-modules/message-change-player";
 import { MessageMoveToHollPage } from "./message-modules/message-move-to-holl-page";
+import { MessageBlock } from "./message-modules/message-block";
+import { MessageLinesFuild } from "./message-modules/message-lines-fuild";
+import { MessageArrayBlocks } from "./message-modules/message-array-blocks";
 export class MessageFactory {
     public createMessageSetName(name: string): string {//+
         let message = new MessageSetName();
@@ -64,9 +67,10 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageEventTossDice(): string {//+
+    public createMessageEventTossDice(color: string): string {//+
         let message = new MessageEventTossDice();
         message.type = MessageType.EventTossDice;
+        message.color = color;
         return JSON.stringify(message);
     }
 
@@ -85,6 +89,28 @@ export class MessageFactory {
     public createMessageDisconnect(): string {
         let message = new MessageDisconnect();
         message.type = MessageType.Disconnect;
+        return JSON.stringify(message);
+    }
+
+    public createMessageBlock(block: any): string {
+        let message = new MessageBlock();
+        message.block = block;
+        message.type = MessageType.Block;
+        return JSON.stringify(message);
+    }
+
+    public createMessageLinesFuild(v: number, h: number): string {
+        let message = new MessageLinesFuild();
+        message.type = MessageType.LinesFuild;
+        message.vertical = v;
+        message.horizontal = h;
+        return JSON.stringify(message);
+    }
+
+    public createMessageArrayBlocks(blocks:object[]):string {
+        let message = new MessageArrayBlocks();
+        message.type= MessageType.ArrayBlocks;
+        message.blocks = blocks;
         return JSON.stringify(message);
     }
 }

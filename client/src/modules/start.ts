@@ -12,6 +12,7 @@ import { SizeMap } from "./game/enums/size-map";
 import { fromEvent } from 'rxjs';
 
 import { DiceRoller } from "./game/dice-roller";
+import { Block } from "./game/work-with-canvas/block";
 
 import { Timer } from "./game/timer";
 
@@ -55,6 +56,7 @@ socket.onmessage = function (message: any) {
                 game.setPlayer2(msg.name1, properties[0]);
                 game.setPlayer1(msg.name2, properties[1]);
             }
+            socket.send(messageFactory.createMessageLinesFuild(properties[4], properties[5]));
             break;
         case MessageType.TossDice:
             dices = msg.dices;
@@ -62,6 +64,14 @@ socket.onmessage = function (message: any) {
             break;
         case MessageType.Event:
             game.setBlockPositionOnMap(msg.event);
+            break;
+        case MessageType.ArrayBlocks:
+            let array = msg.blocks;
+            game.arrayCurrentPosition.length = 0;
+            for (let i of array) {
+                game.arrayCurrentPosition.push(game.convertBlockSizeToPixels(i.x, i.y, i.width, i.height, i.color));
+            }
+            game.setFirstStep();
             break;
         case MessageType.Disconnect:
             alert("Извените ваш опонент вышел");
@@ -71,7 +81,7 @@ socket.onmessage = function (message: any) {
     }
 };
 
-fromEvent(DOM.writeNames, 'click')//+
+fromEvent(DOM.writeNames, 'click')
     .subscribe(() => {
         name = (DOM.playerInit).value;
         if (name != "") {
@@ -81,7 +91,7 @@ fromEvent(DOM.writeNames, 'click')//+
         }
     });
 
-fromEvent(DOM.createRoom, 'click')//+
+fromEvent(DOM.createRoom, 'click')
     .subscribe(() => {
         const nameRoom = (DOM.nameRoom).value;
         if (nameRoom != "" && (properties[0] != properties[1])) {
@@ -102,7 +112,7 @@ setTimeout(function () {
             game.calculatePosition();
         }, 20);
     }
-}, 200); 
+}, 200);
 
 
 DOM.infoButton.addEventListener('click', function (event: any) {
@@ -113,7 +123,7 @@ DOM.hideInformationAboutGame.addEventListener('click', function (event: any) {
     Allerts.hideInfo();
 });
 
-function viewRoom(id: string, name: string): void {//+
+function viewRoom(id: string, name: string): void {
     let roomsDiv = DOM.rooms;
     let newButton = document.createElement('button');
     newButton.id = "clientRoom";
@@ -122,20 +132,21 @@ function viewRoom(id: string, name: string): void {//+
     roomsDiv.appendChild(newButton);
 }
 
-function clearRooms(): void {//+
+function clearRooms(): void {
     let idDiv: any = DOM.rooms;
     while (idDiv.hasChildNodes()) {
         idDiv.removeChild(idDiv.lastChild);
     }
 }
 
-DOM.rooms.addEventListener('click', function (event: any) {//+
+DOM.rooms.addEventListener('click', function (event: any) {
     let idJoinRoom = event.srcElement.value;
     for (let room of arrayRooms) {
         if (room.id === idJoinRoom) {
             socket.send(messageFactory.createMessageJoinRoom(idJoinRoom));
+            socket.send(messageFactory.createMessageLinesFuild(game.canvasDraw.numberOfVerticalLines, game.canvasDraw.numberOfHorizontalLines));
             View.GamePage();
-           // DOM.playSound(PathToMedia.playGame);
+            DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
             DOM.initSounds();
             break;
@@ -205,7 +216,7 @@ fromEvent(document.body, 'keydown')
             case KeyCodes.Left:
                 socket.send(messageFactory.createMessageEvent("moveToLeft"));
                 break;
-            case KeyCodes.Enter: 
+            case KeyCodes.Enter:
                 socket.send(messageFactory.createMessageEvent("setUpBlock"));
                 break;
         }
@@ -213,7 +224,7 @@ fromEvent(document.body, 'keydown')
 
 fromEvent(DOM.tossDice, 'click')
     .subscribe(() => {
-        socket.send(messageFactory.createMessageEventTossDice());
+        socket.send(messageFactory.createMessageEventTossDice(game.currentPlayer.getColor()));
     });
 
 fromEvent(DOM.soundOff, 'click')
@@ -236,7 +247,7 @@ fromEvent(DOM.endGame, 'click')
 
 function tossDice(): void {
     PushImage.returmAnimate();
-    //DOM.playSound(PathToMedia.soundForDice);
+    DOM.playSound(PathToMedia.soundForDice);
     DOM.disabledButtonDice();
     DiceRoller.getPathOfImage(dices);
     setTimeout(timer, 1790);
@@ -249,8 +260,11 @@ function timer() {
     game.createPositionsBlockForMap(dices);
 }
 
-export class Change {
+export class SendMmessage {
     public static changePlayer(): void {
         socket.send(messageFactory.createMessageChangePlayer());
+    }
+    public static sendBlock(block: Block): void {
+        socket.send(messageFactory.createMessageBlock(block));
     }
 }

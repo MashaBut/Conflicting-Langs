@@ -10,4 +10,7 @@ export enum MessageType {
     EventTossDice,
     ChangePlayer,
     MoveToHollPage,
+    Block,
+    LinesFuild,
+    ArrayBlocks
 }

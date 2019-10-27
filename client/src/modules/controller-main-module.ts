@@ -9,23 +9,23 @@ import { PlayersLives } from "./game/lives";
 
 import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
 import { PathToMedia } from "./work-with-html/path-to-media";
-import { Change } from "./start";
+import { SendMmessage } from "./start";
 
 export class Game {
 
     private player1: Player;
     private player2: Player;
-    private currentPlayer: Player;
+    public currentPlayer: Player;
     private flagGame: boolean = true;
     private flag: boolean = true;
     private timer: any;
 
     private position = new Position();
-    private canvasDraw: Draw;
+    public canvasDraw: Draw;
     private sizeFirstBlock: number[];
 
-    private arrayCurrentPosition = new Array<Block>();//должен приниматься с сервера
-    private currentPosition: Block;
+    public arrayCurrentPosition = new Array<Block>();//должен приниматься с сервера
+    public currentPosition: Block;
     private counterBlocksInArray: number = 0;
     private possiblePositions = false;
 
@@ -43,6 +43,12 @@ export class Game {
         this.calculatePosition();
     }
 
+    private firstStepInNumbers(x: number, y: number): number[] {
+        x == 0 ? x = 0 : x = this.canvasDraw.numberOfVerticalLines - this.position.currentDices[0];
+        y == 0 ? y = 0 : y = this.canvasDraw.numberOfHorizontalLines - this.position.currentDices[1];
+        return [x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight];
+    }
+
     public calculatePosition() {
         this.counterBlocksInArray = 0;
         this.arrayCurrentPosition.length = 0;
@@ -52,7 +58,7 @@ export class Game {
             this.currentPosition = new Block(coord[0], coord[1], this.sizeFirstBlock[0], this.sizeFirstBlock[1], this.currentPlayer.getColor());
             this.draw();
         }
-        else {
+        /*else {
             this.calculateAllPosition(this.position.currentDices);
             if (this.arrayCurrentPosition.length != 0) {
                 this.setFirstStep();
@@ -68,36 +74,21 @@ export class Game {
                     this.endOfturn();
                 }
             }
-        }
+        }*/
     }
 
-    private setFirstStep(): void {
+    public setFirstStep(): void {
         this.currentPosition = this.arrayCurrentPosition[0];
         this.draw();
         this.possiblePositions = true;
     }
 
-    private calculateAllPosition(size: number[]): void {
-        for (let x = 0; x <= this.canvasDraw.numberOfVerticalLines; x++) {
-            for (let y = 0; y <= this.canvasDraw.numberOfHorizontalLines; y++) {
-                let block = new Block(x, y, size[0], size[1], this.currentPlayer.getColor());
-                if (this.position.checkPosition(block)) {
-                    this.arrayCurrentPosition.push(this.convertBlockSizeToPixels(x, y, size));
-                }
-            }
-        }
+    public convertBlockSizeToPixels(x: number, y: number, Xsize:number,Ysize:number,color:string): Block {
+        return new Block(x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight, Xsize * this.canvasDraw.aspectRatioWidth,
+            Ysize * this.canvasDraw.aspectRatioHeight, color);
     }
 
-    private convertBlockSizeToPixels(x: number, y: number, size: number[]): Block {
-        return new Block(x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight, size[0] * this.canvasDraw.aspectRatioWidth,
-            size[1] * this.canvasDraw.aspectRatioHeight, this.currentPlayer.getColor());
-    }
 
-    private firstStepInNumbers(x: number, y: number): number[] {
-        x == 0 ? x = 0 : x = this.canvasDraw.numberOfVerticalLines - this.position.currentDices[0];
-        y == 0 ? y = 0 : y = this.canvasDraw.numberOfHorizontalLines - this.position.currentDices[1];
-        return [x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight];
-    }
 /////////////////////////////////////////
     private endOfturn() {
         DOM.undisabledButtonDice();
@@ -107,7 +98,7 @@ export class Game {
             this.currentPlayer.setFirstMove(false);
             this.repetitionAtCompletion();
         }
-        else {
+        /*else {
             if (this.possiblePositions) {
                 this.repetitionAtCompletion();
             }
@@ -127,15 +118,18 @@ export class Game {
                     alert(this.currentPlayer.getName() + " loser");
                 }
             }
-        }
+        }*/
         this.repetititonAtEachTurn();
         this.changePlayer();
-        Change.changePlayer();
+        SendMmessage.changePlayer();
     }
 
     private repetitionAtCompletion(): void {
         this.canvasDraw.redraw(this.currentPosition, this.position.blocks, this.currentPlayer.getColor());
-        this.position.save(this.currentPosition.x / this.canvasDraw.aspectRatioWidth, this.currentPosition.y / this.canvasDraw.aspectRatioHeight, this.currentPlayer.getColor());
+        this.position.save(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight), this.currentPlayer.getColor());
+        let block = new Block (Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
+            this.position.currentDices[0],this.position.currentDices[1], this.currentPlayer.getColor())
+        SendMmessage.sendBlock(block);
     }
 
     private repetititonAtEachTurn(): void {

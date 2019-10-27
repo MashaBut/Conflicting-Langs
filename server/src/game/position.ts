@@ -16,8 +16,8 @@ export class Position {
         return parseFloat((sum).toPrecision(3));
     }
 
-    public save(x: number, y: number, color: string): void {
-        this.blocks.push(new Block(x, y, this.currentDices[0], this.currentDices[1], color));
+    public initBlocks(blocks:Array<Block>): void {
+        this.blocks = blocks;
     }
 
     public change(): void {
