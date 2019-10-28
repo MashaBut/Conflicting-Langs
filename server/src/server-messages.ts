@@ -1,8 +1,11 @@
 import { Room } from "./room";
 import { MessageFactory } from "../../library/dist/message-factory";
+import { Block } from "./game/block";
+import { Calculation } from "./game/calculation";
 
 export class ServerMessages {
     messageFactory = new MessageFactory();
+    calc = new Calculation();
 
     public sendRooms(rooms: Array<Room>, sockets: Map<string, any>): void {
         let openRooms = new Array<Room>();
@@ -37,14 +40,60 @@ export class ServerMessages {
         sockets.get(idClient).send(this.messageFactory.createMessagePushNamesToRoom(nameFisrtClient, nameSecondClient, currentPlayer, settings));
     }
 
-    public sendTossDice(id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+    public sendTossDice(id: string, rooms: Array<Room>, sockets: Map<string, any>, color: string): void {
         for (let room of rooms) {
             if (id === room.isCurrentPlayer()) {
-                let msg = this.messageFactory.createMessageTossDice([this.generationNumber(), this.generationNumber()]);
+                let dices: number[] = [this.generationNumber(), this.generationNumber()];
+                let msg = this.messageFactory.createMessageTossDice(dices);
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(msg);
                 })
+                if (room.blocks.length >= 2) {
+                    this.calc.color = color;
+                    this.calc.CalculatePosition(dices, room.blocks);
+                    if (this.calc.arrayCurrentPosition.length != 0) {
+                        let msg = this.messageFactory.createMessageArrayBlocks(this.calc.arrayCurrentPosition);
+                        room.players.forEach((key: string) => {
+                            sockets.get(key).send(msg);
+                        })
+                    }
+                    else {
+                        this.changePlayerInCurrentRoom(id, rooms);
+                        room.players.forEach((key: string) => {
+                          sockets.get(key).send(this.messageFactory.createMessageFailure());
+                        })
+                    }
+                }
                 break;
+            }
+        }
+    }
+
+    public saveBlock(id: string, rooms: Array<Room>, block: Block, sockets: Map<string, any>): void {
+        for (let room of rooms) {
+            if (id === room.isCurrentPlayer()) {
+                room.saveBlock(block);
+                room.players.forEach((key: string) => {
+                    sockets.get(key).send(this.messageFactory.createMessageArraySaveBlocks(room.blocks));
+                  })
+               // room.setUpCurrentPlayer();
+                console.log(block);
+                break;
+            }
+        }
+    }
+
+    public rotateBlock(dices: number[], color: string, id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+        for (let room of rooms) {
+            if (id === room.isCurrentPlayer()) {
+                this.calc.color = color;
+                this.calc.CalculatePosition(dices, room.blocks);
+                if (this.calc.arrayCurrentPosition.length != 0) {
+                    let msg = this.messageFactory.createMessageArrayBlocks(this.calc.arrayCurrentPosition);
+                    room.players.forEach((key: string) => {
+                        sockets.get(key).send(msg);
+                    })
+                }
             }
         }
     }
@@ -68,11 +117,15 @@ export class ServerMessages {
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(this.messageFactory.createMessageEvent(event));
                 })
-                if (event === "setUpBlock" || event == "stopTimer") {
+                if ("setUpBlock" == event) {
                     this.changePlayerInCurrentRoom(id, rooms);
                 }
                 break;
             }
         }
+    }
+
+    public setLines(vertical: number, horizontal: number): void {
+        this.calc.setLines(vertical, horizontal);
     }
 }

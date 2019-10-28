@@ -1,5 +1,5 @@
 import { ManipulationWithDOM } from "./manipulations-with-dom";
-import { DiceRoller } from "../game/dice/dice-roller";
+import { DiceRoller } from "../game/dice-roller";
 import { PathToMedia } from "./path-to-media";
 
 export class PushImage {

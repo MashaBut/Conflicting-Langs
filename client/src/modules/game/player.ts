@@ -34,11 +34,11 @@ export class Player {
         return this.name;
     }
 
-    public getXCoordinate(): number {
+    public getX(): number {
         return this.xStart;
     }
 
-    public getYCoordinate(): number {
+    public getY(): number {
         return this.yStart;
     }
     

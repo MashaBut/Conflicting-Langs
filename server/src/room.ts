@@ -1,3 +1,5 @@
+import { Block } from "./game/block";
+
 export class Room {
     public currentPlayerId: string;
     public setUpCurrentPlayerNumb: number;
@@ -6,6 +8,7 @@ export class Room {
     public creator: string;
     public players: Array<string> = new Array();
     public settings: Array<any> = new Array();
+    public blocks = new Array<Block>();
 
     constructor(name: string, id: string, creator: any) {
         this.name = name;
@@ -35,5 +38,9 @@ export class Room {
 
     private firstPlayerNumb(): void {
         this.setUpCurrentPlayerNumb = Math.floor(Math.random() * 2);
+    }
+
+    public saveBlock(block:Block):void {
+        this.blocks.push(block);
     }
 }

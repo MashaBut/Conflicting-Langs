@@ -9,16 +9,18 @@ import { ColorPlayers } from "./game/enums/color-players";
 import { ColorMap } from "./game/enums/color-map";
 import { SizeMap } from "./game/enums/size-map";
 
-import { fromEvent } from "rxjs";
+import { fromEvent } from 'rxjs';
 
-import { DiceRoller } from "./game/dice/dice-roller";
+import { DiceRoller } from "./game/dice-roller";
+import { Block } from "./game/work-with-canvas/block";
 
-import { Timer } from "./game/timer/timer";
+import { Timer } from "./game/timer";
 
-import { Game } from "./controllers/controller-main-module";
+import { Game } from "./controller-main-module";
+
 import { MessageFactory } from "../../../library/dist/message-factory";
 import { MessageType } from "../../../library/dist/index";
-import { KeyCodes } from "./key-codes/key-codes";
+import { KeyCodes } from "./key-codes";
 
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:');
 let socketUrl = socketProtocol + '//' + location.host;
@@ -49,6 +51,9 @@ socket.onmessage = function (message: any) {
                 viewRoom(room.id, room.name, "name");
             });
             break;
+        case MessageType.ArraySaveBlocks:
+            game.position.blocks = msg.blocks;
+            break;
         case MessageType.PushNamesToRoom:
             game = new Game();
             properties = msg.settings;
@@ -61,13 +66,26 @@ socket.onmessage = function (message: any) {
                 game.setPlayer2(msg.name1, properties[0]);
                 game.setPlayer1(msg.name2, properties[1]);
             }
+            socket.send(messageFactory.createMessageLinesFuild(properties[4], properties[5]));
             break;
         case MessageType.TossDice:
             dices = msg.dices;
             tossDice();
             break;
+        case MessageType.Failure:
+            game.failute();
+            game.changePlayer();
+            break;
         case MessageType.Event:
             game.setBlockPositionOnMap(msg.event);
+            break;
+        case MessageType.ArrayBlocks:
+            let arrayBlocks = msg.blocks;
+            game.arrayCurrentPosition.length = 0;
+            for (let block of arrayBlocks) {
+                game.arrayCurrentPosition.push(game.convertBlockSizeToPixels(block.x, block.y, block.width, block.height, block.color));
+            }
+            game.setFirstStep();
             break;
         case MessageType.Disconnect:
             alert("Извените ваш опонент вышел");
@@ -77,7 +95,7 @@ socket.onmessage = function (message: any) {
     }
 };
 
-fromEvent(DOM.writeNames, 'click')//+
+fromEvent(DOM.writeNames, 'click')
     .subscribe(() => {
         name = (DOM.playerInit).value;
         if (name != "") {
@@ -87,7 +105,7 @@ fromEvent(DOM.writeNames, 'click')//+
         }
     });
 
-fromEvent(DOM.createRoom, 'click')//+
+fromEvent(DOM.createRoom, 'click')
     .subscribe(() => {
         const nameRoom = (DOM.nameRoom).value;
         if (nameRoom != "" && (properties[0] != properties[1])) {
@@ -105,10 +123,19 @@ fromEvent(DOM.createRoom, 'click')//+
         }
     });
 
-//DOM.infoButton.addEventListener('click', Allerts.viewInfo());
+setTimeout(function () {
+    window.onresize = function () {
+        setTimeout(function () {
+            game.drawNewCanvas(properties[4], properties[5], properties[2], properties[3]);
+            game.calculatePosition();
+        }, 20);
+    }
+}, 200);
 
-//DOM.hideInformationAboutGame.addEventListener('click', Allerts.hideInfo());
 
+DOM.infoButton.addEventListener('click', function (event: any) {
+    Allerts.viewInfo();
+});
 
 DOM.infoButton.addEventListener('click', function (event: any) { Allerts.viewInfo(); });
 
@@ -154,7 +181,7 @@ DOM.divMobVersion.addEventListener('click', (event: any) => {
     }
 })
 
-function viewRoom(id: string, name: string, nameOfPlayer:string): void {//+
+function viewRoom(id: string, name: string, nameOfPlayer:string): void {
     let roomsDiv = DOM.rooms;
     let newButton = document.createElement('button');
     newButton.id = "clientRoom";
@@ -164,14 +191,14 @@ function viewRoom(id: string, name: string, nameOfPlayer:string): void {//+
     roomsDiv.appendChild(newButton);
 }
 
-function clearRooms(): void {//+
+function clearRooms(): void {
     let idDiv: any = DOM.rooms;
     while (idDiv.hasChildNodes()) {
         idDiv.removeChild(idDiv.lastChild);
     }
 }
 
-DOM.rooms.addEventListener('click', function (event: any) {//+
+DOM.rooms.addEventListener('click', function (event: any) {
     let idJoinRoom = event.srcElement.value;
     for (let room of arrayRooms) {
         if (room.id === idJoinRoom) {
@@ -291,7 +318,7 @@ fromEvent(document.body, 'keydown')
 
 fromEvent(DOM.tossDice, 'click')
     .subscribe(() => {
-        socket.send(messageFactory.createMessageEventTossDice());
+        socket.send(messageFactory.createMessageEventTossDice(game.currentPlayer.getColor()));
     });
 
 fromEvent(DOM.soundOff, 'click')
@@ -327,8 +354,15 @@ function timer() {
     game.createPositionsBlockForMap(dices);
 }
 
-export class Change {
+export class SendMmessage {
     public static changePlayer(): void {
         socket.send(messageFactory.createMessageEvent("stopTimer"));
+    }
+    public static sendBlock(block: Block): void {
+        socket.send(messageFactory.createMessageBlock(block));
+    }
+
+    public static rotateBlock(dices:number[] ,color:string): void {
+      socket.send(messageFactory.createMessageRotateBlock(dices,color));
     }
 }

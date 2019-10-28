@@ -34,54 +34,44 @@
 
             <div class="informationAboutGame" id="informationAboutGame">
                 <article id="slider">
-                        <input checked type="radio" name="slider" id="switch1">
-                        <input type="radio" name="slider" id="switch2">
-                        <input type="radio" name="slider" id="switch3">
-                        <div id="slides">
-                                <div id="overflow">
-                                    <div class="divesForInfo">
-                                        <article>
-                                            <div>
-                                            INTRODUCTION!<br><br>
-                                            When two opponents converge in an equal battle, only luck and ingenuity will help them. 
-                                            Try to beat your enemy and conquer most of the territory, not dying at the same time. 
-                                            Indeed, the probability of losing in one wrong move is so high. 
-                                            Prove that you are the best player here and now!
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <div>
-                                            KEEP AN EYE OUT!<br><br>
-                                            The game begins when the first player rolls the dices. 
-                                            The block appears on the map and it can be rotated and moved to possible positions. 
-                                            You have only 20 seconds, after that the block will be fixed in the current position and the turn will pass to the opponent. 
-                                            If the block can not be placed on the map, your life is taken away and your turn ends. 
-                                            The game ends at the moment when all lives ends or the entire available surface is occupied.
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <div>
-                                            CONTROLS :<br><br>
-                                            Rotation — up ▲ or down ▼ arrows<br><br>
-                                            Motion —  left ◄ or right ► arrows<br><br>
-                                            Fixing of block — Enter<br><br>
-                                            Roll the dices — BackSpace
-                                            </div>
-                                        </article>
+                    <input checked type="radio" name="slider" id="switch1">
+                    <input type="radio" name="slider" id="switch2">
+                    <input type="radio" name="slider" id="switch3">
+                    <div id="slides">
+                        <div id="overflow">
+                            <div class="divesForInfo">
+                                <article>
+                                    <div>
+                                        INTRODUCTION!<br><br> When two opponents converge in an equal battle, only luck and ingenuity will help them. Try to beat your enemy and conquer most of the territory, not dying at the same time. Indeed, the probability
+                                        of losing in one wrong move is so high. Prove that you are the best player here and now!
                                     </div>
-                                </div>
-                        </div> 
-                        <div id="controls">
-                            <label for="switch1"></label>
-                            <label for="switch2"></label>
-                            <label for="switch3"></label>
+                                </article>
+                                <article>
+                                    <div>
+                                        KEEP AN EYE OUT!<br><br> The game begins when the first player rolls the dices. The block appears on the map and it can be rotated and moved to possible positions. You have only 20 seconds, after that the block
+                                        will be fixed in the current position and the turn will pass to the opponent. If the block can not be placed on the map, your life is taken away and your turn ends. The game ends at the moment when all lives ends
+                                        or the entire available surface is occupied.
+                                    </div>
+                                </article>
+                                <article>
+                                    <div>
+                                        CONTROLS :<br><br> Rotation — up ▲ or down ▼ arrows<br><br> Motion — left ◄ or right ► arrows<br><br> Fixing of block — Enter<br><br> Roll the dices — BackSpace
+                                    </div>
+                                </article>
+                            </div>
                         </div>
-                </article>
-                <button type="button" class="hideInfo" id="hideInfo">OK</button>                        
-                <div id="active">
+                    </div>
+                    <div id="controls">
                         <label for="switch1"></label>
                         <label for="switch2"></label>
                         <label for="switch3"></label>
+                    </div>
+                </article>
+                <button type="button" class="hideInfo" id="hideInfo">OK</button>
+                <div id="active">
+                    <label for="switch1"></label>
+                    <label for="switch2"></label>
+                    <label for="switch3"></label>
                 </div>
             </div>
             <p class="VS">Enter the ready room or create your own!</p>
@@ -91,13 +81,13 @@
                 <div class="flex">
                     <button type="button" class="orangeButton" id="orangeButton1"></button>
                     <button type="button" class="redButton" id="redButton1"></button>
-                    <button type="button" class="blueButton" id="blueButton1"></button>        
+                    <button type="button" class="blueButton" id="blueButton1"></button>
                 </div>
                 <p>Choose the color of your opponent!</p>
                 <div class="flex">
                     <button type="button" class="orangeButton" id="orangeButton2"></button>
                     <button type="button" class="redButton" id="redButton2"></button>
-                    <button type="button" class="blueButton" id="blueButton2"></button>        
+                    <button type="button" class="blueButton" id="blueButton2"></button>
                 </div>
                 <p>Choose the color of map!</p>
                 <div class="flex">
@@ -109,7 +99,7 @@
                 <div class="flex">
                     <button type="button" class="smallMap" id="smallMap">Small</button>
                     <button type="button" class="mediumMap" id="mediumMap">Medium</button>
-                    <button type="button" class="bigMap" id="bigMap">Big</button>        
+                    <button type="button" class="bigMap" id="bigMap">Big</button>
                 </div>
             </div>
             <div class="enterNameOfRoom">
@@ -125,8 +115,11 @@
 
     <div class="gamepage" id="gamepage">
         <div class="gridForGamePage">
-
-            <p class="timer" id="timer">00:00</p>
+            <div class="flex-box">
+                <div class="left_triangle" id="left_triangle"></div>
+                <p class="timer" id="timer">00:00</p>
+                <div class="right_triangle" id="right_triangle"></div>
+            </div>
 
             <div class="player1ForGame"></div>
             <div class="divForPlayerOne">
@@ -160,9 +153,7 @@
                 <button type="button" id="goToStartPage"></button>
             </div>
 
-            <div class="canvas" id="canvas">
-                <canvas id="fuildGame" width = "1000px" height = "500px" style="background-color: #010428"></canvas>
-            </div>
+            <canvas id="fuildGame" style="margin: auto auto"></canvas>
 
             <div class="click">
                 <button type="button" id="rollTheDice">Roll the dice</button>

@@ -35,17 +35,26 @@ wss.on('connection', function (ws: any) {
                 serverMessages.sendRooms(rooms, sockets);
                 serverMessages.gameStart(rooms, sockets, clients, id, msg.id);
                 break;
+            case MessageType.LinesFuild:
+                serverMessages.setLines(msg.vertical, msg.horizontal);
+                break;
+            case MessageType.RotateBlock:
+                serverMessages.rotateBlock(msg.dices,msg.color,id,rooms,sockets);
+                break;
             case MessageType.EventTossDice:
-                serverMessages.sendTossDice(id, rooms, sockets);
+                serverMessages.sendTossDice(id, rooms, sockets, msg.color);
                 break;
             case MessageType.Event:
                 serverMessages.sendEvent(id, msg.event, rooms, sockets);
                 break;
             case MessageType.ChangePlayer:
-                serverMessages.changePlayerInCurrentRoom(id, rooms);
+                // serverMessages.changePlayerInCurrentRoom(id, rooms);
                 break;
             case MessageType.MoveToHollPage:
                 // navigateToHollPage(id);
+                break;
+            case MessageType.Block:
+                serverMessages.saveBlock(id, rooms, msg.block,sockets);
                 break;
         }
     })

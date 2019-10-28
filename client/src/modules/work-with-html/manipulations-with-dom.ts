@@ -1,4 +1,4 @@
-import { KeyCodes } from '../key-codes/key-codes';
+import { KeyCodes } from '../key-codes';
 import { PathToMedia } from "./path-to-media";
 
 export class ManipulationWithDOM {
@@ -47,6 +47,9 @@ export class ManipulationWithDOM {
     
     static photoPlayer1: HTMLElement = <HTMLElement>document.getElementById("player1ForGame");
     static photoPlayer2: HTMLElement = <HTMLElement>document.getElementById("player2ForGame");
+
+    static leftPlayer: HTMLElement = <HTMLElement>document.getElementById("left_triangle");
+    static rightPlayer: HTMLElement = <HTMLElement>document.getElementById("right_triangle");
 
     //canvas element
     static canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('fuildGame');
