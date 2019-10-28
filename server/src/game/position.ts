@@ -25,14 +25,14 @@ export class Position {
         for (let block of this.blocks) {
             for (let x = block.x; x <= block.x + block.width; x++) {
                 for (let y = block.y; y <= block.y + block.height; y++) {
-                    for (let newY = newBlock.y; newY <= bottom; newY++) {
+                    for (let newY = newBlock.y; newY < bottom; newY++) {
                         if (y === newY) {
                             oldX = x;
-                            for (let newX = newBlock.x; newX <= right; newX++) {
+                            for (let newX = newBlock.x; newX < right; newX++) {
                                 if (newX === oldX++) {
                                     return false;
                                 }
-                                if (newX === block.x || newX === block.x + block.width)
+                                if (newX === block.x)//  || newX === block.x + block.width
                                     return false;
                             }
                         }
@@ -49,6 +49,7 @@ export class Position {
             if (block.color === newBlock.color) {
                 xOfSet = 0;
                 for (let x = block.x; x <= block.x + block.width; x++) {
+                    
                     if (x === newBlock.x) {
                         if (block.width - xOfSet >= newBlock.width) {
                             if (block.y + block.height === newBlock.y) {
@@ -92,6 +93,7 @@ export class Position {
             if (block.color === newBlock.color) {
                 yOfSet = 0;
                 for (let y = block.y; y <= block.y + block.height; y++) {
+                    
                     if (y === newBlock.y) {
                         if (block.height - yOfSet >= newBlock.height) {
                             if (block.x + block.width === newBlock.x) {
@@ -130,8 +132,8 @@ export class Position {
         return false;
     }
 
-    public checkPosition(newBlock: Block): boolean {
-        if (this.isBlockInOtherBlock && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))
+    public checkPosition(newBlock: Block): boolean {//this.isBlockInOtherBlock(newBlock) && 
+        if ((this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))
             return true;
         else
             return false;

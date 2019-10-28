@@ -15,6 +15,7 @@ import { MessageLinesFuild } from "./message-modules/message-lines-fuild";
 import { MessageArrayBlocks } from "./message-modules/message-array-blocks";
 import { MessageRotateBlock } from "./message-modules/message-rotate-block";
 import { MessageFailure } from "./message-modules/message-failure";
+import { MessageArrraySaveBlocks } from "./message-modules/message-array-save-blocks";
 export class MessageFactory {
     public createMessageSetName(name: string): string {//+
         let message = new MessageSetName();
@@ -127,6 +128,13 @@ export class MessageFactory {
     public createMessageFailure(): string {
         let message = new MessageFailure();
         message.type = MessageType.Failure;
+        return JSON.stringify(message);
+    }
+
+    public createMessageArraySaveBlocks(blocks: Array<object>): string {
+        let message = new MessageArrraySaveBlocks();
+        message.type = MessageType.ArraySaveBlocks;
+        message.blocks = blocks;
         return JSON.stringify(message);
     }
 }

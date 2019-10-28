@@ -14,5 +14,6 @@ export enum MessageType {
     LinesFuild,
     ArrayBlocks,
     RotateBlock,
-    Failure
+    Failure,
+    ArraySaveBlocks
 }

@@ -55,7 +55,7 @@ wss.on('connection', function (ws: any) {
                 // navigateToHollPage(id);
                 break;
             case MessageType.Block:
-                serverMessages.saveBlock(id, rooms, msg.block);
+                serverMessages.saveBlock(id, rooms, msg.block,sockets);
                 break;
         }
     })

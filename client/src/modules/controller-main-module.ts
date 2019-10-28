@@ -19,7 +19,7 @@ export class Game {
     private flagGame: boolean = true;
     private timer: any;
 
-    private position = new Position();
+    public position = new Position();
     public canvasDraw: Draw;
     private sizeFirstBlock: number[];
 
@@ -99,10 +99,19 @@ export class Game {
     }
 
     private repetitionAtCompletion(): void {
+
+        let block;
         this.canvasDraw.redraw(this.currentPosition, this.position.blocks, this.currentPlayer.getColor());
-        this.position.save(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight), this.currentPlayer.getColor());
-        let block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
-            this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor())
+        if (this.currentPlayer.isFirstMove()) {
+        this.position.save(this.currentPosition.x / this.canvasDraw.aspectRatioWidth, this.currentPosition.y / this.canvasDraw.aspectRatioHeight, this.currentPlayer.getColor());
+        block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
+            this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
+        }
+        else {
+            this.position.save(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight), this.currentPlayer.getColor());
+            block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
+            this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
+        }
         SendMmessage.sendBlock(block);
     }
 

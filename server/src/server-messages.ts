@@ -49,7 +49,6 @@ export class ServerMessages {
                     sockets.get(key).send(msg);
                 })
                 if (room.blocks.length >= 2) {
-                    console.log("current color :"+ color);
                     this.calc.color = color;
                     this.calc.CalculatePosition(dices, room.blocks);
                     if (this.calc.arrayCurrentPosition.length != 0) {
@@ -70,10 +69,13 @@ export class ServerMessages {
         }
     }
 
-    public saveBlock(id: string, rooms: Array<Room>, block: Block): void {
+    public saveBlock(id: string, rooms: Array<Room>, block: Block, sockets: Map<string, any>): void {
         for (let room of rooms) {
             if (id === room.isCurrentPlayer()) {
                 room.saveBlock(block);
+                room.players.forEach((key: string) => {
+                    sockets.get(key).send(this.messageFactory.createMessageArraySaveBlocks(room.blocks));
+                  })
                // room.setUpCurrentPlayer();
                 console.log(block);
                 break;

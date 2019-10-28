@@ -45,6 +45,9 @@ socket.onmessage = function (message: any) {
                 viewRoom(room.id, room.name);
             });
             break;
+        case MessageType.ArraySaveBlocks:
+            game.position.blocks = msg.blocks;
+            break;
         case MessageType.PushNamesToRoom:
             properties = msg.settings;
             game.initCanvas(properties[4], properties[5], properties[2], properties[3]);
