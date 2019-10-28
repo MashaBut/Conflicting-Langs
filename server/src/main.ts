@@ -37,7 +37,11 @@ wss.on('connection', function (ws: any) {
                 serverMessages.gameStart(rooms, sockets, clients, id, msg.id);
                 break;
             case MessageType.LinesFuild:
-                serverMessages.setLines(msg.vertical, msg.vertical);
+                serverMessages.setLines(msg.vertical, msg.horizontal);
+                break;
+            case MessageType.RotateBlock:
+                serverMessages.rotateBlock(msg.dices,msg.color,id,rooms,sockets);
+                break;
             case MessageType.EventTossDice:
                 serverMessages.sendTossDice(id, rooms, sockets, msg.color);
                 break;

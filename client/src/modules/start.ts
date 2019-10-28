@@ -62,14 +62,18 @@ socket.onmessage = function (message: any) {
             dices = msg.dices;
             tossDice();
             break;
+        case MessageType.Failure:
+            game.failute();
+            game.changePlayer();
+            break;
         case MessageType.Event:
             game.setBlockPositionOnMap(msg.event);
             break;
         case MessageType.ArrayBlocks:
-            let array = msg.blocks;
+            let arrayBlocks = msg.blocks;
             game.arrayCurrentPosition.length = 0;
-            for (let i of array) {
-                game.arrayCurrentPosition.push(game.convertBlockSizeToPixels(i.x, i.y, i.width, i.height, i.color));
+            for (let block of arrayBlocks) {
+                game.arrayCurrentPosition.push(game.convertBlockSizeToPixels(block.x, block.y, block.width, block.height, block.color));
             }
             game.setFirstStep();
             break;
@@ -144,7 +148,6 @@ DOM.rooms.addEventListener('click', function (event: any) {
     for (let room of arrayRooms) {
         if (room.id === idJoinRoom) {
             socket.send(messageFactory.createMessageJoinRoom(idJoinRoom));
-            socket.send(messageFactory.createMessageLinesFuild(game.canvasDraw.numberOfVerticalLines, game.canvasDraw.numberOfHorizontalLines));
             View.GamePage();
             DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
@@ -266,5 +269,9 @@ export class SendMmessage {
     }
     public static sendBlock(block: Block): void {
         socket.send(messageFactory.createMessageBlock(block));
+    }
+
+    public static rotateBlock(dices:number[] ,color:string): void {
+      socket.send(messageFactory.createMessageRotateBlock(dices,color));
     }
 }

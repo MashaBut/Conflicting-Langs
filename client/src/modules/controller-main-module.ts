@@ -17,21 +17,20 @@ export class Game {
     private player2: Player;
     public currentPlayer: Player;
     private flagGame: boolean = true;
-    private flag: boolean = true;
     private timer: any;
 
     private position = new Position();
     public canvasDraw: Draw;
     private sizeFirstBlock: number[];
 
-    public arrayCurrentPosition = new Array<Block>();//должен приниматься с сервера
+    public arrayCurrentPosition = new Array<Block>();
     public currentPosition: Block;
     private counterBlocksInArray: number = 0;
-    private possiblePositions = false;
 
     public initCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
         this.canvasDraw = new Draw(DOM.canvas, sizeX, sizeY, colorMap, colorGrid, this.position.blocks);
         this.drawNewCanvas(sizeX, sizeY, colorMap, colorGrid);
+        this.position.areaMap(sizeX, sizeY);
     }
 
     public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
@@ -50,85 +49,60 @@ export class Game {
     }
 
     public calculatePosition() {
-        this.counterBlocksInArray = 0;
-        this.arrayCurrentPosition.length = 0;
         if (this.currentPlayer.isFirstMove()) {
             let coord: number[] = this.firstStepInNumbers(this.currentPlayer.getX(), this.currentPlayer.getY());
             this.sizeFirstBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth - 2, this.canvasDraw.aspectRatioHeight - 2, this.position.currentDices);
             this.currentPosition = new Block(coord[0], coord[1], this.sizeFirstBlock[0], this.sizeFirstBlock[1], this.currentPlayer.getColor());
             this.draw();
         }
-        /*else {
-            this.calculateAllPosition(this.position.currentDices);
-            if (this.arrayCurrentPosition.length != 0) {
-                this.setFirstStep();
-            }
-            else {
-                this.position.change();
-                this.calculateAllPosition(this.position.currentDices);
-                if (this.arrayCurrentPosition.length != 0) {
-                    this.setFirstStep();
-                }
-                else {
-                    this.possiblePositions = false;
-                    this.endOfturn();
-                }
-            }
-        }*/
     }
 
     public setFirstStep(): void {
         this.currentPosition = this.arrayCurrentPosition[0];
         this.draw();
-        this.possiblePositions = true;
     }
 
-    public convertBlockSizeToPixels(x: number, y: number, Xsize:number,Ysize:number,color:string): Block {
+    public convertBlockSizeToPixels(x: number, y: number, Xsize: number, Ysize: number, color: string): Block {
         return new Block(x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight, Xsize * this.canvasDraw.aspectRatioWidth,
             Ysize * this.canvasDraw.aspectRatioHeight, color);
     }
 
-
-/////////////////////////////////////////
     private endOfturn() {
         DOM.undisabledButtonDice();
         clearTimeout(this.timer);
-        this.flag = false;
         if (this.currentPlayer.isFirstMove()) {
             this.currentPlayer.setFirstMove(false);
             this.repetitionAtCompletion();
         }
-        /*else {
-            if (this.possiblePositions) {
-                this.repetitionAtCompletion();
-            }
-            else if (!this.possiblePositions) {
-                alert("Oh, no. Sorry:(");
-                this.currentPlayer.setLives();
-                DOM.playSound(PathToMedia.lostLife);
-                if (this.currentPlayer === this.player1) {
-                    PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
-                    Timer.flagForTimer = false;
-                }
-                else if (this.currentPlayer === this.player2) {
-                    PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
-                    Timer.flagForTimer = false;
-                }
-                if (this.currentPlayer.getLives() === 0) {
-                    alert(this.currentPlayer.getName() + " loser");
-                }
-            }
-        }*/
+        else {
+            this.repetitionAtCompletion();
+        }
         this.repetititonAtEachTurn();
         this.changePlayer();
         SendMmessage.changePlayer();
     }
 
+    public failute(): void {
+        this.currentPlayer.setLives();
+        DOM.playSound(PathToMedia.lostLife);
+        if (this.currentPlayer === this.player1) {
+            PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
+            Timer.flagForTimer = false;
+        }
+        else if (this.currentPlayer === this.player2) {
+            PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
+            Timer.flagForTimer = false;
+        }
+        if (this.currentPlayer.getLives() === 0) {
+            alert(this.currentPlayer.getName() + " loser");
+        }
+    }
+
     private repetitionAtCompletion(): void {
         this.canvasDraw.redraw(this.currentPosition, this.position.blocks, this.currentPlayer.getColor());
         this.position.save(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight), this.currentPlayer.getColor());
-        let block = new Block (Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
-            this.position.currentDices[0],this.position.currentDices[1], this.currentPlayer.getColor())
+        let block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
+            this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor())
         SendMmessage.sendBlock(block);
     }
 
@@ -138,7 +112,7 @@ export class Game {
         DOM.engagedTerritory(DOM.territoryplayer2, this.player2.getOccupiedArea());
     }
 
-    private changePlayer(): void {
+    public changePlayer(): void {
         if (this.flagGame) {
             this.flagGame = false;
             this.currentPlayer = this.player2;
@@ -156,7 +130,6 @@ export class Game {
 
     public turnTime() {
         this.timer = setTimeout(() => this.endOfturn(), 20000);
-        this.flag = true;
     }
 
     public setPlayer1(name: string, color: string): void {
@@ -187,66 +160,46 @@ export class Game {
     }
 
     public rotateBlock() {
-        if (this.flag) {
-            if (!this.currentPlayer.isFirstMove()) {
-                this.sizeFirstBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth, this.canvasDraw.aspectRatioHeight, this.position.currentDices);
-                this.currentPosition.width = this.sizeFirstBlock[0];
-                this.currentPosition.height = this.sizeFirstBlock[1];
-            }
+        if (!this.currentPlayer.isFirstMove()) {
+            this.position.change();
+            SendMmessage.rotateBlock(this.position.currentDices, this.currentPlayer.getColor());
+        }
+        if (this.currentPlayer.isFirstMove()) {
             this.position.change();
             this.calculatePosition();
             this.draw();
-        }
-        else if (!this.flag) {
-            return;
         }
         DOM.playSound(PathToMedia.movementsOfBlock);
     }
 
     public moveToRight() {
-        if (this.flag) {
-            if (!this.currentPlayer.isFirstMove()) {
-                this.counterBlocksInArray++;
-                if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
-                    this.counterBlocksInArray = 0;
-                }
-                this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
-                this.draw();
+        if (!this.currentPlayer.isFirstMove()) {
+            this.counterBlocksInArray++;
+            if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
+                this.counterBlocksInArray = 0;
             }
-        }
-        else if (!this.flag) {
-            return;
+            this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
+            this.draw();
         }
         DOM.playSound(PathToMedia.movementsOfBlock);
     }
 
     public moveToLeft() {
-        if (this.flag) {
-            if (!this.currentPlayer.isFirstMove()) {
-                this.counterBlocksInArray--;
-                if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
-                    this.counterBlocksInArray = 0;
-                }
-                this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
-                this.draw();
+        if (!this.currentPlayer.isFirstMove()) {
+            this.counterBlocksInArray--;
+            if (this.counterBlocksInArray >= this.arrayCurrentPosition.length || this.counterBlocksInArray < 0) {
+                this.counterBlocksInArray = 0;
             }
-        }
-        else if (!this.flag) {
-            return;
+            this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
+            this.draw();
         }
         DOM.playSound(PathToMedia.movementsOfBlock);
     }
 
     public setUpBlock() {
-        if (this.flag) {
-            DOM.playSound(PathToMedia.enterSound);
-            Timer.flagForTimer = false;
-            this.endOfturn();
-            this.flag = false;
-        }
-        else if (!this.flag) {
-            return;
-        }
+        DOM.playSound(PathToMedia.enterSound);
+        Timer.flagForTimer = false;
+        this.endOfturn();
     }
 
     public setBlockPositionOnMap(event: string): void {

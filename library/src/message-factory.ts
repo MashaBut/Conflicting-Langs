@@ -13,6 +13,8 @@ import { MessageMoveToHollPage } from "./message-modules/message-move-to-holl-pa
 import { MessageBlock } from "./message-modules/message-block";
 import { MessageLinesFuild } from "./message-modules/message-lines-fuild";
 import { MessageArrayBlocks } from "./message-modules/message-array-blocks";
+import { MessageRotateBlock } from "./message-modules/message-rotate-block";
+import { MessageFailure } from "./message-modules/message-failure";
 export class MessageFactory {
     public createMessageSetName(name: string): string {//+
         let message = new MessageSetName();
@@ -107,10 +109,24 @@ export class MessageFactory {
         return JSON.stringify(message);
     }
 
-    public createMessageArrayBlocks(blocks:object[]):string {
+    public createMessageArrayBlocks(blocks: object[]): string {
         let message = new MessageArrayBlocks();
-        message.type= MessageType.ArrayBlocks;
+        message.type = MessageType.ArrayBlocks;
         message.blocks = blocks;
+        return JSON.stringify(message);
+    }
+
+    public createMessageRotateBlock(dices: number[], color: string): string {
+        let message = new MessageRotateBlock();
+        message.type = MessageType.RotateBlock;
+        message.dices = dices;
+        message.color = color;
+        return JSON.stringify(message);
+    }
+
+    public createMessageFailure(): string {
+        let message = new MessageFailure();
+        message.type = MessageType.Failure;
         return JSON.stringify(message);
     }
 }

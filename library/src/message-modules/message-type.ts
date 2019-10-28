@@ -12,5 +12,7 @@ export enum MessageType {
     MoveToHollPage,
     Block,
     LinesFuild,
-    ArrayBlocks
+    ArrayBlocks,
+    RotateBlock,
+    Failure
 }

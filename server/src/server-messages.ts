@@ -6,6 +6,7 @@ import { Calculation } from "./game/calculation";
 export class ServerMessages {
     messageFactory = new MessageFactory();
     calc = new Calculation();
+
     public sendRooms(rooms: Array<Room>, sockets: Map<string, any>): void {
         let openRooms = new Array<Room>();
         let msg: string;
@@ -48,6 +49,7 @@ export class ServerMessages {
                     sockets.get(key).send(msg);
                 })
                 if (room.blocks.length >= 2) {
+                    console.log("current color :"+ color);
                     this.calc.color = color;
                     this.calc.CalculatePosition(dices, room.blocks);
                     if (this.calc.arrayCurrentPosition.length != 0) {
@@ -56,18 +58,13 @@ export class ServerMessages {
                             sockets.get(key).send(msg);
                         })
                     }
+                    else {
+                        this.changePlayerInCurrentRoom(id, rooms);
+                        room.players.forEach((key: string) => {
+                          sockets.get(key).send(this.messageFactory.createMessageFailure());
+                        })
+                    }
                 }
-                break;
-            }
-        }
-    }
-    public sendArrayBlockToClient(id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
-        for (let room of rooms) {
-            if (id === room.isCurrentPlayer()) {
-                let msg = this.messageFactory.createMessageArrayBlocks(this.calc.arrayCurrentPosition);
-                room.players.forEach((key: string) => {
-                    sockets.get(key).send(msg);
-                })
                 break;
             }
         }
@@ -77,8 +74,24 @@ export class ServerMessages {
         for (let room of rooms) {
             if (id === room.isCurrentPlayer()) {
                 room.saveBlock(block);
+               // room.setUpCurrentPlayer();
                 console.log(block);
                 break;
+            }
+        }
+    }
+
+    public rotateBlock(dices: number[], color: string, id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+        for (let room of rooms) {
+            if (id === room.isCurrentPlayer()) {
+                this.calc.color = color;
+                this.calc.CalculatePosition(dices, room.blocks);
+                if (this.calc.arrayCurrentPosition.length != 0) {
+                    let msg = this.messageFactory.createMessageArrayBlocks(this.calc.arrayCurrentPosition);
+                    room.players.forEach((key: string) => {
+                        sockets.get(key).send(msg);
+                    })
+                }
             }
         }
     }

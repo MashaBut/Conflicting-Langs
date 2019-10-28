@@ -1,32 +1,17 @@
 import { Block } from "./block";
-const coefArea: number = 5000;
 
 export class Position {
     public blocks = new Array<Block>();
     public currentDices: number[];
     private flagOfRotate: boolean = true;
 
-    public countingTheAreaOfTheCurrentPlayer(currentColor: string): number {
-        let sum: number = 0;
-        this.blocks.forEach(block => {
-            if (block.color === currentColor) {
-                sum += (block.width * block.height) / coefArea;
-            }
-        })
-        return parseFloat((sum).toPrecision(3));
-    }
-
-    public initBlocks(blocks:Array<Block>): void {
+    public initBlocks(blocks: Array<Block>): void {
         this.blocks = blocks;
     }
 
     public change(): void {
         this.currentDices = [this.currentDices[1], this.currentDices[0]];
         this.flagOfRotate == true ? this.flagOfRotate = false : this.flagOfRotate = true;
-    }
-
-    public isChange(): boolean {
-        return this.flagOfRotate;
     }
 
     public initDice(dices: number[]): void {
@@ -38,16 +23,16 @@ export class Position {
         let bottom = newBlock.y + newBlock.height;
         let oldX: number;
         for (let block of this.blocks) {
-            for (let x = block.x; x < block.x + block.width; x++) {
-                for (let y = block.y; y < block.y + block.height; y++) {
-                    for (let newY = newBlock.y; newY < bottom; newY++) {
+            for (let x = block.x; x <= block.x + block.width; x++) {
+                for (let y = block.y; y <= block.y + block.height; y++) {
+                    for (let newY = newBlock.y; newY <= bottom; newY++) {
                         if (y === newY) {
                             oldX = x;
-                            for (let newX = newBlock.x; newX < right; newX++) {
+                            for (let newX = newBlock.x; newX <= right; newX++) {
                                 if (newX === oldX++) {
                                     return false;
                                 }
-                                if (newX === block.x)
+                                if (newX === block.x || newX === block.x + block.width)
                                     return false;
                             }
                         }
@@ -146,7 +131,7 @@ export class Position {
     }
 
     public checkPosition(newBlock: Block): boolean {
-        if (this.isBlockInOtherBlock(newBlock) && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))
+        if (this.isBlockInOtherBlock && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))
             return true;
         else
             return false;
