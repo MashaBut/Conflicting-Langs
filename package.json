@@ -18,8 +18,5 @@
     "bugs": {
         "url": "https://github.com/MashaBut/Conflicting-Langs/issues"
     },
-    "homepage": "https://github.com/MashaBut/Conflicting-Langs#readme",
-    "dependencies": {
-        "messages-for-conglicting-lands": "^1.0.0"
-    }
+    "homepage": "https://github.com/MashaBut/Conflicting-Langs#readme"
 }

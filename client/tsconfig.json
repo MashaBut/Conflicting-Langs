@@ -14,8 +14,8 @@
       "@node-modules/*": [
         "../client/node_modules/*"
       ],
-      "@message-facroty/*": [
-        "../library/dist/*"
+      "@messages-facroty/*": [
+        "../client/node_modules/messages-factory/dist/*"
       ]
     }
   }

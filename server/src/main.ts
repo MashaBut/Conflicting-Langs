@@ -15,7 +15,6 @@ let serverMessages = new ServerMessages();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
 let rooms = new Array<Room>();
-
 wss.on('connection', function (ws: any) {
     let id: string = String(uuidv1());
     ws.on('message', (message: any) => {

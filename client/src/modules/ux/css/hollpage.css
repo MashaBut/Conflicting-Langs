@@ -104,6 +104,55 @@
     color: #fff;
 }
 
+[data-title] {
+    position: relative;
+}
+
+[data-title]::before,
+[data-title]::after {
+  text-transform: none;
+  font-size: 0.9em;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 60%;
+  display: none;
+}
+
+[data-title]::before {
+  content: '';
+  border: 5px solid transparent;
+  z-index: 1;
+}
+
+[data-title]::after {
+  content: attr(data-title);
+  text-align: center;
+  width: 6em;
+  height: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1ch 1.5ch;
+  border-radius: .3ch;
+  background: #333333c2;
+  color: #c1a940;
+  z-index: 1;
+}
+
+[data-title]:hover::before,
+[data-title]:hover::after {
+  display: block;
+}
+
+[data-title='']::before,
+[data-title='']::after {
+  display: none;
+}
+
+
 ::-webkit-scrollbar { width: 15px; }
 
 ::-webkit-scrollbar-track { background-color: #080c3e; } /* the new scrollbar will have a flat appearance with the set background color */
@@ -135,6 +184,12 @@
     font-size: 1.2vw; 
     font-weight: 700;
     text-transform: uppercase;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 
@@ -192,22 +247,6 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.properties button:focus {
-    outline: none;
-    -webkit-box-shadow: inset 0px 0px 5px #1b1b1b;
-       -moz-box-shadow: inset 0px 0px 5px #1b1b1b;
-            box-shadow: inset 0px 0px 5px #1b1b1b;
-}
-
-.smallMap:focus,
-.mediumMap:focus,
-.bigMap:focus { 
-    outline: none;
-    -webkit-box-shadow: inset 0px 0px 5px #ffffff;
-       -moz-box-shadow: inset 0px 0px 5px #ffffff;
-            box-shadow: inset 0px 0px 5px #ffffff;
 }
 
 .smallMap,
