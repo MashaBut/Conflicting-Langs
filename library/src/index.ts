@@ -15,6 +15,6 @@ export { MessageBlockReversalEvent } from "./message-modules/message-block-rever
 export { MessageFailure } from "./message-modules/message-failure";
 export { MessageArrayOfFixedBlocks } from "./message-modules/message-array-of-fixed-blocks";
 
-export { Settings } from "./assistants/settings";
-export { Room } from "./assistants/room";
-export { Block } from "./assistants/block";
+export { Settings } from "./models/settings";
+export { Room } from "./models/room";
+export { Block } from "./models/block";

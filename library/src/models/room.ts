@@ -16,7 +16,7 @@ export class Room {
         this.id = id;
         this.creatorName = creator;
         this.players.push(id);
-        this.firstPlayerNumb();
+        this.setUpCurrentPlayerNumb = this.firstPlayerNumb();
     }
 
     public join(id: string): void {
@@ -37,11 +37,7 @@ export class Room {
         this.settings = settings;
     }
 
-    private firstPlayerNumb(): void {
-        this.setUpCurrentPlayerNumb = Math.floor(Math.random() * 2);
-    }
-
-    public saveBlock(block: Block): void {
-        this.blocks.push(block);
+    private firstPlayerNumb(): number {
+        return Math.floor(Math.random() * 2);
     }
 }

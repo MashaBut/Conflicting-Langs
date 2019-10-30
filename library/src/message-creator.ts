@@ -1,4 +1,3 @@
-import { MessageType } from "./message-modules/message-type";
 import { MessageSetName } from "./message-modules/message-set-name";
 import { MessageSetNameRoom } from "./message-modules/message-set-name-room";
 import { MessageJoinTheRoom } from "./message-modules/message-join-the-room";
@@ -15,116 +14,102 @@ import { MessageBlockReversalEvent } from "./message-modules/message-block-rever
 import { MessageFailure } from "./message-modules/message-failure";
 import { MessageArrayOfFixedBlocks } from "./message-modules/message-array-of-fixed-blocks";
 
-import { Settings } from "./assistants/settings";
-import { Room } from "./assistants/room";
-import { Block } from "./assistants/block";
+import { Settings } from "./models/settings";
+import { Room } from "./models/room";
+import { Block } from "./models/block";
+import { MessageBase } from "./message-modules/message-base";
 export class MessageCreator {
 
-    public createMessageSetName(name: string): Object {
+    public createMessageSetName(name: string): MessageSetName {
         let message = new MessageSetName();
         message.name = name;
-        message.type = MessageType.SetName;
         return message;
     }
 
-    public createMessageSetRoomName(name: string, settings: Settings): Object {
+    public createMessageSetNameRoom(name: string, settings: Settings): MessageSetNameRoom {
         let message = new MessageSetNameRoom();
         message.name = name;
         message.settings = settings;
-        message.type = MessageType.SetNameRoom;
         return message;
     }
 
-    public createMessageCreateRoom(rooms: Array<Room>): Object {
+    public createMessageCreateRoom(rooms: Array<Room>): MessageCreateRoom {
         let message = new MessageCreateRoom();
         message.rooms = rooms;
-        message.type = MessageType.CreateRoom;
         return message;
     }
 
-    public createMessageJoinTheRoom(idRoom: string): Object {
+    public createMessageJoinTheRoom(idRoom: string): MessageJoinTheRoom {
         let message = new MessageJoinTheRoom();
         message.id = idRoom;
-        message.type = MessageType.JoinTheRoom;
         return message;
     }
 
-    public createMessageSendInfoToPlayerRooms(firstPlayerName: string, secondPlayerName: string, currentPlayer: number, settings: Settings): Object {
+    public createMessageSendInfoToPlayerRooms(firstPlayerName: string, secondPlayerName: string, currentPlayer: number, settings: Settings): MessageSendInfoToPlayerRooms {
         let message = new MessageSendInfoToPlayerRooms();
         message.firstPlayerName = firstPlayerName;
         message.secondPlayerName = secondPlayerName;
         message.settings = settings;
         message.currentPlayer = currentPlayer;
-        message.type = MessageType.SendInfoToPlayerRooms;
         return message;
     }
 
-    public createMessageSendDice(dices: number[]): Object {
+    public createMessageSendDice(dices: number[]): MessageSendDice {
         let message = new MessageSendDice();
         message.dices = dices;
-        message.type = MessageType.SendDice;
         return message;
     }
 
-    public createMessageGameActionEvents(event: string): Object {
+    public createMessageGameActionEvents(event: string): MessageGameActionEvents {
         let message = new MessageGameActionEvents();
         message.event = event;
-        message.type = MessageType.GameActionEvents;
         return message;
     }
 
-    public createMessageEventTossDice(color: string): Object {
+    public createMessageEventTossDice(color: string): MessageEventTossDice {
         let message = new MessageEventTossDice();
-        message.type = MessageType.EventTossDice;
         message.color = color;
         return message;
     }
 
-    public createMessageMoveToHollPage(): Object {
+    public createMessageMoveToHollPage(): MessageBase {
         let message = new MessageMoveToHollPage();
-        message.type = MessageType.MoveToHollPage;
         return message;
     }
 
-    public createMessageSaveBlock(block: Block): Object {
+    public createMessageSaveBlock(block: Block): MessageSaveBlock {
         let message = new MessageSaveBlock();
         message.block = block;
-        message.type = MessageType.SaveBlock;
         return message;
     }
 
-    public createMessageGridSending(setting: Settings): Object {
+    public createMessageGridSending(setting: Settings): MessageGridSending {
         let message = new MessageGridSending();
-        message.type = MessageType.GridSending;
-        message.verticalLines = setting.numberOfVerticalLines;
-        message.horizontalLines = setting.numberOfHorizontalLines;
+        message.verticalLines = setting.height;
+        message.horizontalLines = setting.width;
         return message;
     }
 
-    public createMessageArrayOfPossibleBlockPositions(blocks: Block[]): Object {
+    public createMessageArrayOfPossibleBlockPositions(blocks: Block[]): MessageArrayOfPossibleBlockPosition {
         let message = new MessageArrayOfPossibleBlockPosition();
-        message.type = MessageType.ArrayOfPossibleBlockPosition;
         message.blocks = blocks;
         return message;
     }
 
-    public createMessageBlockReversalEvent(dices: number[], color: string): Object {
+    public createMessageBlockReversalEvent(dices: number[], color: string): MessageBlockReversalEvent {
         let message = new MessageBlockReversalEvent();
-        message.type = MessageType.BlockReversalEvent;
         message.dices = dices;
         message.color = color;
         return message;
     }
 
-    public createMessageFailure(): Object {
+    public createMessageFailure(): MessageBase {
         let message = new MessageFailure();
-        message.type = MessageType.Failure;
         return message;
     }
 
-    public createMessageArrayOfFixedBlocks(blocks: Array<Block>): Object {
+    public createMessageArrayOfFixedBlocks(blocks: Array<Block>): MessageArrayOfFixedBlocks {
         let message = new MessageArrayOfFixedBlocks();
-        message.type = MessageType.ArrayOfFixedBlocks;
         message.blocks = blocks;
         return message;
     }

@@ -1,4 +1,7 @@
 import { MessageBase } from './message-base';
+import { MessageType } from "./message-type";
+
 export class MessageEventTossDice extends MessageBase {
-    color: string;
+    public color: string;
+    public type = MessageType.EventTossDice;
 }
