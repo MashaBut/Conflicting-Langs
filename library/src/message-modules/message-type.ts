@@ -1,19 +1,17 @@
 export enum MessageType {
     SetName,
     SetNameRoom,
-    JoinRoom,
-    TossDice,
-    Event,
-    Disconnect,
+    JoinTheRoom,
+    SendDice,
+    GameActionEvents,
     CreateRoom,
-    PushNamesToRoom,
+    SendInfoToPlayerRooms,
     EventTossDice,
-    ChangePlayer,
     MoveToHollPage,
-    Block,
-    LinesFuild,
-    ArrayBlocks,
-    RotateBlock,
+    SaveBlock,
+    GridSending,
+    ArrayOfPossibleBlockPosition,
+    BlockReversalEvent,
     Failure,
-    ArraySaveBlocks
+    ArrayOfFixedBlocks
 }

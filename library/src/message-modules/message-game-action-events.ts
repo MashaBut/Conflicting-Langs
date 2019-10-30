@@ -1,5 +1,5 @@
 import { MessageBase } from './message-base';
 
-export class MessageEvent extends MessageBase {
+export class MessageGameActionEvents extends MessageBase {
     public event: string;
 }

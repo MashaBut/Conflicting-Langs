@@ -1,10 +1,20 @@
-export { MessageTossDice } from "./message-modules/message-toss-dice";
+export { MessageType } from "./message-modules/message-type";
 export { MessageSetName } from "./message-modules/message-set-name";
 export { MessageSetNameRoom } from "./message-modules/message-set-name-room";
-export { MessageEvent } from "./message-modules/message-event";
-export { MessageDisconnect } from "./message-modules/message-disconnect";
-export { MessageBase } from "./message-modules/message-base";
-export { MessageFactory } from "./message-factory";
-export { MessageCreateRoom} from "./message-modules/message-create-room";
-export { MessageType } from "./message-modules/message-type";
-export { MessageJoinRoom} from "./message-modules/message-join-room";
+export { MessageJoinTheRoom } from "./message-modules/message-join-the-room";
+export { MessageSendDice } from "./message-modules/message-send-dice";
+export { MessageGameActionEvents } from "./message-modules/message-game-action-events";
+export { MessageCreateRoom } from "./message-modules/message-create-room";
+export { MessageSendInfoToPlayerRooms } from "./message-modules/message-send-info-to-player-rooms";
+export { MessageEventTossDice } from "./message-modules/message-event-toss-dice";
+export { MessageMoveToHollPage } from "./message-modules/message-move-to-holl-page";
+export { MessageSaveBlock } from "./message-modules/message-save-block";
+export { MessageGridSending } from "./message-modules/message-grid-sending";
+export { MessageArrayOfPossibleBlockPosition } from "./message-modules/message-array-of-possible-block-position";
+export { MessageBlockReversalEvent } from "./message-modules/message-block-reversal-event";
+export { MessageFailure } from "./message-modules/message-failure";
+export { MessageArrayOfFixedBlocks } from "./message-modules/message-array-of-fixed-blocks";
+
+export { Settings } from "./assistants/settings";
+export { Room } from "./assistants/room";
+export { Block } from "./assistants/block";
