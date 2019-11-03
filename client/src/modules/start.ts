@@ -18,9 +18,10 @@ import { Timer } from "./game/timer";
 
 import { Game } from "./controller-main-module";
 
-import { MessageFactory } from "../../../library/dist/message-factory";
+import { MessageCreator } from "../../../library/dist/message-creator";
 import { MessageType } from "../../../library/dist/index";
 import { KeyCodes } from "./key-codes";
+import { Settings } from "./settings";
 
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:');
 let socketUrl = socketProtocol + '//' + location.host;
@@ -32,13 +33,20 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     createDivMobVersion();
 }
 
-let messageFactory = new MessageFactory();
-let game: Game;
+let messageCreator = new MessageCreator();
+let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
-let properties: Array<any> = new Array();
 let name: string = "";
 let dices: number[];
 let arrayRooms: Array<any>;
+let settings: Settings = new Settings();
+settings.firstPlayerColor = ColorPlayers.Red;
+settings.secondPlayerColor = ColorPlayers.Blue;
+settings.mapColor = ColorMap.BlueMap;
+settings.gridColor = ColorMap.BlueGrid;
+settings.width = SizeMap.BigX;
+settings.height = SizeMap.BigY;
+
 View.StartPage();
 
 socket.onmessage = function (message: any) {
@@ -48,38 +56,30 @@ socket.onmessage = function (message: any) {
             clearRooms();
             arrayRooms = msg.rooms;
             arrayRooms.forEach((room: any) => {
-                viewRoom(room.id, room.name, "name");
+                viewRoom(room.id, room.name, room.creatorName);
             });
             break;
-        case MessageType.ArraySaveBlocks:
-            game.position.blocks = msg.blocks;
-            break;
-        case MessageType.PushNamesToRoom:
-            game = new Game();
-            properties = msg.settings;
-            game.initCanvas(properties[4], properties[5], properties[2], properties[3]);
+        case MessageType.SendInfoToPlayerRooms:
+            settings = msg.settings;
+            game.initCanvas(settings);
             if (msg.currentPlayer == 0) {
-                game.setPlayer1(msg.name1, properties[0]);
-                game.setPlayer2(msg.name2, properties[1]);
+                game.setPlayer1(msg.firstPlayerName, settings.firstPlayerColor);
+                game.setPlayer2(msg.secondPlayerName, settings.secondPlayerColor);
             }
             else if (msg.currentPlayer == 1) {
-                game.setPlayer2(msg.name1, properties[0]);
-                game.setPlayer1(msg.name2, properties[1]);
+                game.setPlayer2(msg.firstPlayerName, settings.firstPlayerColor);
+                game.setPlayer1(msg.secondPlayerName, settings.secondPlayerColor);
             }
-            socket.send(messageFactory.createMessageLinesFuild(properties[4], properties[5]));
+            socket.send(JSON.stringify(messageCreator.createMessageGridSending(settings)));
             break;
-        case MessageType.TossDice:
+        case MessageType.SendDice:
             dices = msg.dices;
             tossDice();
             break;
-        case MessageType.Failure:
-            game.failute();
-            game.changePlayer();
-            break;
-        case MessageType.Event:
+        case MessageType.GameActionEvents:
             game.setBlockPositionOnMap(msg.event);
             break;
-        case MessageType.ArrayBlocks:
+        case MessageType.ArrayOfPossibleBlockPosition:
             let arrayBlocks = msg.blocks;
             game.arrayCurrentPosition.length = 0;
             for (let block of arrayBlocks) {
@@ -87,11 +87,17 @@ socket.onmessage = function (message: any) {
             }
             game.setFirstStep();
             break;
-        case MessageType.Disconnect:
+        case MessageType.ArrayOfFixedBlocks:
+            game.position.blocks = msg.blocks;
+            break;
+        case MessageType.Failure:
+            game.failute();
+            break;
+        /*case MessageType.Disconnect:
             alert("Извените ваш опонент вышел");
             game.clearFuildForPlayerData(properties[0], properties[1]);
             View.HollPage();
-            break;
+            break;*/
     }
 };
 
@@ -100,20 +106,20 @@ fromEvent(DOM.writeNames, 'click')
         name = (DOM.playerInit).value;
         if (name != "") {
             View.HollPage();
-            properties = [ColorPlayers.Red, ColorPlayers.Blue, ColorMap.BlueMap, ColorMap.BlueGrid, SizeMap.BigX, SizeMap.BigY];
-            socket.send(messageFactory.createMessageSetName(name));
+            socket.send(JSON.stringify(messageCreator.createMessageSetName(name)));
         }
     });
 
 fromEvent(DOM.createRoom, 'click')
     .subscribe(() => {
         const nameRoom = (DOM.nameRoom).value;
-        if (nameRoom != "" && (properties[0] != properties[1])) {
-            socket.send(messageFactory.createMessageSetNameRoom(nameRoom, properties));
+        if (nameRoom != "" && (settings.firstPlayerColor != settings.secondPlayerColor)) {
+            socket.send(JSON.stringify(messageCreator.createMessageSetNameRoom(nameRoom, settings)));
             game = new Game();
-            game.initCanvas(properties[4], properties[5], properties[2], properties[3]);
-            game.setPlayer1(name, properties[0]);
+            game.initCanvas(settings);
+            game.setPlayer1(name, settings.firstPlayerColor);
             View.GamePage();
+            game.initCanvas(settings);
             DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
             DOM.initSounds();
@@ -126,7 +132,7 @@ fromEvent(DOM.createRoom, 'click')
 setTimeout(function () {
     window.onresize = function () {
         setTimeout(function () {
-            game.drawNewCanvas(properties[4], properties[5], properties[2], properties[3]);
+            game.drawNewCanvas(settings.width, settings.height, settings.mapColor, settings.gridColor);
             game.calculatePosition();
         }, 20);
     }
@@ -165,23 +171,23 @@ function createDivMobVersion(): void {
 
 DOM.divMobVersion.addEventListener('click', (event: any) => {
     let idBtn = event.srcElement.id;
-    switch(idBtn) {
+    switch (idBtn) {
         case "moveToLeft":
-            socket.send(messageFactory.createMessageEvent("moveToLeft"));
+            socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("moveToLeft")));
             break;
         case "moveToRight":
-            socket.send(messageFactory.createMessageEvent("moveToRight"));
+            socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("moveToRight")));
             break;
         case "setUp":
-            socket.send(messageFactory.createMessageEvent("setUpBlock"));
+            socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("setUpBlock")));
             break;
         case "rotate":
-            socket.send(messageFactory.createMessageEvent("rotateBlock"));
+            socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("rotateBlock")));
             break;
     }
 })
 
-function viewRoom(id: string, name: string, nameOfPlayer:string): void {
+function viewRoom(id: string, name: string, nameOfPlayer: string): void {//+
     let roomsDiv = DOM.rooms;
     let newButton = document.createElement('button');
     newButton.id = "clientRoom";
@@ -191,7 +197,7 @@ function viewRoom(id: string, name: string, nameOfPlayer:string): void {
     roomsDiv.appendChild(newButton);
 }
 
-function clearRooms(): void {
+function clearRooms(): void {//+
     let idDiv: any = DOM.rooms;
     while (idDiv.hasChildNodes()) {
         idDiv.removeChild(idDiv.lastChild);
@@ -202,7 +208,7 @@ DOM.rooms.addEventListener('click', function (event: any) {
     let idJoinRoom = event.srcElement.value;
     for (let room of arrayRooms) {
         if (room.id === idJoinRoom) {
-            socket.send(messageFactory.createMessageJoinRoom(idJoinRoom));
+            socket.send(JSON.stringify(messageCreator.createMessageJoinTheRoom(idJoinRoom)));
             View.GamePage();
             DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
@@ -212,83 +218,83 @@ DOM.rooms.addEventListener('click', function (event: any) {
     }
 });
 
-DOM.properties.addEventListener('click', (event: any) => {
-    const property = event.srcElement.id;
-    switch (property) {
+DOM.settings.addEventListener('click', (event: any) => {
+    const setting = event.srcElement.id;
+    switch (setting) {
         case "orangeButton1":
-            properties[0] = ColorPlayers.Orange;
+            settings.firstPlayerColor = ColorPlayers.Orange;
             DOM.orangeButton1.textContent = "✔";
             DOM.redButton1.textContent = " ";
             DOM.blueButton1.textContent = " ";
             break;
         case "redButton1":
-            properties[0] = ColorPlayers.Red;
+            settings.firstPlayerColor = ColorPlayers.Red;
             DOM.redButton1.textContent = "✔";
             DOM.blueButton1.textContent = " ";
             DOM.orangeButton1.textContent = " ";
             break;
         case "blueButton1":
-            properties[0] = ColorPlayers.Blue;
+            settings.firstPlayerColor = ColorPlayers.Blue;
             DOM.blueButton1.textContent = "✔";
             DOM.orangeButton1.textContent = " ";
             DOM.redButton1.textContent = " ";
             break;
         case "orangeButton2":
-            properties[1] = ColorPlayers.Orange;
+            settings.secondPlayerColor = ColorPlayers.Orange;
             DOM.orangeButton2.textContent = "✔";
             DOM.redButton2.textContent = " ";
             DOM.blueButton2.textContent = " ";
             break;
         case "redButton2":
-            properties[1] = ColorPlayers.Red;
+            settings.secondPlayerColor = ColorPlayers.Red;
             DOM.redButton2.textContent = "✔";
             DOM.blueButton2.textContent = " ";
             DOM.orangeButton2.textContent = " ";
             break;
         case "blueButton2":
-            properties[1] = ColorPlayers.Blue;
+            settings.secondPlayerColor = ColorPlayers.Blue;
             DOM.blueButton2.textContent = "✔";
             DOM.orangeButton2.textContent = " ";
             DOM.redButton2.textContent = " ";
             break;
         case "blueMap":
-            properties[2] = ColorMap.BlueMap;
-            properties[3] = ColorMap.BlueGrid;
+            settings.mapColor = ColorMap.BlueMap;
+            settings.gridColor = ColorMap.BlueGrid;
             DOM.blueMap.textContent = "✔";
             DOM.brownMap.textContent = " ";
             DOM.whiteMap.textContent = " ";
             break;
         case "brownMap":
-            properties[2] = ColorMap.BrownMap;
-            properties[3] = ColorMap.BrownGrid;
+            settings.mapColor = ColorMap.BrownMap;
+            settings.gridColor = ColorMap.BrownGrid;
             DOM.brownMap.textContent = "✔";
             DOM.whiteMap.textContent = " ";
             DOM.blueMap.textContent = " ";
             break;
         case "whiteMap":
-            properties[2] = ColorMap.WhiteMap;
-            properties[3] = ColorMap.WhiteGrid;
+            settings.mapColor = ColorMap.WhiteMap;
+            settings.gridColor = ColorMap.WhiteGrid;
             DOM.whiteMap.textContent = "✔";
             DOM.blueMap.textContent = " ";
             DOM.brownMap.textContent = " ";
             break;
         case "smallMap":
-            properties[4] = SizeMap.SmallX;
-            properties[5] = SizeMap.SmallY;
+            settings.width = SizeMap.SmallX;
+            settings.height = SizeMap.SmallY;
             DOM.smallMap.textContent = "✔";
             DOM.mediumMap.textContent = "Medium";
             DOM.bigMap.textContent = "Big";
             break;
         case "mediumMap":
-            properties[4] = SizeMap.MediumX;
-            properties[5] = SizeMap.MediumY;
+            settings.width = SizeMap.MediumX;
+            settings.height = SizeMap.MediumY;
             DOM.mediumMap.textContent = "✔";
             DOM.smallMap.textContent = "Small";
             DOM.bigMap.textContent = "Big";
             break;
         case "bigMap":
-            properties[4] = SizeMap.BigX;
-            properties[5] = SizeMap.BigY;
+            settings.width = SizeMap.BigX;
+            settings.height = SizeMap.BigY;
             DOM.bigMap.textContent = "✔";
             DOM.smallMap.textContent = "Small";
             DOM.mediumMap.textContent = "Medium";
@@ -302,23 +308,23 @@ fromEvent(document.body, 'keydown')
             case KeyCodes.Space:
             case KeyCodes.Up:
             case KeyCodes.Down:
-                socket.send(messageFactory.createMessageEvent("rotateBlock"));
+                socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("rotateBlock")));
                 break;
             case KeyCodes.Right:
-                socket.send(messageFactory.createMessageEvent("moveToRight"));
+                socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("moveToRight")));
                 break;
             case KeyCodes.Left:
-                socket.send(messageFactory.createMessageEvent("moveToLeft"));
+                socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("moveToLeft")));
                 break;
             case KeyCodes.Enter:
-                socket.send(messageFactory.createMessageEvent("setUpBlock"));
+                socket.send(JSON.stringify(messageCreator.createMessageGameActionEvents("setUpBlock")));
                 break;
         }
     })
 
 fromEvent(DOM.tossDice, 'click')
     .subscribe(() => {
-        socket.send(messageFactory.createMessageEventTossDice(game.currentPlayer.getColor()));
+        socket.send(JSON.stringify(messageCreator.createMessageEventTossDice(game.currentPlayer.getColor())));
     });
 
 fromEvent(DOM.soundOff, 'click')
@@ -335,8 +341,8 @@ fromEvent(DOM.endGame, 'click')
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
         View.HollPage();
-        game.clearFuildForPlayerData(properties[0], properties[1]);
-        socket.send(messageFactory.createMessageMoveToHollPage());
+        game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
+        socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage()));
     })
 
 function tossDice(): void {
@@ -349,20 +355,18 @@ function tossDice(): void {
 
 function timer() {
     PushImage.returnImage(dices);
-    timerForPlayer.Timer();
-    game.turnTime();
+    //timerForPlayer.Timer();
+    //game.turnTime();
     game.createPositionsBlockForMap(dices);
 }
 
 export class SendMmessage {
-    public static changePlayer(): void {
-        socket.send(messageFactory.createMessageEvent("stopTimer"));
-    }
+
     public static sendBlock(block: Block): void {
-        socket.send(messageFactory.createMessageBlock(block));
+        socket.send(JSON.stringify(messageCreator.createMessageSaveBlock(block)));
     }
 
-    public static rotateBlock(dices:number[] ,color:string): void {
-      socket.send(messageFactory.createMessageRotateBlock(dices,color));
+    public static rotateBlock(dices: number[], color: string): void {
+        socket.send(JSON.stringify(messageCreator.createMessageBlockReversalEvent(dices, color)));
     }
 }

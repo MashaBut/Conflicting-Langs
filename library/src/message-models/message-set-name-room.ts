@@ -1,6 +1,6 @@
 import { MessageBase } from "./message-base";
 import { Settings } from "../models/settings";
-import { MessageType } from "./message-type";
+import { MessageType } from "../message-type";
 
 export class MessageSetNameRoom extends MessageBase {
     public name: string;

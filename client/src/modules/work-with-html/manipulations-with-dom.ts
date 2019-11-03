@@ -15,7 +15,7 @@ export class ManipulationWithDOM {
     static createRoom: HTMLElement = <HTMLElement>document.getElementById("createRoom");
     static clientRoom: HTMLElement = <HTMLElement>document.getElementById("clientRoom");
     static rooms: HTMLElement = <HTMLElement>document.getElementById('rooms');
-    static properties: HTMLElement = <HTMLElement>document.getElementById('properties');
+    static settings: HTMLElement = <HTMLElement>document.getElementById('properties');
 
     //properties
     static orangeButton1: HTMLElement = <HTMLButtonElement>document.getElementById('orangeButton1');

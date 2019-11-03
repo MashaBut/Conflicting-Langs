@@ -21,16 +21,16 @@ export class Room {
 
     public join(id: string): void {
         this.players.push(id);
-        this.setUpCurrentPlayer();
+        this.currentPlayerId = this.setUpCurrentPlayer();
     }
 
     public isCurrentPlayer(): string {
         return this.currentPlayerId;
     }
 
-    public setUpCurrentPlayer(): void {
+    public setUpCurrentPlayer(): string {
         this.setUpCurrentPlayerNumb == 1 ? this.setUpCurrentPlayerNumb = 0 : this.setUpCurrentPlayerNumb = 1;
-        this.currentPlayerId = this.players[this.setUpCurrentPlayerNumb];
+        return this.players[this.setUpCurrentPlayerNumb];
     }
 
     public settingsRoom(settings: Settings): void {

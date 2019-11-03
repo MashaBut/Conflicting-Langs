@@ -1,4 +1,4 @@
-import { MessageType } from "./message-type";
+import { MessageType } from "../message-type";
 import { MessageBase } from './message-base';
 
 export class MessageSendDice extends MessageBase {

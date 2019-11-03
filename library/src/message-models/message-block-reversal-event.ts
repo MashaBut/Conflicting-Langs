@@ -1,5 +1,5 @@
 import { MessageBase } from './message-base';
-import { MessageType } from "./message-type";
+import { MessageType } from "../message-type";
 
 export class MessageBlockReversalEvent extends MessageBase {
     public dices: number[];

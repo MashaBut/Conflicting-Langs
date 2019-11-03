@@ -1,23 +1,23 @@
-import { MessageSetName } from "./message-modules/message-set-name";
-import { MessageSetNameRoom } from "./message-modules/message-set-name-room";
-import { MessageJoinTheRoom } from "./message-modules/message-join-the-room";
-import { MessageSendDice } from "./message-modules/message-send-dice";
-import { MessageGameActionEvents } from "./message-modules/message-game-action-events";
-import { MessageCreateRoom } from "./message-modules/message-create-room";
-import { MessageSendInfoToPlayerRooms } from "./message-modules/message-send-info-to-player-rooms";
-import { MessageEventTossDice } from "./message-modules/message-event-toss-dice";
-import { MessageMoveToHollPage } from "./message-modules/message-move-to-holl-page";
-import { MessageSaveBlock } from "./message-modules/message-save-block";
-import { MessageGridSending } from "./message-modules/message-grid-sending";
-import { MessageArrayOfPossibleBlockPosition } from "./message-modules/message-array-of-possible-block-position";
-import { MessageBlockReversalEvent } from "./message-modules/message-block-reversal-event";
-import { MessageFailure } from "./message-modules/message-failure";
-import { MessageArrayOfFixedBlocks } from "./message-modules/message-array-of-fixed-blocks";
+import { MessageSetName } from "./message-models/message-set-name";
+import { MessageSetNameRoom } from "./message-models/message-set-name-room";
+import { MessageJoinTheRoom } from "./message-models/message-join-the-room";
+import { MessageSendDice } from "./message-models/message-send-dice";
+import { MessageGameActionEvents } from "./message-models/message-game-action-events";
+import { MessageCreateRoom } from "./message-models/message-create-room";
+import { MessageSendInfoToPlayerRooms } from "./message-models/message-send-info-to-player-rooms";
+import { MessageEventTossDice } from "./message-models/message-event-toss-dice";
+import { MessageMoveToHollPage } from "./message-models/message-move-to-holl-page";
+import { MessageSaveBlock } from "./message-models/message-save-block";
+import { MessageGridSending } from "./message-models/message-grid-sending";
+import { MessageArrayOfPossibleBlockPosition } from "./message-models/message-array-of-possible-block-position";
+import { MessageBlockReversalEvent } from "./message-models/message-block-reversal-event";
+import { MessageFailure } from "./message-models/message-failure";
+import { MessageArrayOfFixedBlocks } from "./message-models/message-array-of-fixed-blocks";
 
 import { Settings } from "./models/settings";
 import { Room } from "./models/room";
 import { Block } from "./models/block";
-import { MessageBase } from "./message-modules/message-base";
+import { MessageBase } from "./message-models/message-base";
 export class MessageCreator {
 
     public createMessageSetName(name: string): MessageSetName {

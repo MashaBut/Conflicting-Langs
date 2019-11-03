@@ -10,6 +10,7 @@ import { PlayersLives } from "./game/lives";
 import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
 import { PathToMedia } from "./work-with-html/path-to-media";
 import { SendMmessage } from "./start";
+import { Settings } from "../../../library/dist";
 
 export class Game {
 
@@ -27,10 +28,10 @@ export class Game {
     public currentPosition: Block;
     private counterBlocksInArray: number = 0;
 
-    public initCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
-        this.canvasDraw = new Draw(DOM.canvas, sizeX, sizeY, colorMap, colorGrid, this.position.blocks);
-        this.drawNewCanvas(sizeX, sizeY, colorMap, colorGrid);
-        this.position.areaMap(sizeX, sizeY);
+    public initCanvas(settings:Settings) {
+        this.canvasDraw = new Draw(DOM.canvas, settings.width, settings.height, settings.mapColor, settings.gridColor, this.position.blocks);
+        this.drawNewCanvas(settings.width, settings.height, settings.mapColor, settings.gridColor);
+        this.position.areaMap(settings.width, settings.height);
     }
 
     public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
@@ -48,7 +49,7 @@ export class Game {
         return [x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight];
     }
 
-    public calculatePosition() {
+    public calculatePosition(): void {
         if (this.currentPlayer.isFirstMove()) {
             let coord: number[] = this.firstStepInNumbers(this.currentPlayer.getX(), this.currentPlayer.getY());
             this.sizeFirstBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth - 2, this.canvasDraw.aspectRatioHeight - 2, this.position.currentDices);
@@ -79,11 +80,11 @@ export class Game {
         }
         this.repetititonAtEachTurn();
         this.changePlayer();
-        SendMmessage.changePlayer();
     }
 
     public failute(): void {
         this.currentPlayer.setLives();
+        DOM.undisabledButtonDice();
         DOM.playSound(PathToMedia.lostLife);
         if (this.currentPlayer === this.player1) {
             PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
@@ -96,6 +97,7 @@ export class Game {
         if (this.currentPlayer.getLives() === 0) {
             alert(this.currentPlayer.getName() + " loser");
         }
+        this.changePlayer();
     }
 
     private repetitionAtCompletion(): void {
@@ -138,7 +140,7 @@ export class Game {
     }
 
     public turnTime() {
-        this.timer = setTimeout(() => this.endOfturn(), 20000);
+        this.timer = setTimeout(() => this.endOfturn(), 20000);//() => this.endOfturn()
     }
 
     public setPlayer1(name: string, color: string): void {

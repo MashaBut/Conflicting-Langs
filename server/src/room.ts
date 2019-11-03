@@ -1,46 +1,43 @@
 import { Block } from "./game/block";
+import { Settings } from "./settings";
 
 export class Room {
+    public id: string;
+    public name: string;
+    public creatorName: string;
+    public players: Array<string> = new Array();
+    public settings: Settings;
     public currentPlayerId: string;
     public setUpCurrentPlayerNumb: number;
-    public name: string;
-    public id: string;
-    public creator: string;
-    public players: Array<string> = new Array();
-    public settings: Array<any> = new Array();
     public blocks = new Array<Block>();
 
     constructor(name: string, id: string, creator: any) {
         this.name = name;
         this.id = id;
-        this.creator = creator;
+        this.creatorName = creator;
         this.players.push(id);
-        this.firstPlayerNumb();
+        this.setUpCurrentPlayerNumb = this.firstPlayerNumb();
     }
 
     public join(id: string): void {
         this.players.push(id);
-        this.setUpCurrentPlayer();
+        this.currentPlayerId = this.setUpCurrentPlayer();
     }
 
     public isCurrentPlayer(): string {
         return this.currentPlayerId;
     }
 
-    public setUpCurrentPlayer(): void {
+    public setUpCurrentPlayer(): string {
         this.setUpCurrentPlayerNumb == 1 ? this.setUpCurrentPlayerNumb = 0 : this.setUpCurrentPlayerNumb = 1;
-        this.currentPlayerId = this.players[this.setUpCurrentPlayerNumb];
+        return this.players[this.setUpCurrentPlayerNumb];
     }
 
-    public settingsRoom(properties: Array<any>): void {
-        this.settings = properties;
+    public settingsRoom(settings: Settings): void {
+        this.settings = settings;
     }
 
-    private firstPlayerNumb(): void {
-        this.setUpCurrentPlayerNumb = Math.floor(Math.random() * 2);
-    }
-
-    public saveBlock(block:Block):void {
-        this.blocks.push(block);
+    private firstPlayerNumb(): number {
+        return Math.floor(Math.random() * 2);
     }
 }

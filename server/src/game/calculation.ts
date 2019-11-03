@@ -11,9 +11,8 @@ export class Calculation {
     public setLines(vertical: number, horizontal: number): void {
         this.numberOfHorizontalLines = horizontal;
         this.numberOfVerticalLines = vertical;
-        console.log(horizontal+"__"+vertical);
     }
-    public CalculatePosition(dices:number[],blocks:Array<Block>): void {
+    public сalculatePosition(dices:number[],blocks:Array<Block>): void {
         this.position.initDice(dices);
         this.position.initBlocks(blocks);
         this.arrayCurrentPosition.length = 0;
@@ -40,6 +39,5 @@ export class Calculation {
                 }
             }
         }
-        console.log(this.arrayCurrentPosition);
     }
 }
