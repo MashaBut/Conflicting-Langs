@@ -23,8 +23,8 @@ export class Position {
         let bottom = newBlock.y + newBlock.height;
         let oldX: number;
         for (let block of this.blocks) {
-            for (let x = block.x; x <= block.x + block.width; x++) {
-                for (let y = block.y; y <= block.y + block.height; y++) {
+            for (let x = block.x; x < block.x + block.width; x++) {
+                for (let y = block.y; y < block.y + block.height; y++) {
                     for (let newY = newBlock.y; newY < bottom; newY++) {
                         if (y === newY) {
                             oldX = x;
@@ -32,7 +32,7 @@ export class Position {
                                 if (newX === oldX++) {
                                     return false;
                                 }
-                                if (newX === block.x)//  || newX === block.x + block.width
+                                if (newX === block.x)
                                     return false;
                             }
                         }
@@ -132,8 +132,8 @@ export class Position {
         return false;
     }
 
-    public checkPosition(newBlock: Block): boolean {//this.isBlockInOtherBlock(newBlock) && 
-        if ((this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))
+    public checkPosition(newBlock: Block): boolean {
+        if (this.isBlockInOtherBlock(newBlock)&&(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))//(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))
             return true;
         else
             return false;

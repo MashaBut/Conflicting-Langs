@@ -18,6 +18,7 @@ import { Settings } from "./models/settings";
 import { Room } from "./models/room";
 import { Block } from "./models/block";
 import { MessageBase } from "./message-models/message-base";
+import { MessageType } from "./message-type";
 export class MessageCreator {
 
     public createMessageSetName(name: string): MessageSetName {
@@ -111,6 +112,12 @@ export class MessageCreator {
     public createMessageArrayOfFixedBlocks(blocks: Array<Block>): MessageArrayOfFixedBlocks {
         let message = new MessageArrayOfFixedBlocks();
         message.blocks = blocks;
+        return message;
+    }
+
+    public createMessageDisconect(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.Disconect;
         return message;
     }
 }

@@ -52,7 +52,8 @@ wss.on('connection', function (ws: any) {
                 eventHanding.sendEvent(id,msg.event, rooms, sockets);
                 break;
             case MessageType.MoveToHollPage:
-                // navigateToHollPage(id);
+                eventHanding.sendDisconnect(id,rooms,sockets);
+                eventHanding.sendRooms(rooms, sockets);
                 break;
             case MessageType.SaveBlock:
                 eventHanding.saveBlock(id, rooms, msg.block, sockets);
@@ -66,20 +67,3 @@ wss.on('connection', function (ws: any) {
 server.listen(8080, function () {
     console.log('Listening on http://localhost:8080');
 });
-
-/*function navigateToHollPage(id: string): void {
-    let a = 0;
-    for (let room of rooms) {
-        let iter = room.players.values();
-        if (id == iter.next().value || id == iter.next().value) {
-            room.players.forEach((key: string) => {
-                if (key != id) {
-                    sockets.get(key).send(messageFactory.createMessageDisconnect());
-                }
-            })
-            rooms.slice(a, 1);
-            break;
-        }
-        a++;
-    }
-}*/

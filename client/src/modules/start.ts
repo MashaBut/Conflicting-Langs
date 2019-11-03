@@ -40,12 +40,7 @@ let name: string = "";
 let dices: number[];
 let arrayRooms: Array<any>;
 let settings: Settings = new Settings();
-settings.firstPlayerColor = ColorPlayers.Red;
-settings.secondPlayerColor = ColorPlayers.Blue;
-settings.mapColor = ColorMap.BlueMap;
-settings.gridColor = ColorMap.BlueGrid;
-settings.width = SizeMap.BigX;
-settings.height = SizeMap.BigY;
+setUpSettings();
 
 View.StartPage();
 
@@ -93,11 +88,11 @@ socket.onmessage = function (message: any) {
         case MessageType.Failure:
             game.failute();
             break;
-        /*case MessageType.Disconnect:
-            alert("Извените ваш опонент вышел");
-            game.clearFuildForPlayerData(properties[0], properties[1]);
+        case MessageType.MoveToHollPage:
             View.HollPage();
-            break;*/
+            setUpSettings();
+            game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
+            break;
     }
 };
 
@@ -202,6 +197,15 @@ function clearRooms(): void {//+
     while (idDiv.hasChildNodes()) {
         idDiv.removeChild(idDiv.lastChild);
     }
+}
+
+function setUpSettings(): void {
+    settings.firstPlayerColor = ColorPlayers.Red;
+    settings.secondPlayerColor = ColorPlayers.Blue;
+    settings.mapColor = ColorMap.BlueMap;
+    settings.gridColor = ColorMap.BlueGrid;
+    settings.width = SizeMap.BigX;
+    settings.height = SizeMap.BigY;
 }
 
 DOM.rooms.addEventListener('click', function (event: any) {
@@ -340,8 +344,6 @@ fromEvent(DOM.endGame, 'click')
 
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
-        View.HollPage();
-        game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
         socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage()));
     })
 

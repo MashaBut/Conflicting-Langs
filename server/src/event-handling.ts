@@ -69,11 +69,9 @@ export class EventHandling {
         for (let room of rooms) {
             if (id === room.isCurrentPlayer()) {
                 room.blocks.push(block);
-                console.log(room.blocks);
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageArrayOfFixedBlocks(room.blocks)));
                 })
-              //  this.changePlayerInCurrentRoom(id, rooms);
             }
         }
     }
@@ -121,5 +119,18 @@ export class EventHandling {
 
     public setLines(vertical: number, horizontal: number): void {
         this.calc.setLines(vertical, horizontal);
+    }
+
+    public sendDisconnect(id: string, rooms:Array<Room>,sockets: Map<string,any>):void {
+        let numbPosition = 0 ;
+        for(let room of rooms) {
+            if(room.players[0] == id || room.players[1] == id) {
+                room.players.forEach((key: string) => {
+                    sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
+                })
+                rooms.splice(numbPosition,1);
+            }
+            numbPosition++;
+        }
     }
 }

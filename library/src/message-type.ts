@@ -13,5 +13,6 @@ export enum MessageType {
     ArrayOfPossibleBlockPosition,
     BlockReversalEvent,
     Failure,
-    ArrayOfFixedBlocks
+    ArrayOfFixedBlocks,
+    Disconect
 }
