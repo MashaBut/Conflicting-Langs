@@ -43,20 +43,23 @@ wss.on('connection', function (ws: any) {
                 eventHanding.setLines(msg.verticalLines, msg.horizontalLines);
                 break;
             case MessageType.BlockReversalEvent:
-                eventHanding.rotateBlock(id,msg.dices, msg.color, rooms, sockets);
+                eventHanding.rotateBlock(id, msg.dices, msg.color, rooms, sockets);
                 break;
             case MessageType.EventTossDice:
-                eventHanding.sendTossDice(id,rooms, sockets, msg.color);
+                eventHanding.sendTossDice(id, rooms, sockets, msg.color);
                 break;
             case MessageType.GameActionEvents:
-                eventHanding.sendEvent(id,msg.event, rooms, sockets);
+                eventHanding.sendEvent(id, msg.event, rooms, sockets);
                 break;
             case MessageType.MoveToHollPage:
-                eventHanding.sendDisconnect(id,rooms,sockets);
+                eventHanding.sendDisconnect(id, rooms, sockets);
                 eventHanding.sendRooms(rooms, sockets);
                 break;
             case MessageType.SaveBlock:
                 eventHanding.saveBlock(id, rooms, msg.block, sockets);
+                break;
+            case MessageType.EndOfGame:
+                eventHanding.getArea(id, rooms, sockets, msg.areaOfTheFirst, msg.areaOfTheSecond);
                 break;
         }
     })

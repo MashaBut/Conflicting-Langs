@@ -11,8 +11,9 @@ export class Calculation {
     public setLines(vertical: number, horizontal: number): void {
         this.numberOfHorizontalLines = horizontal;
         this.numberOfVerticalLines = vertical;
+        this.position.setSize(vertical, horizontal);
     }
-    public сalculatePosition(dices:number[],blocks:Array<Block>): void {
+    public сalculatePosition(dices: number[], blocks: Array<Array<string>>): void {
         this.position.initDice(dices);
         this.position.initBlocks(blocks);
         this.arrayCurrentPosition.length = 0;
@@ -31,9 +32,10 @@ export class Calculation {
     }
 
     private calculateAllPosition(size: number[]): void {
+        console.log(size[0] + ' ' + size[1]);
         for (let x = 0; x < this.numberOfHorizontalLines; x++) {
             for (let y = 0; y < this.numberOfVerticalLines; y++) {
-                let block = new Block(y, x, size[0], size[1], this.color);
+                let block = new Block(x, y, size[0], size[1], this.color);
                 if (this.position.checkPosition(block)) {
                     this.arrayCurrentPosition.push(block);
                 }

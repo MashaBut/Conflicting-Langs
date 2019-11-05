@@ -19,6 +19,7 @@ import { Room } from "./models/room";
 import { Block } from "./models/block";
 import { MessageBase } from "./message-models/message-base";
 import { MessageType } from "./message-type";
+import { MessageEndOfGame } from "./message-models/message-end-of-game";
 export class MessageCreator {
 
     public createMessageSetName(name: string): MessageSetName {
@@ -109,15 +110,16 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageArrayOfFixedBlocks(blocks: Array<Block>): MessageArrayOfFixedBlocks {
+    public createMessageArrayOfFixedBlocks(blocks: Array<Array<string>>): MessageArrayOfFixedBlocks {
         let message = new MessageArrayOfFixedBlocks();
         message.blocks = blocks;
         return message;
     }
 
-    public createMessageDisconect(): MessageBase {
-        let message = new MessageBase();
-        message.type = MessageType.Disconect;
+    public createMessageEndOfGame(areaOfTheFirst:number,areaOfTheSecond:number): MessageEndOfGame {
+        let message = new MessageEndOfGame();
+        message.areaOfTheFirst = areaOfTheFirst;
+        message.areaOfTheSecond = areaOfTheSecond;
         return message;
     }
 }

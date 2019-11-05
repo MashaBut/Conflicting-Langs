@@ -1,5 +1,6 @@
 import { Block } from "./block";
 import { ManipulationWithDOM } from "../../work-with-html/manipulations-with-dom";
+import { isUndefined } from "util";
 
 export class Draw {
 
@@ -63,16 +64,23 @@ export class Draw {
 		this.canvasContext.fillRect(block.x, block.y, block.width, block.height);
 	}
 
-	public redrawBlocks(block: any): void {
-		block.forEach((b: Block) => {
-			this.canvasContext.fillStyle = b.color;
-			this.canvasContext.fillRect(b.x * this.aspectRatioWidth, b.y * this.aspectRatioHeight, b.width * this.aspectRatioWidth, b.height * this.aspectRatioHeight);
-		});
+	public redrawBlocks(blocks: any): void {
+		if (blocks === undefined) { return; }
+
+		for (let x = 0; x < this.numberOfHorizontalLines; x++) {
+			for (let y = 0; y < this.numberOfVerticalLines; y++) {
+				if (blocks[x][y] !== '') {
+					this.canvasContext.fillStyle = blocks[x][y];
+					this.canvasContext.fillRect(x * this.aspectRatioWidth, y * this.aspectRatioHeight, this.aspectRatioWidth, this.aspectRatioHeight);
+				}
+			}
+		}
 	}
 
 	public redraw(block: Block, blocks: any, color: string): void {
 		this.clearCanvas();
 		this.drawGrid();
+		if (blocks === undefined) { return; }
 		this.redrawBlocks(blocks);
 		this.drawBlockOnMap(block, color);
 	}

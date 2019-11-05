@@ -1,11 +1,18 @@
 import { Block } from "./block";
 
 export class Position {
-    public blocks = new Array<Block>();
+    public blocks = new Array<Array<string>>();
     public currentDices: number[];
     private flagOfRotate: boolean = true;
+    private height: number;
+    private width: number;
 
-    public initBlocks(blocks: Array<Block>): void {
+    public setSize(height: number, width: number): void {
+        this.height = height;
+        this.width = width;
+    }
+
+    public initBlocks(blocks: Array<Array<string>>): void {
         this.blocks = blocks;
     }
 
@@ -19,123 +26,68 @@ export class Position {
     }
 
     private isBlockInOtherBlock(newBlock: Block): boolean {
-        let right = newBlock.x + newBlock.width;
-        let bottom = newBlock.y + newBlock.height;
-        let oldX: number;
-        for (let block of this.blocks) {
-            for (let x = block.x; x < block.x + block.width; x++) {
-                for (let y = block.y; y < block.y + block.height; y++) {
-                    for (let newY = newBlock.y; newY < bottom; newY++) {
-                        if (y === newY) {
-                            oldX = x;
-                            for (let newX = newBlock.x; newX < right; newX++) {
-                                if (newX === oldX++) {
-                                    return false;
-                                }
-                                if (newX === block.x)
-                                    return false;
-                            }
-                        }
-                    }
+        if (this.blocks === undefined) { return false; }
+        for (let x = newBlock.x; x < newBlock.x + newBlock.width; x++) {
+            for (let y = newBlock.y; y < newBlock.y + newBlock.height; y++) {
+                if (this.blocks[x][y] !== '') {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private isTouchBlock(newBlock: Block): boolean {
+        const t1 = this.isBlocksX(newBlock.x, newBlock.y, newBlock.width);
+        const t2 = this.isBlocksY(newBlock.y, newBlock.x, newBlock.height);
+        console.log('X: ' + t1);
+        console.log('Y: ' + t2);
+        if (!t1 && !t2) { return false; }
+        const newY = newBlock.y - newBlock.height;
+        if (newY >= 0 && this.checkSide(newBlock.x, newY, newBlock.width, newBlock.height)) { return true; } // top side
+        const newX = newBlock.x - newBlock.x;
+        if (newX >= 0 && this.checkSide(newX, newBlock.y, newBlock.width, newBlock.height)) { return true; } // left side
+        const newY1 = newBlock.y + newBlock.height;
+        if (newY1 <= this.height && this.checkSide(newBlock.x, newY1, newBlock.width, newBlock.height)) { return true; } // right side
+        const newX1 = newBlock.x + newBlock.x;
+        if (newX1 <= this.width && this.checkSide(newX1, newBlock.y, newBlock.width, newBlock.height)) { return true; } // bottom side
+
+        return false;
+    }
+
+    private checkSide(xStart: number, yStart: number, width: number, height: number): boolean {
+        for (let x = xStart; x < xStart + width; x++) {
+            for (let y = yStart; y < yStart + height; y++) {
+                if (this.blocks[x][y] !== '') {
+                    return false;
                 }
             }
         }
         return true;
     }
 
-    private isTouchTheRightBlockForX(newBlock: Block): boolean {
-        let xOfSet: number;
-        for (let block of this.blocks) {
-            if (block.color === newBlock.color) {
-                xOfSet = 0;
-                for (let x = block.x; x <= block.x + block.width; x++) {
-                    
-                    if (x === newBlock.x) {
-                        if (block.width - xOfSet >= newBlock.width) {
-                            if (block.y + block.height === newBlock.y) {
-                                return true;
-                            }
-                            else if (block.y - newBlock.y === newBlock.height) {
-                                return true;
-                            }
-                        }
-                        else if (block.width - xOfSet < newBlock.width) {
-                            for (let otherBlock of this.blocks) {
-                                if (otherBlock.color === newBlock.color) {
-                                    if (block.width - xOfSet + otherBlock.width >= newBlock.width) {
-                                        if (block.x + block.width === otherBlock.x) {
-                                            if (block.y - newBlock.y === newBlock.height) {
-                                                if (block.y === otherBlock.y) {
-                                                    return true;
-                                                }
-                                            }
-                                            else if (block.y + block.height === newBlock.y) {
-                                                if (block.y + block.height === otherBlock.y + otherBlock.height) {
-                                                    return true;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    xOfSet++;
-                }
+    private isBlocksX(xStart: number, yStart: number, width: number): boolean {
+        for (let x = xStart; x < xStart + width; x++) {
+            if (this.blocks[x][yStart] !== '') {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
-    private isTouchTheRightBlockForY(newBlock: Block): boolean {
-        let yOfSet: number;
-        for (let block of this.blocks) {
-            if (block.color === newBlock.color) {
-                yOfSet = 0;
-                for (let y = block.y; y <= block.y + block.height; y++) {
-                    
-                    if (y === newBlock.y) {
-                        if (block.height - yOfSet >= newBlock.height) {
-                            if (block.x + block.width === newBlock.x) {
-                                return true;
-
-                            }
-                            else if (block.x - newBlock.x === newBlock.width) {
-                                return true;
-                            }
-                        }
-                        else if (block.height - yOfSet < newBlock.height) {
-                            for (let otherBlock of this.blocks) {
-                                if (otherBlock.color === newBlock.color) {
-                                    if (block.height - yOfSet + otherBlock.height >= newBlock.height) {
-                                        if (block.y + block.height === otherBlock.y) {
-                                            if (block.x - newBlock.x === newBlock.width) {
-                                                if (block.x === otherBlock.x) {
-                                                    return true;
-                                                }
-                                            }
-                                            else if (block.x + block.width === newBlock.x) {
-                                                if (block.x + block.width === otherBlock.x + otherBlock.width) {
-                                                    return true;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    yOfSet++;
-                }
+    private isBlocksY(yStart: number, xStart: number, height: number): boolean {
+        for (let y = yStart; y < yStart + height; y++) {
+            if (this.blocks[xStart][y] !== '') {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public checkPosition(newBlock: Block): boolean {
-        if (this.isBlockInOtherBlock(newBlock)&&(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))//(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))
-            return true;
-        else
-            return false;
+        const bl1 = this.isBlockInOtherBlock(newBlock);
+        const bl2 = this.isTouchBlock(newBlock);
+        return bl2;
     }
 }

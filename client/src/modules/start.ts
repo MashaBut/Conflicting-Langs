@@ -69,6 +69,7 @@ socket.onmessage = function (message: any) {
             break;
         case MessageType.SendDice:
             dices = msg.dices;
+            console.log("Dices:"+ dices);
             tossDice();
             break;
         case MessageType.GameActionEvents:
@@ -83,7 +84,12 @@ socket.onmessage = function (message: any) {
             game.setFirstStep();
             break;
         case MessageType.ArrayOfFixedBlocks:
+            game.position.blocks.length = 0;
             game.position.blocks = msg.blocks;
+            console.log("FixedRoom");
+            for(let room of game.position.blocks) {
+                console.log(room);
+            }
             break;
         case MessageType.Failure:
             game.failute();
@@ -365,10 +371,15 @@ function timer() {
 export class SendMmessage {
 
     public static sendBlock(block: Block): void {
+        console.log(block);
         socket.send(JSON.stringify(messageCreator.createMessageSaveBlock(block)));
     }
 
     public static rotateBlock(dices: number[], color: string): void {
         socket.send(JSON.stringify(messageCreator.createMessageBlockReversalEvent(dices, color)));
+    }
+
+    public static endOfGame(areaOfTheFirst: number, areaOfTheSecond: number): void {
+        socket.send(JSON.stringify(messageCreator.createMessageEndOfGame(areaOfTheFirst, areaOfTheSecond)));
     }
 }

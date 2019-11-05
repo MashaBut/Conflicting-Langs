@@ -1,5 +1,6 @@
 import { Block } from "./game/block";
 import { Settings } from "./settings";
+import { settings } from "cluster";
 
 export class Room {
     public id: string;
@@ -9,7 +10,8 @@ export class Room {
     public settings: Settings;
     public currentPlayerId: string;
     public setUpCurrentPlayerNumb: number;
-    public blocks = new Array<Block>();
+    public blocks: Array<Array<string>>;
+    public count: number = 0;
 
     constructor(name: string, id: string, creator: any) {
         this.name = name;
@@ -35,6 +37,10 @@ export class Room {
 
     public settingsRoom(settings: Settings): void {
         this.settings = settings;
+        this.blocks = new Array<Array<string>>(this.settings.width);
+        for (let i = 0; i < this.settings.height; i++) {
+            this.blocks[i] = new Array<string>(this.settings.width).fill('');
+        }
     }
 
     private firstPlayerNumb(): number {

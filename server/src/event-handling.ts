@@ -44,9 +44,10 @@ export class EventHandling {
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(msg);
                 })
-                if (room.blocks.length >= 2) {
+                if (room.count >= 2) {
                     this.calc.color = color;
                     this.calc.сalculatePosition(dices, room.blocks);
+                    console.log(this.calc.arrayCurrentPosition);
                     if (this.calc.arrayCurrentPosition.length != 0) {
                         let msg = JSON.stringify(this.messageCreator.createMessageArrayOfPossibleBlockPositions(this.calc.arrayCurrentPosition));
                         room.players.forEach((key: string) => {
@@ -68,10 +69,19 @@ export class EventHandling {
     public saveBlock(id: string, rooms: Array<Room>, block: Block, sockets: Map<string, any>): void {
         for (let room of rooms) {
             if (id === room.isCurrentPlayer()) {
-                room.blocks.push(block);
+              //  console.log("Saved blocks");
+                room.count++;
+                //console.log(block);
+                for (let x = block.x; x < block.x + block.width; x++) {
+                    for (let y = block.y; y < block.y + block.height; y++) {
+                        room.blocks[x][y] = block.color;
+                    }
+                }
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageArrayOfFixedBlocks(room.blocks)));
                 })
+               // console.log("all blocks:");
+              ///  console.log(room.blocks);
             }
         }
     }
@@ -107,6 +117,8 @@ export class EventHandling {
     public sendEvent(id: string, event: string, rooms: Array<Room>, sockets: Map<string, any>): void {
         for (let room of rooms) {
             if (room.isCurrentPlayer() === id) {
+               // console.log('--SEND EVENT--');
+
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageGameActionEvents(event)));
                 })
@@ -121,16 +133,25 @@ export class EventHandling {
         this.calc.setLines(vertical, horizontal);
     }
 
-    public sendDisconnect(id: string, rooms:Array<Room>,sockets: Map<string,any>):void {
-        let numbPosition = 0 ;
-        for(let room of rooms) {
-            if(room.players[0] == id || room.players[1] == id) {
+    public sendDisconnect(id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+        let numbPosition = 0;
+        for (let room of rooms) {
+            if (room.players[0] == id || room.players[1] == id) {
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
                 })
-                rooms.splice(numbPosition,1);
+                rooms.splice(numbPosition, 1);
             }
             numbPosition++;
+        }
+    }
+
+    public getArea(id: string, rooms: Array<Room>, sockets: Map<string, any>, areaOfTheFirst: number, areaOfTheSecond: number): void {
+        for (let room of rooms) {
+            if (room.isCurrentPlayer() === id) {
+              //  console.log(areaOfTheFirst, areaOfTheSecond);
+                break;
+            }
         }
     }
 }
