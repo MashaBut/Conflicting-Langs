@@ -61,6 +61,11 @@ wss.on('connection', function (ws: any) {
             case MessageType.SaveBlock:
                 eventHanding.saveBlock(id, rooms, msg.block, sockets);
                 break;
+            case MessageType.ResultOfGame:
+                console.log("Area: " + msg.area);
+                eventHanding.setResultOfGame(id,rooms,sockets);
+                eventHanding.sendRooms(rooms, sockets);
+                break;
         }
     })
     /*ws.on('close', function () {

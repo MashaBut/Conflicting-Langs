@@ -141,4 +141,20 @@ export class EventHandling {
             numbPosition++;
         }
     }
+
+    public setResultOfGame(id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+        let numbPosition = 0;
+        for (let room of rooms) {
+            if (room.isCurrentPlayer() === id) {
+                setTimeout(() => {
+                    room.players.forEach((key: string) => {
+                        sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
+                    })
+                    rooms.splice(numbPosition, 1);
+                }  
+                , 10000);
+            }
+            numbPosition++;
+        }
+    }
 }

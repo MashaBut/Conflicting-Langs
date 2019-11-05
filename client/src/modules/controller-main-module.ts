@@ -12,6 +12,7 @@ import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-
 import { PathToMedia } from "./work-with-html/path-to-media";
 import { SendMmessage } from "./start";
 import { Settings } from "../../../library/dist";
+import { identity } from "rxjs";
 
 export class Game {
 
@@ -24,7 +25,7 @@ export class Game {
     public position = new PositionCalculation();
     public canvasDraw: Draw;
     private sizeFirstBlock: number[];
-    calc = new Calculation();
+    private calc = new Calculation();
     public arrayCurrentPosition = new Array<Block>();
     public currentPosition: Block;
     private counterBlocksInArray: number = 0;
@@ -101,6 +102,14 @@ export class Game {
             Timer.flagForTimer = false;
         }
         if (this.currentPlayer.getLives() === 0) {
+            let winnerArea:number;
+            if(this.currentPlayer.getColor() == this.player1.getColor()) {
+                winnerArea = this.player2.getOccupiedArea();
+            }
+            else {
+                winnerArea =  this.player1.getOccupiedArea();
+            }
+            SendMmessage.resultOfGame(winnerArea);
             alert(this.currentPlayer.getName() + " loser");
         }
         this.changePlayer();

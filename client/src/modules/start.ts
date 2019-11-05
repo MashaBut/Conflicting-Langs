@@ -376,6 +376,6 @@ export class SendMmessage {
     }
 
     public static resultOfGame(area: number): void {
-        //   socket.send(JSON.stringify(messageCreator.))
+      socket.send(JSON.stringify(messageCreator.createMessageResultOfGame(area)));
     }
 }
