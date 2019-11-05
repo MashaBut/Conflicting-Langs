@@ -1,5 +1,5 @@
-import { Block } from "./game/block";
-import { Settings } from "./settings";
+import { Block } from "../../library/dist/index";
+import { Settings } from "../../library/dist/index";
 
 export class Room {
     public id: string;
@@ -10,6 +10,7 @@ export class Room {
     public currentPlayerId: string;
     public setUpCurrentPlayerNumb: number;
     public blocks = new Array<Block>();
+    public currentBlocks = new Array<Block>();
 
     constructor(name: string, id: string, creator: any) {
         this.name = name;

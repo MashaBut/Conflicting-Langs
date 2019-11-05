@@ -10,11 +10,11 @@ export { MessageEventTossDice } from "./message-models/message-event-toss-dice";
 export { MessageMoveToHollPage } from "./message-models/message-move-to-holl-page";
 export { MessageSaveBlock } from "./message-models/message-save-block";
 export { MessageGridSending } from "./message-models/message-grid-sending";
-export { MessageArrayOfPossibleBlockPosition } from "./message-models/message-array-of-possible-block-position";
 export { MessageBlockReversalEvent } from "./message-models/message-block-reversal-event";
 export { MessageFailure } from "./message-models/message-failure";
-export { MessageArrayOfFixedBlocks } from "./message-models/message-array-of-fixed-blocks";
 
 export { Settings } from "./models/settings";
 export { Room } from "./models/room";
 export { Block } from "./models/block";
+export { Calculation } from "./models/calculation";
+export { PositionCalculation } from "./models/position-calculation";

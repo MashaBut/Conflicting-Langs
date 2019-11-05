@@ -19,18 +19,18 @@ wss.on('connection', function (ws: any) {
     ws.on('message', (message: any) => {
         const msg = JSON.parse(message);
         switch (msg.type) {
-            case MessageType.SetName:
+            case MessageType.SetName://get cooper
                 sockets.set(id, ws);
                 clients.set(id, msg.name);
                 eventHanding.sendRooms(rooms, sockets);
                 break;
-            case MessageType.SetNameRoom:
+            case MessageType.SetNameRoom://+
                 let room = new Room(msg.name, id, clients.get(id));
                 room.settingsRoom(msg.settings);
                 rooms.push(room);
                 eventHanding.sendRooms(rooms, sockets);
                 break;
-            case MessageType.JoinTheRoom:
+            case MessageType.JoinTheRoom://+
                 eventHanding.sendRooms(rooms, sockets);
                 for (let room of rooms) {
                     if (room.id === msg.id) {
@@ -44,6 +44,9 @@ wss.on('connection', function (ws: any) {
                 break;
             case MessageType.BlockReversalEvent:
                 eventHanding.rotateBlock(id,msg.dices, msg.color, rooms, sockets);
+                break;
+            case MessageType.PositionCheck:
+                eventHanding.positionCheck(id, rooms, msg.block, sockets);
                 break;
             case MessageType.EventTossDice:
                 eventHanding.sendTossDice(id,rooms, sockets, msg.color);

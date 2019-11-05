@@ -9,17 +9,29 @@ import { MessageEventTossDice } from "./message-models/message-event-toss-dice";
 import { MessageMoveToHollPage } from "./message-models/message-move-to-holl-page";
 import { MessageSaveBlock } from "./message-models/message-save-block";
 import { MessageGridSending } from "./message-models/message-grid-sending";
-import { MessageArrayOfPossibleBlockPosition } from "./message-models/message-array-of-possible-block-position";
 import { MessageBlockReversalEvent } from "./message-models/message-block-reversal-event";
 import { MessageFailure } from "./message-models/message-failure";
-import { MessageArrayOfFixedBlocks } from "./message-models/message-array-of-fixed-blocks";
 
 import { Settings } from "./models/settings";
 import { Room } from "./models/room";
 import { Block } from "./models/block";
 import { MessageBase } from "./message-models/message-base";
 import { MessageType } from "./message-type";
+import { MessagePositionCheck } from "./message-models/message-position-check";
+import { MessageResultOfGame } from "./message-models/message-result-of-game";
 export class MessageCreator {
+
+    public createMessageResultOfGame(area: number): MessageResultOfGame {
+        let message = new MessageResultOfGame();
+        message.area = area;
+        return message;
+    }
+
+    public createMessagePositionCheck(block: Block): MessagePositionCheck {
+        let message = new MessagePositionCheck();
+        message.block = block;
+        return message;
+    }
 
     public createMessageSetName(name: string): MessageSetName {
         let message = new MessageSetName();
@@ -91,12 +103,6 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageArrayOfPossibleBlockPositions(blocks: Block[]): MessageArrayOfPossibleBlockPosition {
-        let message = new MessageArrayOfPossibleBlockPosition();
-        message.blocks = blocks;
-        return message;
-    }
-
     public createMessageBlockReversalEvent(dices: number[], color: string): MessageBlockReversalEvent {
         let message = new MessageBlockReversalEvent();
         message.dices = dices;
@@ -109,15 +115,15 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageArrayOfFixedBlocks(blocks: Array<Block>): MessageArrayOfFixedBlocks {
-        let message = new MessageArrayOfFixedBlocks();
-        message.blocks = blocks;
-        return message;
-    }
-
     public createMessageDisconect(): MessageBase {
         let message = new MessageBase();
         message.type = MessageType.Disconect;
+        return message;
+    }
+
+    public createMessageIsPosition(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.IsPosition;
         return message;
     }
 }

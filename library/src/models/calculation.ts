@@ -1,12 +1,12 @@
 import { Block } from "./block";
-import { Position } from "./position";
+import { PositionCalculation } from "./position-calculation";
 
 export class Calculation {
     public arrayCurrentPosition = new Array<Block>();
     public color: string = "";
     private numberOfVerticalLines: number = 0;
     private numberOfHorizontalLines: number = 0;
-    position = new Position();
+    position = new PositionCalculation();
 
     public setLines(vertical: number, horizontal: number): void {
         this.numberOfHorizontalLines = horizontal;
@@ -17,14 +17,10 @@ export class Calculation {
         this.position.initBlocks(blocks);
         this.arrayCurrentPosition.length = 0;
         this.calculateAllPosition(this.position.currentDices);
-        if (this.arrayCurrentPosition.length != 0) {
-        }
-        else {
+        if(this.arrayCurrentPosition.length == 0) {
             this.position.change();
             this.calculateAllPosition(this.position.currentDices);
-            if (this.arrayCurrentPosition.length != 0) {
-            }
-            else {
+            if (this.arrayCurrentPosition.length == 0) {
                 console.log("feil");
             }
         }

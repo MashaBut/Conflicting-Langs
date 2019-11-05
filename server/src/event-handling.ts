@@ -1,7 +1,7 @@
 import { Room } from "./room";
 import { MessageCreator } from "../../library/dist/message-creator";
-import { Block } from "./game/block";
-import { Calculation } from "./game/calculation";
+import { Block } from "../../library/dist";
+import { Calculation } from "../../library/dist";
 import { Settings } from "../../library/dist";
 
 export class EventHandling {
@@ -48,12 +48,12 @@ export class EventHandling {
                     this.calc.color = color;
                     this.calc.сalculatePosition(dices, room.blocks);
                     if (this.calc.arrayCurrentPosition.length != 0) {
-                        let msg = JSON.stringify(this.messageCreator.createMessageArrayOfPossibleBlockPositions(this.calc.arrayCurrentPosition));
-                        room.players.forEach((key: string) => {
-                            sockets.get(key).send(msg);
-                        })
+                        room.currentBlocks = this.calc.arrayCurrentPosition;
+                        console.log("Position current on server");
+                        console.log(room.currentBlocks);
                     }
                     else {
+                        console.log("i am here");
                         this.changePlayerInCurrentRoom(id, rooms);
                         room.players.forEach((key: string) => {
                             sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageFailure()));
@@ -65,13 +65,24 @@ export class EventHandling {
         }
     }
 
+    public positionCheck(id: string, rooms: Array<Room>, block: Block, sockets: Map<string, any>): void {
+        for (let room of rooms) {
+            if (id === room.isCurrentPlayer()) {
+                for (let position of room.currentBlocks) {
+                    if (position.x == block.x && position.y == block.y && position.width == block.width && position.height == block.height && position.color == block.color) {
+                        room.players.forEach((key: string) => {
+                            sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageIsPosition()));
+                        })
+                    }
+                }
+            }
+        }
+    }
+
     public saveBlock(id: string, rooms: Array<Room>, block: Block, sockets: Map<string, any>): void {
         for (let room of rooms) {
             if (id === room.isCurrentPlayer()) {
                 room.blocks.push(block);
-                room.players.forEach((key: string) => {
-                    sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageArrayOfFixedBlocks(room.blocks)));
-                })
             }
         }
     }
@@ -82,10 +93,7 @@ export class EventHandling {
                 this.calc.color = color;
                 this.calc.сalculatePosition(dices, room.blocks);
                 if (this.calc.arrayCurrentPosition.length != 0) {
-                    let msg = JSON.stringify(this.messageCreator.createMessageArrayOfPossibleBlockPositions(this.calc.arrayCurrentPosition));
-                    room.players.forEach((key: string) => {
-                        sockets.get(key).send(msg);
-                    })
+                    room.currentBlocks = this.calc.arrayCurrentPosition;
                 }
             }
         }
@@ -121,14 +129,14 @@ export class EventHandling {
         this.calc.setLines(vertical, horizontal);
     }
 
-    public sendDisconnect(id: string, rooms:Array<Room>,sockets: Map<string,any>):void {
-        let numbPosition = 0 ;
-        for(let room of rooms) {
-            if(room.players[0] == id || room.players[1] == id) {
+    public sendDisconnect(id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+        let numbPosition = 0;
+        for (let room of rooms) {
+            if (room.players[0] == id || room.players[1] == id) {
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
                 })
-                rooms.splice(numbPosition,1);
+                rooms.splice(numbPosition, 1);
             }
             numbPosition++;
         }

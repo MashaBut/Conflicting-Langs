@@ -2,8 +2,9 @@ import { Player } from "./game/player";
 import { ColorPlayers } from "./game/enums/color-players";
 import { Draw } from "./game/work-with-canvas/draw";
 import { CoordinateTransformation } from "./game/work-with-canvas/coordinate-transformation";
-import { Position } from "./game/work-with-canvas/position";
-import { Block } from "./game/work-with-canvas/block";
+import { PositionCalculation } from "../../../library/dist/models/position-calculation";
+import { Block } from "../../../library/dist/models/block";
+import { Calculation } from "../../../library/dist/index";
 import { Timer } from "./game/timer";
 import { PlayersLives } from "./game/lives";
 
@@ -20,10 +21,10 @@ export class Game {
     private flagGame: boolean = true;
     private timer: any;
 
-    public position = new Position();
+    public position = new PositionCalculation();
     public canvasDraw: Draw;
     private sizeFirstBlock: number[];
-
+    calc = new Calculation();
     public arrayCurrentPosition = new Array<Block>();
     public currentPosition: Block;
     private counterBlocksInArray: number = 0;
@@ -32,6 +33,7 @@ export class Game {
         this.canvasDraw = new Draw(DOM.canvas, settings.width, settings.height, settings.mapColor, settings.gridColor, this.position.blocks);
         this.drawNewCanvas(settings.width, settings.height, settings.mapColor, settings.gridColor);
         this.position.areaMap(settings.width, settings.height);
+        this.calc.setLines(settings.height,settings.width);
     }
 
     public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
@@ -56,16 +58,20 @@ export class Game {
             this.currentPosition = new Block(coord[0], coord[1], this.sizeFirstBlock[0], this.sizeFirstBlock[1], this.currentPlayer.getColor());
             this.draw();
         }
+        else {
+            this.calc.color = this.currentPlayer.getColor();
+            this.calc.сalculatePosition(this.position.currentDices, this.position.blocks);
+            if (this.calc.arrayCurrentPosition.length != 0) {
+                this.arrayCurrentPosition = this.calc.arrayCurrentPosition;
+                this.currentPosition = this.arrayCurrentPosition[0];
+                SendMmessage.positionCheck(this.currentPosition);
+            }
+        }
     }
 
-    public setFirstStep(): void {
-        this.currentPosition = this.arrayCurrentPosition[0];
-        this.draw();
-    }
-
-    public convertBlockSizeToPixels(x: number, y: number, Xsize: number, Ysize: number, color: string): Block {
-        return new Block(x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight, Xsize * this.canvasDraw.aspectRatioWidth,
-            Ysize * this.canvasDraw.aspectRatioHeight, color);
+    public convertBlockSizeToPixels(block: Block): Block {
+        return new Block(block.x * this.canvasDraw.aspectRatioWidth, block.y * this.canvasDraw.aspectRatioHeight, block.width * this.canvasDraw.aspectRatioWidth,
+            block.height * this.canvasDraw.aspectRatioHeight, block.color);
     }
 
     private endOfturn() {
@@ -105,15 +111,14 @@ export class Game {
         let block;
         this.canvasDraw.redraw(this.currentPosition, this.position.blocks, this.currentPlayer.getColor());
         if (this.currentPlayer.isFirstMove()) {
-        this.position.save(this.currentPosition.x / this.canvasDraw.aspectRatioWidth, this.currentPosition.y / this.canvasDraw.aspectRatioHeight, this.currentPlayer.getColor());
         block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
             this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
         }
         else {
-            this.position.save(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight), this.currentPlayer.getColor());
             block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
             this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
         }
+        this.position.blocks.push(block);
         SendMmessage.sendBlock(block);
     }
 
@@ -140,7 +145,7 @@ export class Game {
     }
 
     public turnTime() {
-        this.timer = setTimeout(() => this.endOfturn(), 20000);//() => this.endOfturn()
+        this.timer = setTimeout(() => this.endOfturn(), 20000);
     }
 
     public setPlayer1(name: string, color: string): void {
@@ -174,6 +179,7 @@ export class Game {
         if (!this.currentPlayer.isFirstMove()) {
             this.position.change();
             SendMmessage.rotateBlock(this.position.currentDices, this.currentPlayer.getColor());
+            this.calculatePosition();
         }
         if (this.currentPlayer.isFirstMove()) {
             this.position.change();
@@ -190,7 +196,7 @@ export class Game {
                 this.counterBlocksInArray = 0;
             }
             this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
-            this.draw();
+            SendMmessage.positionCheck(this.currentPosition);
         }
         DOM.playSound(PathToMedia.movementsOfBlock);
     }
@@ -202,7 +208,7 @@ export class Game {
                 this.counterBlocksInArray = 0;
             }
             this.currentPosition = this.arrayCurrentPosition[this.counterBlocksInArray];
-            this.draw();
+            SendMmessage.positionCheck(this.currentPosition);
         }
         DOM.playSound(PathToMedia.movementsOfBlock);
     }
