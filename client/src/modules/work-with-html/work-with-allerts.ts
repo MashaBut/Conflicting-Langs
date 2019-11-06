@@ -10,12 +10,28 @@ export class Allerts {
         ManipulationWithDOM.informationAboutGame.style.display = 'none';
     }
 
-    public static viewWarning(): void {
-        ManipulationWithDOM.warningAboutColor.style.display = 'block';
+    public static viewWarning(warning: any): void {
+        warning.style.display = 'block';
     }
 
-    public static hideWarning(): void {
-        ManipulationWithDOM.warningAboutColor.style.display = 'none';
+    public static hideWarning(warning: any): void {
+        warning.style.display = 'none';
+    }
+
+    public static viewIntoAboutLoosingLife(): void {
+        ManipulationWithDOM.warningAboutLoosingLife.style.display = 'block';
+    }
+
+    public static hideIntoAboutLoosingLife(): void {
+        ManipulationWithDOM.warningAboutLoosingLife.style.display = 'none';
+    }
+
+    public static viewIntoAboutEndingOfTheGame(): void {
+        ManipulationWithDOM.warningAboutуEndingOfTheGame.style.display = 'block';
+    }
+
+    public static hideIntoAboutEndingOfTheGame(): void {
+        ManipulationWithDOM.warningAboutуEndingOfTheGame.style.display = 'none';
     }
 
 }

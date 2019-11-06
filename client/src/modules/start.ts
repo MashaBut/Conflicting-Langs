@@ -86,6 +86,7 @@ socket.onmessage = function (message: any) {
         case MessageType.MoveToHollPage:
             View.HollPage();
             setUpSettings();
+            Allerts.viewIntoAboutEndingOfTheGame();
             game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
             break;
     }
@@ -103,7 +104,8 @@ fromEvent(DOM.writeNames, 'click')
 fromEvent(DOM.createRoom, 'click')
     .subscribe(() => {
         const nameRoom = (DOM.nameRoom).value;
-        if (nameRoom != "" && (settings.firstPlayerColor != settings.secondPlayerColor)) {
+        if (nameRoom != "") {
+            if (settings.firstPlayerColor != settings.secondPlayerColor) {
             socket.send(JSON.stringify(messageCreator.createMessageSetNameRoom(nameRoom, settings)));
             game = new Game();
             game.initCanvas(settings);
@@ -113,9 +115,13 @@ fromEvent(DOM.createRoom, 'click')
             DOM.playSound(PathToMedia.playGame);
             PushImage.createImage();
             DOM.initSounds();
+            }
+            else {
+                Allerts.viewWarning(DOM.warningAboutColor);
+            }
         }
         else {
-            Allerts.viewWarning();
+            Allerts.viewWarning(DOM.warningAboutNameOfRoom);
         }
     });
 
@@ -133,8 +139,13 @@ DOM.infoButton.addEventListener('click', function (event: any) { Allerts.viewInf
 
 DOM.hideInformationAboutGame.addEventListener('click', function (event: any) { Allerts.hideInfo(); });
 
-DOM.hideWarning.addEventListener('click', function (event: any) { Allerts.hideWarning(); });
+DOM.hideWarningAboutColor.addEventListener('click', function (event: any) { Allerts.hideWarning(DOM.warningAboutColor); });
 
+DOM.hideWarningAboutNameOfRoom.addEventListener('click', function (event: any) { Allerts.hideWarning(DOM.warningAboutNameOfRoom); });
+
+DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) { Allerts.hideIntoAboutLoosingLife(); });
+
+DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideIntoAboutEndingOfTheGame(); });
 
 function createButtonForMobileVersion(): void {
     buttonForMobileVersion("moveToLeft", "←");
@@ -338,7 +349,7 @@ fromEvent(DOM.endGame, 'click')
 
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
-        socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage())); // здесь лежал аллерт выхода из игры
+        socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage()));
     })
 
 function tossDice(): void {

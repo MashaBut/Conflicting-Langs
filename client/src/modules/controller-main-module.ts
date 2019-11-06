@@ -7,6 +7,7 @@ import { Block } from "../../../library/dist/models/block";
 import { Calculation } from "../../../library/dist/index";
 import { Timer } from "./game/timer";
 import { PlayersLives } from "./game/lives";
+import { Allerts } from "./work-with-html/work-with-allerts";
 
 import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
 import { PathToMedia } from "./work-with-html/path-to-media";
@@ -96,10 +97,12 @@ export class Game {
         if (this.currentPlayer === this.player1) {
             PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
             Timer.flagForTimer = false;
+            Allerts.viewIntoAboutLoosingLife();
         }
         else if (this.currentPlayer === this.player2) {
             PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
             Timer.flagForTimer = false;
+            Allerts.viewIntoAboutLoosingLife();
         }
         if (this.currentPlayer.getLives() === 0) {
             let winnerArea:number;

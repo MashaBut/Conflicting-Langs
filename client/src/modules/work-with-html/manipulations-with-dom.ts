@@ -73,8 +73,16 @@ export class ManipulationWithDOM {
     static hideInformationAboutGame: any = <HTMLElement>document.getElementById("hideInfo");
 
     //all warnings
-    static warningAboutColor: any = <HTMLElement>document.getElementById("warning");
-    static hideWarning: any = <HTMLElement>document.getElementById("hideWarning");
+    static warningAboutNameOfRoom: any = <HTMLElement>document.getElementById("warningAboutNameOfRoom");
+    static warningAboutColor: any = <HTMLElement>document.getElementById("warningAboutColor");
+    static hideWarningAboutColor: any = <HTMLElement>document.getElementById("hideWarningAboutColor");
+    static hideWarningAboutNameOfRoom: any = <HTMLElement>document.getElementById("hideWarningAboutNameOfRoom");
+
+    static warningAboutLoosingLife: any = <HTMLElement>document.getElementById("warningAboutLoosingLife");
+    static hideWarningAboutLoosingLife: any = <HTMLElement>document.getElementById("hideWarningAboutLoosingLife");
+
+    static warningAboutуEndingOfTheGame: any = <HTMLElement>document.getElementById("warningAboutуEndingOfTheGame");
+    static hideWarningAboutуEndingOfTheGame: any = <HTMLElement>document.getElementById("hideWarningAboutуEndingOfTheGame");
 
 
 

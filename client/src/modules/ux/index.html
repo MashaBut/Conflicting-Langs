@@ -27,10 +27,19 @@
 
     <div class="hollpage" id="hollpage">
         <div class="gridForHollPage">
-
-            <div class="warning" id="warning">
+            <div class="warning" id="warningAboutColor">
                 <p>Choose other color for your opponent (or for you)!</p>
-                <button type="button" class="hideWarning" id="hideWarning">OK</button>
+                <button type="button" class="hideWarning" id="hideWarningAboutColor">OK</button>
+            </div>
+            
+            <div class="warning" id="warningAboutNameOfRoom">
+                <p>Name the room, please!</p>
+                <button type="button" class="hideWarning" id="hideWarningAboutNameOfRoom">OK</button>
+            </div>
+
+            <div class="warning" id="warningAboutуEndingOfTheGame">
+                    <p>Disconnect :( <br> The game is finished!</p>
+                    <button type="button" class="hideWarning" id="hideWarningAboutуEndingOfTheGame">OK</button>
             </div>
 
             <div class="aboutGame">
@@ -123,6 +132,12 @@
 
     <div class="gamepage" id="gamepage">
         <div class="gridForGamePage">
+
+            <div class="warningAllert" id="warningAboutLoosingLife">
+                    <p>You lost the life :(</p>
+                    <button type="button" class="hideWarning" id="hideWarningAboutLoosingLife">OK</button>
+            </div>
+
             <div class="flex-box">
                 <div class="left_triangle" id="left_triangle"></div>
                 <p class="timer" id="timer">00:00</p>
