@@ -3,12 +3,12 @@ import { MessageCreator } from "../../library/dist/message-creator";
 import { Block } from "../../library/dist";
 import { Calculation } from "../../library/dist";
 import { Settings } from "../../library/dist";
-import { Timer } from "./game/timer"
+//import { Timer } from "./game/timer"
 
 export class EventHandling {
     messageCreator = new MessageCreator();
     calc = new Calculation();
-    timer = new Timer();
+    //timer = new Timer();
 
     public sendRooms(rooms: Array<Room>, sockets: Map<string, any>): void {
         let openRooms: any = new Array<Room>();

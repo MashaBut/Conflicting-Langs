@@ -1,12 +1,12 @@
-import { MessageCreator } from "../../../library/dist/message-creator";
-import { Room } from "../room";
+//import { MessageCreator } from "../../dist/message-creator";
+//import { Room } from "../room";
 
 
 export class Timer {
     static flagForTimer: boolean = true;
-    messageCreator = new MessageCreator();
+   // messageCreator = new MessageCreator();
     constructor(public counter = 38) { }
-    async Timer(rooms: Array<Room>, sockets: Map<string, any>) {
+    async Timer() { //rooms: Array<Room>, sockets: Map<string, any>
 
         let intervalId = setInterval(() => {
 
