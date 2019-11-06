@@ -88,13 +88,6 @@ socket.onmessage = function (message: any) {
             setUpSettings();
             game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
             break;
-        // case MessageType.RunTimer:
-        //     console.log("Timer is running!");
-        //     timerForPlayer.Timer();
-        //     break;
-        // case MessageType.StopTimer:
-        //     console.log("Timer is stopped!");
-        //     break;
     }
 };
 
@@ -373,10 +366,6 @@ export class SendMmessage {
     public static rotateBlock(dices: number[], color: string): void {
         socket.send(JSON.stringify(messageCreator.createMessageBlockReversalEvent(dices, color)));
     }
-
-    //public static andOfTimer(): void {
-   //     socket.send(JSON.stringify(messageCreator.createMessageStopTimer()));
-   // }
 
     public static positionCheck(block: Block): void {
         if (game.arrayCurrentPosition.length != 0) {

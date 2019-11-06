@@ -75,11 +75,10 @@ export class Game {
             block.height * this.canvasDraw.aspectRatioHeight, block.color);
     }
 
-    public endOfturn() {
-        //this.timer.Timer();
+    private endOfturn() {
         DOM.undisabledButtonDice();
         clearTimeout(this.timer);
-       if (this.currentPlayer.isFirstMove()) {
+        if (this.currentPlayer.isFirstMove()) {
             this.currentPlayer.setFirstMove(false);
             this.repetitionAtCompletion();
         }
@@ -88,7 +87,6 @@ export class Game {
         }
         this.repetititonAtEachTurn();
         this.changePlayer();
-       // SendMmessage.andOfTimer();
     }
 
     public failute(): void {

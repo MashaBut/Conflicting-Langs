@@ -11,16 +11,14 @@ import { MessageSaveBlock } from "./message-models/message-save-block";
 import { MessageGridSending } from "./message-models/message-grid-sending";
 import { MessageBlockReversalEvent } from "./message-models/message-block-reversal-event";
 import { MessageFailure } from "./message-models/message-failure";
-import { MessagePositionCheck } from "./message-models/message-position-check";
-import { MessageResultOfGame } from "./message-models/message-result-of-game";
 
 import { Settings } from "./models/settings";
 import { Room } from "./models/room";
 import { Block } from "./models/block";
 import { MessageBase } from "./message-models/message-base";
 import { MessageType } from "./message-type";
-
-
+import { MessagePositionCheck } from "./message-models/message-position-check";
+import { MessageResultOfGame } from "./message-models/message-result-of-game";
 
 export class MessageCreator {
 

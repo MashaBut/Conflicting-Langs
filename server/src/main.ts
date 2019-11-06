@@ -1,7 +1,6 @@
 import { MessageType } from "../../library/dist/index";
 import { Room } from "./room";
 import { EventHandling } from "./event-handling";
-//import { Timer } from "../../library/dist/models/timer.ts";
 const express = require('express');
 const webSocket = require('ws');
 const { createServer } = require('http');
@@ -15,7 +14,7 @@ let eventHanding = new EventHandling();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
 let rooms = new Array<Room>();
-//let timer = new Timer;
+
 wss.on('connection', function (ws: any) {
     let id = String(uuidv1());
     ws.on('message', (message: any) => {
@@ -52,8 +51,6 @@ wss.on('connection', function (ws: any) {
                 break;
             case MessageType.EventTossDice:
                 eventHanding.sendTossDice(id,rooms, sockets, msg.color);
-               // console.log("Timer is running!");
-               // eventHanding.sendTimer(id,rooms,sockets);
                 break;
             case MessageType.GameActionEvents:
                 eventHanding.sendEvent(id,msg.event, rooms, sockets);
@@ -64,13 +61,7 @@ wss.on('connection', function (ws: any) {
                 break;
             case MessageType.SaveBlock:
                 eventHanding.saveBlock(id, rooms, msg.block, sockets);
-                //Timer.flagForTimer = false;
                 break;
-            //case MessageType.StopTimer:
-              //  console.log("Timer is stopped!");
-                //eventHanding.sendTimer(id,rooms,sockets);
-                //Timer.flagForTimer = false;
-                //break;
             case MessageType.ResultOfGame:
                 console.log("Area: " + msg.area);
                 eventHanding.setResultOfGame(id,rooms,sockets);

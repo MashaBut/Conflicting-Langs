@@ -12,10 +12,10 @@ export enum MessageType {
     GridSending,
     BlockReversalEvent,
     Failure,
-    RunTimer,
-    StopTimer,
     Disconect,
     PositionCheck,
     IsPosition,
-    ResultOfGame
+    ResultOfGame,
+    RunTimer,
+    StopTimer
 }
