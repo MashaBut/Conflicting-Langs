@@ -10,11 +10,13 @@ export enum MessageType {
     MoveToHollPage,
     SaveBlock,
     GridSending,
-    ArrayOfPossibleBlockPosition,
     BlockReversalEvent,
     Failure,
     ArrayOfFixedBlocks,
     Disconect,
     RunTimer,
-    StopTimer
+    StopTimer,
+    PositionCheck,
+    IsPosition,
+    ResultOfGame
 }

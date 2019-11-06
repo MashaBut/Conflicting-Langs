@@ -1,9 +1,24 @@
 import { Block } from "./block";
 
-export class Position {
+export class PositionCalculation {
     public blocks = new Array<Block>();
     public currentDices: number[];
     private flagOfRotate: boolean = true;
+    private area: number = 0;
+
+    public areaMap(h: number, v: number): void {
+        this.area = (h * v) / 100;
+    }
+
+    public countingTheAreaOfTheCurrentPlayer(currentColor: string): number {
+        let sum: number = 0;
+        this.blocks.forEach(block => {
+            if (block.color === currentColor) {
+                sum += (block.width * block.height) / this.area;
+            }
+        })
+        return parseFloat((sum).toPrecision(3));
+    }
 
     public initBlocks(blocks: Array<Block>): void {
         this.blocks = blocks;
@@ -49,7 +64,7 @@ export class Position {
             if (block.color === newBlock.color) {
                 xOfSet = 0;
                 for (let x = block.x; x <= block.x + block.width; x++) {
-                    
+
                     if (x === newBlock.x) {
                         if (block.width - xOfSet >= newBlock.width) {
                             if (block.y + block.height === newBlock.y) {
@@ -93,7 +108,7 @@ export class Position {
             if (block.color === newBlock.color) {
                 yOfSet = 0;
                 for (let y = block.y; y <= block.y + block.height; y++) {
-                    
+
                     if (y === newBlock.y) {
                         if (block.height - yOfSet >= newBlock.height) {
                             if (block.x + block.width === newBlock.x) {
@@ -133,7 +148,7 @@ export class Position {
     }
 
     public checkPosition(newBlock: Block): boolean {
-        if (this.isBlockInOtherBlock(newBlock)&&(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))//(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))
+        if (this.isBlockInOtherBlock(newBlock) && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))//(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))
             return true;
         else
             return false;

@@ -1,4 +1,4 @@
-import { Block } from "./block";
+import { Block } from "../../../../../library/dist";
 import { ManipulationWithDOM } from "../../work-with-html/manipulations-with-dom";
 
 export class Draw {

@@ -12,7 +12,7 @@ import { SizeMap } from "./game/enums/size-map";
 import { fromEvent } from 'rxjs';
 
 import { DiceRoller } from "./game/dice-roller";
-import { Block } from "./game/work-with-canvas/block";
+import { Block } from "../../../library/dist";
 
 import { Timer } from "./game/timer";
 
@@ -21,7 +21,8 @@ import { Game } from "./controller-main-module";
 import { MessageCreator } from "../../../library/dist/message-creator";
 import { MessageType } from "../../../library/dist/index";
 import { KeyCodes } from "./key-codes";
-import { Settings } from "./settings";
+import { Settings } from "../../../library/dist/index";
+import { json } from "body-parser";
 
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:');
 let socketUrl = socketProtocol + '//' + location.host;
@@ -71,19 +72,13 @@ socket.onmessage = function (message: any) {
             dices = msg.dices;
             tossDice();
             break;
+        case MessageType.IsPosition:
+            console.log("good");
+            game.currentPosition = game.convertBlockSizeToPixels(game.currentPosition);
+            game.draw();
+            break;
         case MessageType.GameActionEvents:
             game.setBlockPositionOnMap(msg.event);
-            break;
-        case MessageType.ArrayOfPossibleBlockPosition:
-            let arrayBlocks = msg.blocks;
-            game.arrayCurrentPosition.length = 0;
-            for (let block of arrayBlocks) {
-                game.arrayCurrentPosition.push(game.convertBlockSizeToPixels(block.x, block.y, block.width, block.height, block.color));
-            }
-            game.setFirstStep();
-            break;
-        case MessageType.ArrayOfFixedBlocks:
-            game.position.blocks = msg.blocks;
             break;
         case MessageType.Failure:
             game.failute();
@@ -371,6 +366,7 @@ function timer() {
 export class SendMmessage {
 
     public static sendBlock(block: Block): void {
+        console.log("Save block" + " x: " + block.x + " y: " + block.y + " h: " + block.height + " w: " + block.width + " color: " + block.color);
         socket.send(JSON.stringify(messageCreator.createMessageSaveBlock(block)));
     }
 
@@ -382,4 +378,14 @@ export class SendMmessage {
    //     socket.send(JSON.stringify(messageCreator.createMessageStopTimer()));
    // }
 
+    public static positionCheck(block: Block): void {
+        if (game.arrayCurrentPosition.length != 0) {
+            console.log("checkBlock" + " x: " + block.x + " y: " + block.y + " h: " + block.height + " w: " + block.width + " color: " + block.color);
+            socket.send(JSON.stringify(messageCreator.createMessagePositionCheck(block)));
+        }
+    }
+
+    public static resultOfGame(area: number): void {
+      socket.send(JSON.stringify(messageCreator.createMessageResultOfGame(area)));
+    }
 }
