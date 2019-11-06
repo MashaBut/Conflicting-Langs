@@ -9,3 +9,4 @@ import "../ux/css/game-page.css";
 import "../ux/css/canvas.css";
 import "../ux/css/blocks-for-players.css";
 import "../ux/css/triangles.css";
+import "../ux/css/allerts-for-game.css"

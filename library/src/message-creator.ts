@@ -19,7 +19,20 @@ import { Room } from "./models/room";
 import { Block } from "./models/block";
 import { MessageBase } from "./message-models/message-base";
 import { MessageType } from "./message-type";
+
 export class MessageCreator {
+
+    public createMessaageRunTimer(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.RunTimer;
+        return message;
+    }
+
+    public createMessageStopTimer(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.StopTimer;
+        return message;
+    }
 
     public createMessageSetName(name: string): MessageSetName {
         let message = new MessageSetName();

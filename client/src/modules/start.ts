@@ -93,6 +93,13 @@ socket.onmessage = function (message: any) {
             setUpSettings();
             game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
             break;
+        // case MessageType.RunTimer:
+        //     console.log("Timer is running!");
+        //     timerForPlayer.Timer();
+        //     break;
+        // case MessageType.StopTimer:
+        //     console.log("Timer is stopped!");
+        //     break;
     }
 };
 
@@ -120,7 +127,7 @@ fromEvent(DOM.createRoom, 'click')
             DOM.initSounds();
         }
         else {
-            alert("fghjk");
+            Allerts.viewWarning();
         }
     });
 
@@ -134,13 +141,12 @@ setTimeout(function () {
 }, 200);
 
 
-DOM.infoButton.addEventListener('click', function (event: any) {
-    Allerts.viewInfo();
-});
-
 DOM.infoButton.addEventListener('click', function (event: any) { Allerts.viewInfo(); });
 
 DOM.hideInformationAboutGame.addEventListener('click', function (event: any) { Allerts.hideInfo(); });
+
+DOM.hideWarning.addEventListener('click', function (event: any) { Allerts.hideWarning(); });
+
 
 function createButtonForMobileVersion(): void {
     buttonForMobileVersion("moveToLeft", "←");
@@ -344,7 +350,7 @@ fromEvent(DOM.endGame, 'click')
 
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
-        socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage()));
+        socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage())); // здесь лежал аллерт выхода из игры
     })
 
 function tossDice(): void {
@@ -352,7 +358,7 @@ function tossDice(): void {
     DOM.playSound(PathToMedia.soundForDice);
     DOM.disabledButtonDice();
     DiceRoller.getPathOfImage(dices);
-    setTimeout(timer, 1790);
+    setTimeout(timer, 1790);//1890
 }
 
 function timer() {
@@ -371,4 +377,9 @@ export class SendMmessage {
     public static rotateBlock(dices: number[], color: string): void {
         socket.send(JSON.stringify(messageCreator.createMessageBlockReversalEvent(dices, color)));
     }
+
+    //public static andOfTimer(): void {
+   //     socket.send(JSON.stringify(messageCreator.createMessageStopTimer()));
+   // }
+
 }

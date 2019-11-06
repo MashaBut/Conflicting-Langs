@@ -14,5 +14,7 @@ export enum MessageType {
     BlockReversalEvent,
     Failure,
     ArrayOfFixedBlocks,
-    Disconect
+    Disconect,
+    RunTimer,
+    StopTimer
 }

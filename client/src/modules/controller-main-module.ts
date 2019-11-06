@@ -68,10 +68,11 @@ export class Game {
             Ysize * this.canvasDraw.aspectRatioHeight, color);
     }
 
-    private endOfturn() {
+    public endOfturn() {
+        //this.timer.Timer();
         DOM.undisabledButtonDice();
         clearTimeout(this.timer);
-        if (this.currentPlayer.isFirstMove()) {
+       if (this.currentPlayer.isFirstMove()) {
             this.currentPlayer.setFirstMove(false);
             this.repetitionAtCompletion();
         }
@@ -80,6 +81,7 @@ export class Game {
         }
         this.repetititonAtEachTurn();
         this.changePlayer();
+       // SendMmessage.andOfTimer();
     }
 
     public failute(): void {
@@ -140,8 +142,9 @@ export class Game {
     }
 
     public turnTime() {
-        this.timer = setTimeout(() => this.endOfturn(), 20000);//() => this.endOfturn()
+        this.timer = setTimeout(() => this.endOfturn(), 20000);   
     }
+
 
     public setPlayer1(name: string, color: string): void {
         this.player1 = new Player(name, color, 0, 1);

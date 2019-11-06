@@ -3,10 +3,12 @@ import { MessageCreator } from "../../library/dist/message-creator";
 import { Block } from "./game/block";
 import { Calculation } from "./game/calculation";
 import { Settings } from "../../library/dist";
+import { Timer } from "./game/timer"
 
 export class EventHandling {
     messageCreator = new MessageCreator();
     calc = new Calculation();
+    timer = new Timer();
 
     public sendRooms(rooms: Array<Room>, sockets: Map<string, any>): void {
         let openRooms: any = new Array<Room>();
@@ -43,6 +45,8 @@ export class EventHandling {
                 let msg = JSON.stringify(this.messageCreator.createMessageSendDice(dices));
                 room.players.forEach((key: string) => {
                     sockets.get(key).send(msg);
+                   // sockets.get(key).send(JSON.stringify(this.messageCreator.createMessaageRunTimer())); 
+                    //this.timer.Timer(rooms, sockets);
                 })
                 if (room.blocks.length >= 2) {
                     this.calc.color = color;
@@ -133,4 +137,16 @@ export class EventHandling {
             numbPosition++;
         }
     }
+
+    // public sendTimer(id: string, rooms: Array<Room>, sockets: Map<string, any>): void {
+    //      for(let room of rooms) {
+    //         if(id === room.isCurrentPlayer()) {
+    //             if((this.timer.counter === 0) || (Timer.flagForTimer === false)) {
+    //                 room.players.forEach((key: string) => {
+    //                     sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageStopTimer()));
+    //                 })   
+    //             }
+    //         }
+    //     }
+    // }
 }
