@@ -147,6 +147,10 @@ DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) 
 
 DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideIntoAboutEndingOfTheGame(); });
 
+DOM.hideResultsOfTheGame.addEventListener('click', function (event: any) { 
+    Allerts.hideIntoAboutEndingOfTheGame(); 
+});
+
 function createButtonForMobileVersion(): void {
     buttonForMobileVersion("moveToLeft", "←");
     buttonForMobileVersion("moveToRight", "→");
@@ -343,7 +347,7 @@ fromEvent(DOM.soundOff, 'click')
 
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
-        View.GamePage();
+        View.HollPage();
         DOM.playSound(PathToMedia.endOfTheGame);
     });
 

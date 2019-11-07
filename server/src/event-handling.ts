@@ -54,9 +54,9 @@ export class EventHandling {
                     else {
                         console.log("i am here");
                         this.changePlayerInCurrentRoom(id, rooms);
-                        room.players.forEach((key: string) => {
-                            sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageFailure()));
-                        })
+                         room.players.forEach((key: string) => {
+                             sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageFailure()));
+                         })
                     }
                 }
                 break;
@@ -133,7 +133,9 @@ export class EventHandling {
         for (let room of rooms) {
             if (room.players[0] == id || room.players[1] == id) {
                 room.players.forEach((key: string) => {
-                    sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
+                    if(key === room.isCurrentPlayer()) {
+                        sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
+                    }
                 })
                 rooms.splice(numbPosition, 1);
             }

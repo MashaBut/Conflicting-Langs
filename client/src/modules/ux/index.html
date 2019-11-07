@@ -38,8 +38,8 @@
             </div>
 
             <div class="warning" id="warningAboutуEndingOfTheGame">
-                    <p>Disconnect :( <br> The game is finished!</p>
-                    <button type="button" class="hideWarning" id="hideWarningAboutуEndingOfTheGame">OK</button>
+                <p>Your opponent went out :( <br> The game is finished!</p>
+                <button type="button" class="hideWarning" id="hideWarningAboutуEndingOfTheGame">OK</button>
             </div>
 
             <div class="aboutGame">
@@ -134,8 +134,28 @@
         <div class="gridForGamePage">
 
             <div class="warningAllert" id="warningAboutLoosingLife">
-                    <p>You lost the life :(</p>
-                    <button type="button" class="hideWarning" id="hideWarningAboutLoosingLife">OK</button>
+                <p>You lost the life :(</p>
+                <button type="button" class="hideWarning" id="hideWarningAboutLoosingLife">OK</button>
+            </div>
+
+             <div class="endOfTheGame" id="resultsOfTheGame">
+                <div class="flex1">
+                    <div class="looser"> 
+                        <label>LOSER</label><br>
+                        <label>Engaged territory: </label>
+                        <p id="territoryplayerOne" value=""></p> 
+                        <!-- <div class="photoForLoser"></div>   -->
+                    </div>
+
+
+                    <div class="winner"> 
+                        <label>WINNNER!</label><br>
+                        <label>Engaged territory: </label>
+                        <p id="territoryplayerTwo" value=""></p>
+                        <!-- <div class="photoForWinner">                        </div> -->
+                    </div>
+                </div>
+                <button type="button" class="approve" id="hideResultsOfTheGame">OK</button>
             </div>
 
             <div class="flex-box">

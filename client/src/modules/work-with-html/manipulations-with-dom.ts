@@ -84,6 +84,11 @@ export class ManipulationWithDOM {
     static warningAboutуEndingOfTheGame: any = <HTMLElement>document.getElementById("warningAboutуEndingOfTheGame");
     static hideWarningAboutуEndingOfTheGame: any = <HTMLElement>document.getElementById("hideWarningAboutуEndingOfTheGame");
 
+    static resultsOfTheGame: any = <HTMLElement>document.getElementById("resultsOfTheGame");
+    static hideResultsOfTheGame: any = <HTMLElement>document.getElementById("hideResultsOfTheGame");
+
+    static territoryplayerOne: HTMLElement = <HTMLElement>document.getElementById("territoryplayerOne");
+    static territoryplayerTwo: HTMLElement = <HTMLElement>document.getElementById("territoryplayerTwo");
 
 
     public static disabledButtonDice(): void {

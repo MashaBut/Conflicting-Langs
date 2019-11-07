@@ -34,4 +34,12 @@ export class Allerts {
         ManipulationWithDOM.warningAboutуEndingOfTheGame.style.display = 'none';
     }
 
+    public static viewResultsOfTheGame(): void {
+        ManipulationWithDOM.resultsOfTheGame.style.display = "block";
+    }
+
+    public static hideResultsOfTheGame(): void {
+        ManipulationWithDOM.resultsOfTheGame.style.display = "none";
+    }
+
 }

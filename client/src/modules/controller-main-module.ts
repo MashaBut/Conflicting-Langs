@@ -94,6 +94,7 @@ export class Game {
         this.currentPlayer.setLives();
         DOM.undisabledButtonDice();
         DOM.playSound(PathToMedia.lostLife);
+
         if (this.currentPlayer === this.player1) {
             PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
             Timer.flagForTimer = false;
@@ -113,7 +114,10 @@ export class Game {
                 winnerArea =  this.player1.getOccupiedArea();
             }
             SendMmessage.resultOfGame(winnerArea);
-            alert(this.currentPlayer.getName() + " loser");
+            DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea());
+            DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea());
+            Allerts.viewResultsOfTheGame();
+            //alert(this.currentPlayer.getName() + " loser");
         }
         this.changePlayer();
     }
@@ -138,6 +142,8 @@ export class Game {
         this.currentPlayer.setOccupiedArea(this.position.countingTheAreaOfTheCurrentPlayer(this.currentPlayer.getColor()));
         DOM.engagedTerritory(DOM.territoryplayer1, this.player1.getOccupiedArea());
         DOM.engagedTerritory(DOM.territoryplayer2, this.player2.getOccupiedArea());
+        DOM.engagedTerritory(DOM.territoryplayerOne, this.player1.getOccupiedArea());
+        DOM.engagedTerritory(DOM.territoryplayerTwo, this.player2.getOccupiedArea());
     }
 
     public changePlayer(): void {
@@ -159,7 +165,6 @@ export class Game {
     public turnTime() {
         this.timer = setTimeout(() => this.endOfturn(), 20000);
     }
-
 
     public setPlayer1(name: string, color: string): void {
         this.player1 = new Player(name, color, 0, 1);

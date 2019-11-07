@@ -17,3 +17,81 @@
     margin: auto;
     z-index: 0;
 }
+
+.photoForLoser,
+.photoForWinner {
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 40%;
+    width: 70%;
+}
+
+.photoForLoser {
+    background-image: url("../../../assets/images/loser.png");
+}
+
+.photoForWinner {
+    background-image: url("../../../assets/images/winner.png");
+}
+
+.flex1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.7vw;
+    height: 60%;
+    width: 100%;
+    margin-top: 7%;
+}
+
+.looser label{
+    height: 100%;
+    width: 50%;
+    color: red;
+}
+
+.winner label{
+    height: 100%;
+    width: 50%;
+    color: #00d300;
+}
+
+.endOfTheGame {
+    grid-column: 2;
+    grid-row: 2;
+    display: none;
+    font-size: 1.2vw;
+    text-align: center;
+    padding-top: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: #0e0e0e;
+    color: #fff;
+    border-style: solid;
+    border-color: #c1a940;
+    border-radius: 20px;
+    height: 60%;
+    width: 70%;
+    margin: auto;
+    z-index: 0;
+}
+
+.approve {
+    height: 15%;
+    width: 15%;
+    margin-top: 1%;
+    padding-top: 1px;
+    font-size: 1.1vw;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #0e0e0e;
+    border-color: #c1a940;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer; 
+}
