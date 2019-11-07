@@ -9,14 +9,6 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "moduleResolution": "node", /*classic*/
-    "baseUrl": ".",
-    "paths": {
-      "@node-modules/*": [
-        "../client/node_modules/*"
-      ],
-      "@messages-facroty/*": [
-        "../client/node_modules/messages-factory/dist/*"
-      ]
-    }
+    "baseUrl": "."
   }
 }

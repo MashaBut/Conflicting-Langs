@@ -8,4 +8,5 @@ export class MessageSendInfoToPlayerRooms extends MessageBase {
     public settings: Settings;
     public currentPlayer: number;
     public type = MessageType.SendInfoToPlayerRooms;
+    public picture: any;
 }

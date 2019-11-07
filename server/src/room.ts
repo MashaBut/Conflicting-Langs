@@ -11,17 +11,21 @@ export class Room {
     public setUpCurrentPlayerNumb: number;
     public blocks = new Array<Block>();
     public currentBlocks = new Array<Block>();
+    public picture = new Array<string>();
 
-    constructor(name: string, id: string, creator: any) {
+    constructor(name: string, id: string,picture:any, creator: any) {
         this.name = name;
         this.id = id;
         this.creatorName = creator;
         this.players.push(id);
+        console.log(picture);
+        this.picture.push(picture);
         this.setUpCurrentPlayerNumb = this.firstPlayerNumb();
     }
 
-    public join(id: string): void {
+    public join(id: string,picture:any): void {
         this.players.push(id);
+        this.picture.push(picture);
         this.currentPlayerId = this.setUpCurrentPlayer();
     }
 

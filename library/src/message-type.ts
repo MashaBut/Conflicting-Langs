@@ -15,5 +15,6 @@ export enum MessageType {
     Disconect,
     PositionCheck,
     IsPosition,
-    ResultOfGame
+    ResultOfGame,
+    Token
 }

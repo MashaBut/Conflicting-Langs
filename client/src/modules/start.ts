@@ -3,7 +3,7 @@ import "./work-with-html/path-to-css";
 import { PathToMedia } from "./work-with-html/path-to-media";
 import { View } from "./work-with-html/view";
 import { Allerts } from "./work-with-html/work-with-allerts";
-import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
+import { ManipulationWithDOM as DOM} from "./work-with-html/manipulations-with-dom";
 import { PushImage } from "./work-with-html/push-image";
 import { ColorPlayers } from "./game/enums/color-players";
 import { ColorMap } from "./game/enums/color-map";
@@ -22,8 +22,6 @@ import { MessageCreator } from "../../../library/dist/message-creator";
 import { MessageType } from "../../../library/dist/index";
 import { KeyCodes } from "./key-codes";
 import { Settings } from "../../../library/dist/index";
-import { json } from "body-parser";
-
 const socketProtocol = (window.location.protocol === 'https:' ? 'wss:' : 'ws:');
 let socketUrl = socketProtocol + '//' + location.host;
 const socket = new WebSocket(socketUrl);
@@ -33,6 +31,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 } else {
     createDivMobVersion();
 }
+let a: any = localStorage.getItem('JwtCooper');
 
 let messageCreator = new MessageCreator();
 let game: Game = new Game();
@@ -44,10 +43,12 @@ let settings: Settings = new Settings();
 setUpSettings();
 
 View.StartPage();
-
 socket.onmessage = function (message: any) {
     let msg = JSON.parse(message.data);
     switch (msg.type) {
+        case MessageType.Token:
+
+            break;
         case MessageType.CreateRoom:
             clearRooms();
             arrayRooms = msg.rooms;
@@ -58,11 +59,16 @@ socket.onmessage = function (message: any) {
         case MessageType.SendInfoToPlayerRooms:
             settings = msg.settings;
             game.initCanvas(settings);
+            console.log(msg);
             if (msg.currentPlayer == 0) {
+                DOM.ONE.style.backgroundImage = "url('"+msg.picture[0]+"')";
+                DOM.TWO.style.backgroundImage ="url('"+msg.picture[1]+"')";
                 game.setPlayer1(msg.firstPlayerName, settings.firstPlayerColor);
                 game.setPlayer2(msg.secondPlayerName, settings.secondPlayerColor);
             }
             else if (msg.currentPlayer == 1) {
+                DOM.ONE.style.backgroundImage = "url('"+msg.picture[1]+"')";
+                DOM.TWO.style.backgroundImage = "url('"+msg.picture[0]+"')";
                 game.setPlayer2(msg.firstPlayerName, settings.firstPlayerColor);
                 game.setPlayer1(msg.secondPlayerName, settings.secondPlayerColor);
             }
@@ -73,7 +79,6 @@ socket.onmessage = function (message: any) {
             tossDice();
             break;
         case MessageType.IsPosition:
-            console.log("good");
             game.currentPosition = game.convertBlockSizeToPixels(game.currentPosition);
             game.draw();
             break;
@@ -93,11 +98,9 @@ socket.onmessage = function (message: any) {
 
 fromEvent(DOM.writeNames, 'click')
     .subscribe(() => {
-        name = (DOM.playerInit).value;
-        if (name != "") {
-            View.HollPage();
-            socket.send(JSON.stringify(messageCreator.createMessageSetName(name)));
-        }
+        socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
+        View.HollPage();
+        //socket.send(JSON.stringify(messageCreator.createMessageSetName(name)));
     });
 
 fromEvent(DOM.createRoom, 'click')
@@ -138,6 +141,7 @@ DOM.infoButton.addEventListener('click', function (event: any) { Allerts.viewInf
 DOM.hideInformationAboutGame.addEventListener('click', function (event: any) { Allerts.hideInfo(); });
 
 function createButtonForMobileVersion(): void {
+
     buttonForMobileVersion("moveToLeft", "←");
     buttonForMobileVersion("moveToRight", "→");
     buttonForMobileVersion("setUp", "Set Up");
@@ -376,6 +380,6 @@ export class SendMmessage {
     }
 
     public static resultOfGame(area: number): void {
-      socket.send(JSON.stringify(messageCreator.createMessageResultOfGame(area)));
+        socket.send(JSON.stringify(messageCreator.createMessageResultOfGame(area)));
     }
 }

@@ -6,6 +6,10 @@ export class ManipulationWithDOM {
     private static arrayOfAudios = new Array();
     static nameRoom: HTMLInputElement = <HTMLInputElement>document.getElementById("nameRoom");
 
+    static ONE:HTMLElement = <HTMLElement>document.getElementById("player1ForGame")
+    static TWO:HTMLElement = <HTMLElement>document.getElementById("player2ForGame");
+
+
     //buttons
     static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
