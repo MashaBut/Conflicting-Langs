@@ -33,7 +33,7 @@ export class ManipulationWithDOM {
     static blueMap: HTMLElement = <HTMLElement>document.getElementById("blueMap");
     static brownMap: HTMLElement = <HTMLElement>document.getElementById('brownMap');
     static whiteMap: HTMLElement = <HTMLElement>document.getElementById('whiteMap');
-    
+
     static smallMap: HTMLElement = <HTMLButtonElement>document.getElementById('smallMap');
     static mediumMap: HTMLElement = <HTMLElement>document.getElementById("mediumMap");
     static bigMap: HTMLElement = <HTMLElement>document.getElementById("bigMap");
@@ -48,7 +48,7 @@ export class ManipulationWithDOM {
     static playerInit: HTMLInputElement = <HTMLInputElement>document.getElementById("player");
     static nameplayer1: HTMLElement = <HTMLElement>document.getElementById("nameplayer1");
     static nameplayer2: HTMLElement = <HTMLElement>document.getElementById("nameplayer2");
-    
+
     static photoPlayer1: HTMLElement = <HTMLElement>document.getElementById("player1ForGame");
     static photoPlayer2: HTMLElement = <HTMLElement>document.getElementById("player2ForGame");
 
@@ -70,12 +70,25 @@ export class ManipulationWithDOM {
     //div
     static gamePage: HTMLElement = <HTMLElement>document.getElementById("gamepage");
     static divMobVersion: HTMLElement = <HTMLElement>document.getElementById("MobVirsion");
-    
+
     //info
     static infoButton: any = <HTMLElement>document.getElementById("information");
     static informationAboutGame: any = <HTMLElement>document.getElementById("informationAboutGame");
     static hideInformationAboutGame: any = <HTMLElement>document.getElementById("hideInfo");
-    
+
+    //all warnings
+    static warningAboutNameOfRoom: any = <HTMLElement>document.getElementById("warningAboutNameOfRoom");
+    static warningAboutColor: any = <HTMLElement>document.getElementById("warningAboutColor");
+    static hideWarningAboutColor: any = <HTMLElement>document.getElementById("hideWarningAboutColor");
+    static hideWarningAboutNameOfRoom: any = <HTMLElement>document.getElementById("hideWarningAboutNameOfRoom");
+
+    static warningAboutLoosingLife: any = <HTMLElement>document.getElementById("warningAboutLoosingLife");
+    static hideWarningAboutLoosingLife: any = <HTMLElement>document.getElementById("hideWarningAboutLoosingLife");
+
+    static warningAboutуEndingOfTheGame: any = <HTMLElement>document.getElementById("warningAboutуEndingOfTheGame");
+    static hideWarningAboutуEndingOfTheGame: any = <HTMLElement>document.getElementById("hideWarningAboutуEndingOfTheGame");
+
+
 
     public static disabledButtonDice(): void {
         this.tossDice.setAttribute("disabled", "true");
@@ -99,7 +112,7 @@ export class ManipulationWithDOM {
         let sound3 = new Audio(PathToMedia.enterSound);
         let sound4 = new Audio(PathToMedia.movementsOfBlock);
         let sound5 = new Audio(PathToMedia.endOfTheGame);
-        let sound6 = new Audio (PathToMedia.clock);
+        let sound6 = new Audio(PathToMedia.clock);
 
         this.arrayOfAudios.push(sound1);
         this.arrayOfAudios.push(sound2);

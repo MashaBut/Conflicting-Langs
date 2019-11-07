@@ -16,5 +16,7 @@ export enum MessageType {
     PositionCheck,
     IsPosition,
     ResultOfGame,
-    Token
+    Token,
+    RunTimer,
+    StopTimer
 }

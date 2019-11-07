@@ -22,9 +22,21 @@ import { MessageResultOfGame } from "./message-models/message-result-of-game";
 import { MessageToken } from "./message-models/message-token";
 export class MessageCreator {
 
-    public createMessageToken(token:string):MessageToken {
+    public createMessageToken(token: string): MessageToken {
         let message = new MessageToken();
         message.token = token;
+        return message;
+    }
+
+    public createMessaageRunTimer(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.RunTimer;
+        return message;
+    }
+
+    public createMessageStopTimer(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.StopTimer;
         return message;
     }
 
@@ -65,7 +77,7 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageSendInfoToPlayerRooms(firstPlayerName: string, secondPlayerName: string, currentPlayer: number, settings: Settings,picture:any): MessageSendInfoToPlayerRooms {
+    public createMessageSendInfoToPlayerRooms(firstPlayerName: string, secondPlayerName: string, currentPlayer: number, settings: Settings, picture: any): MessageSendInfoToPlayerRooms {
         let message = new MessageSendInfoToPlayerRooms();
         message.firstPlayerName = firstPlayerName;
         message.secondPlayerName = secondPlayerName;
