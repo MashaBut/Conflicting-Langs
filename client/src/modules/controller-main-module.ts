@@ -13,7 +13,6 @@ import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-
 import { PathToMedia } from "./work-with-html/path-to-media";
 import { SendMmessage } from "./start";
 import { Settings } from "../../../library/dist";
-import { identity } from "rxjs";
 
 export class Game {
 

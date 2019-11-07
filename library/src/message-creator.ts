@@ -19,8 +19,14 @@ import { MessageBase } from "./message-models/message-base";
 import { MessageType } from "./message-type";
 import { MessagePositionCheck } from "./message-models/message-position-check";
 import { MessageResultOfGame } from "./message-models/message-result-of-game";
-
+import { MessageToken } from "./message-models/message-token";
 export class MessageCreator {
+
+    public createMessageToken(token: string): MessageToken {
+        let message = new MessageToken();
+        message.token = token;
+        return message;
+    }
 
     public createMessaageRunTimer(): MessageBase {
         let message = new MessageBase();
@@ -71,12 +77,13 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageSendInfoToPlayerRooms(firstPlayerName: string, secondPlayerName: string, currentPlayer: number, settings: Settings): MessageSendInfoToPlayerRooms {
+    public createMessageSendInfoToPlayerRooms(firstPlayerName: string, secondPlayerName: string, currentPlayer: number, settings: Settings, picture: any): MessageSendInfoToPlayerRooms {
         let message = new MessageSendInfoToPlayerRooms();
         message.firstPlayerName = firstPlayerName;
         message.secondPlayerName = secondPlayerName;
         message.settings = settings;
         message.currentPlayer = currentPlayer;
+        message.picture = picture;
         return message;
     }
 

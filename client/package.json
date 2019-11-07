@@ -22,11 +22,9 @@
         "webpack-cli": "^3.3.8"
     },
     "dependencies": {
-        "@types/express": "^4.17.1",
         "@types/jquery": "^3.3.31",
         "@types/node": "^12.7.4",
         "@types/socket.io": "^2.1.2",
-        "express": "^4.17.1",
         "jquery": "^3.4.1",
         "rxjs": "^6.5.3",
         "socket.io": "^2.2.0",
