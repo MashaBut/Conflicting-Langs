@@ -95,7 +95,14 @@ socket.onmessage = function (message: any) {
             game.setBlockPositionOnMap(msg.event);
             break;
         case MessageType.Failure:
-            game.failute();
+            setTimeout(() => {
+                game.failute();
+            }, 1500);
+            break;
+        case MessageType.ErrorForPosition:
+            setTimeout(() => {
+                Allerts.viewIntoAboutLoosingLife();
+            }, 1500);
             break;
         case MessageType.MoveToHollPage:
             Allerts.viewIntoAboutEndingOfTheGame();
@@ -104,7 +111,7 @@ socket.onmessage = function (message: any) {
     }
 };
 
-function leftGame():void {
+function leftGame(): void {
     View.HollPage();
     setUpSettings();
     game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);

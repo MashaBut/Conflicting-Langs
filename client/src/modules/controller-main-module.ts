@@ -130,12 +130,12 @@ export class Game {
         if (this.currentPlayer === this.player1) {
             PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
             Timer.flagForTimer = false;
-            Allerts.viewIntoAboutLoosingLife();
+           // Allerts.viewIntoAboutLoosingLife();
         }
         else if (this.currentPlayer === this.player2) {
             PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
             Timer.flagForTimer = false;
-            Allerts.viewIntoAboutLoosingLife();
+           // Allerts.viewIntoAboutLoosingLife();
         }
         if (this.currentPlayer.getLives() === 0) {
             let winnerArea: number;

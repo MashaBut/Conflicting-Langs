@@ -18,5 +18,6 @@ export enum MessageType {
     ResultOfGame,
     Token,
     RunTimer,
-    StopTimer
+    StopTimer,
+    ErrorForPosition
 }

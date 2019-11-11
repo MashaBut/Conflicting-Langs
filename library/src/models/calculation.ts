@@ -27,8 +27,8 @@ export class Calculation {
     }
 
     private calculateAllPosition(size: number[]): void {
-        for (let x = 0; x < this.numberOfHorizontalLines; x++) {
-            for (let y = 0; y < this.numberOfVerticalLines; y++) {
+        for (let x = 0; x <= this.numberOfHorizontalLines-this.position.currentDices[1]; x++) {
+            for (let y = 0; y <= this.numberOfVerticalLines-this.position.currentDices[0]; y++) {
                 let block = new Block(y, x, size[0], size[1], this.color);
                 if (this.position.checkPosition(block)) {
                     this.arrayCurrentPosition.push(block);
@@ -36,14 +36,4 @@ export class Calculation {
             }
         }
     }
-    /*private calculateAllPosition(size: number[]): void {
-        for (let x = 0; x < this.numberOfHorizontalLines; x++) {
-            for (let y = 0; y < this.numberOfVerticalLines; y++) {
-                let block = new Block(y, x, size[0], size[1], this.color);
-                if (this.position.checkPosition(block)) {
-                    this.arrayCurrentPosition.push(block);
-                }
-            }
-        }
-    }*/
 }

@@ -52,7 +52,7 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageSetName(name: string, photoURL:string): MessageSetName {
+    public createMessageSetName(name: string, photoURL: string): MessageSetName {
         let message = new MessageSetName();
         message.name = name;
         message.photoURL = photoURL;
@@ -145,6 +145,12 @@ export class MessageCreator {
     public createMessageIsPosition(): MessageBase {
         let message = new MessageBase();
         message.type = MessageType.IsPosition;
+        return message;
+    }
+
+    public createMessageEoorForPosition(): MessageBase {
+        let message = new MessageBase();
+        message.type = MessageType.ErrorForPosition;
         return message;
     }
 }

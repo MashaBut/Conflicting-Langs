@@ -60,6 +60,9 @@ export class EventHandling {
                         this.changePlayerInCurrentRoom(id, rooms);
                         room.players.forEach((key: string) => {
                             sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageFailure()));
+                            if (key == id) {
+                                sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageEoorForPosition()));
+                            }
                         })
                     }
                 }
