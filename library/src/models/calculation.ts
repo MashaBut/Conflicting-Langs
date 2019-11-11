@@ -36,4 +36,14 @@ export class Calculation {
             }
         }
     }
+    /*private calculateAllPosition(size: number[]): void {
+        for (let x = 0; x < this.numberOfHorizontalLines; x++) {
+            for (let y = 0; y < this.numberOfVerticalLines; y++) {
+                let block = new Block(y, x, size[0], size[1], this.color);
+                if (this.position.checkPosition(block)) {
+                    this.arrayCurrentPosition.push(block);
+                }
+            }
+        }
+    }*/
 }

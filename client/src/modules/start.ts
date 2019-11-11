@@ -3,7 +3,7 @@ import "./work-with-html/path-to-css";
 import { PathToMedia } from "./work-with-html/path-to-media";
 import { View } from "./work-with-html/view";
 import { Allerts } from "./work-with-html/work-with-allerts";
-import { ManipulationWithDOM as DOM} from "./work-with-html/manipulations-with-dom";
+import { ManipulationWithDOM as DOM } from "./work-with-html/manipulations-with-dom";
 import { PushImage } from "./work-with-html/push-image";
 import { ColorPlayers } from "./game/enums/color-players";
 import { ColorMap } from "./game/enums/color-map";
@@ -31,23 +31,31 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 } else {
     createDivMobVersion();
 }
-let a: any = localStorage.getItem('JwtCooper');
 
 let messageCreator = new MessageCreator();
 let game: Game = new Game();
 let timerForPlayer: Timer = new Timer();
-let name: string = "";
+let name: string;
 let dices: number[];
 let arrayRooms: Array<any>;
 let settings: Settings = new Settings();
 setUpSettings();
-
+setTimeout(() => {
+    let a: any = localStorage.getItem('JwtCooper');
+    socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
+    View.HollPage();
+}, 1500);
 View.StartPage();
 socket.onmessage = function (message: any) {
     let msg = JSON.parse(message.data);
     switch (msg.type) {
-        case MessageType.Token:
-
+        case MessageType.SetName:
+            name = msg.name;
+            let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s"
+            DOM.ONE.style.cssText = "background-image: url(" + path + ");";
+            DOM.TWO.style.cssText = "background-image: url(" + path + ");";
+            DOM.ONE.style.backgroundImage = "url('" + msg.photoURL + "')";
+            game.setPlayer1(name, settings.firstPlayerColor);
             break;
         case MessageType.CreateRoom:
             clearRooms();
@@ -59,16 +67,16 @@ socket.onmessage = function (message: any) {
         case MessageType.SendInfoToPlayerRooms:
             settings = msg.settings;
             game.initCanvas(settings);
-            console.log(msg);
+            //console.log(msg);
             if (msg.currentPlayer == 0) {
-                DOM.ONE.style.backgroundImage = "url('"+msg.picture[0]+"')";
-                DOM.TWO.style.backgroundImage ="url('"+msg.picture[1]+"')";
+                DOM.ONE.style.backgroundImage = "url('" + msg.picture[0] + "')";
+                DOM.TWO.style.backgroundImage = "url('" + msg.picture[1] + "')";
                 game.setPlayer1(msg.firstPlayerName, settings.firstPlayerColor);
                 game.setPlayer2(msg.secondPlayerName, settings.secondPlayerColor);
             }
             else if (msg.currentPlayer == 1) {
-                DOM.ONE.style.backgroundImage = "url('"+msg.picture[1]+"')";
-                DOM.TWO.style.backgroundImage = "url('"+msg.picture[0]+"')";
+                DOM.ONE.style.backgroundImage = "url('" + msg.picture[1] + "')";
+                DOM.TWO.style.backgroundImage = "url('" + msg.picture[0] + "')";
                 game.setPlayer2(msg.firstPlayerName, settings.firstPlayerColor);
                 game.setPlayer1(msg.secondPlayerName, settings.secondPlayerColor);
             }
@@ -79,6 +87,7 @@ socket.onmessage = function (message: any) {
             tossDice();
             break;
         case MessageType.IsPosition:
+            game.elemInNumber = game.currentPosition;
             game.currentPosition = game.convertBlockSizeToPixels(game.currentPosition);
             game.draw();
             break;
@@ -89,35 +98,37 @@ socket.onmessage = function (message: any) {
             game.failute();
             break;
         case MessageType.MoveToHollPage:
-            View.HollPage();
-            setUpSettings();
             Allerts.viewIntoAboutEndingOfTheGame();
-            game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
+            leftGame();
             break;
     }
 };
 
-fromEvent(DOM.writeNames, 'click')
-    .subscribe(() => {
-        socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
-        View.HollPage();
-        //socket.send(JSON.stringify(messageCreator.createMessageSetName(name)));
-    });
+function leftGame():void {
+    View.HollPage();
+    setUpSettings();
+    game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
+    let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s"
+    DOM.ONE.style.cssText = "background-image: url(" + path + ");";
+    DOM.TWO.style.cssText = "background-image: url(" + path + ");";
+    game.arrayCurrentPosition.length = 0;
+    game.position.blocks.length = 0;
+}
 
 fromEvent(DOM.createRoom, 'click')
     .subscribe(() => {
         const nameRoom = (DOM.nameRoom).value;
         if (nameRoom != "") {
             if (settings.firstPlayerColor != settings.secondPlayerColor) {
-            socket.send(JSON.stringify(messageCreator.createMessageSetNameRoom(nameRoom, settings)));
-            game = new Game();
-            game.initCanvas(settings);
-            game.setPlayer1(name, settings.firstPlayerColor);
-            View.GamePage();
-            game.initCanvas(settings);
-            DOM.playSound(PathToMedia.playGame);
-            PushImage.createImage();
-            DOM.initSounds();
+                socket.send(JSON.stringify(messageCreator.createMessageSetName("a", "b")));
+                socket.send(JSON.stringify(messageCreator.createMessageSetNameRoom(nameRoom, settings)));
+                game = new Game();
+                game.initCanvas(settings);
+                View.GamePage();
+                game.initCanvas(settings);
+                DOM.playSound(PathToMedia.playGame);
+                PushImage.createImage();
+                DOM.initSounds();
             }
             else {
                 Allerts.viewWarning(DOM.warningAboutColor);
@@ -150,12 +161,11 @@ DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) 
 
 DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideIntoAboutEndingOfTheGame(); });
 
-DOM.hideResultsOfTheGame.addEventListener('click', function (event: any) { 
-    Allerts.hideIntoAboutEndingOfTheGame(); 
+DOM.hideResultsOfTheGame.addEventListener('click', function (event: any) {
+    Allerts.hideIntoAboutEndingOfTheGame();
 });
 
 function createButtonForMobileVersion(): void {
-
     buttonForMobileVersion("moveToLeft", "←");
     buttonForMobileVersion("moveToRight", "→");
     buttonForMobileVersion("setUp", "Set Up");
@@ -357,6 +367,7 @@ fromEvent(DOM.endGame, 'click')
 
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
+        leftGame();
         socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage()));
     })
 
@@ -380,6 +391,7 @@ export class SendMmessage {
     public static sendBlock(block: Block): void {
         console.log("Save block" + " x: " + block.x + " y: " + block.y + " h: " + block.height + " w: " + block.width + " color: " + block.color);
         socket.send(JSON.stringify(messageCreator.createMessageSaveBlock(block)));
+        game.currentPosition = new Block(0, 0, 0, 0, ColorMap.BlueGrid);
     }
 
     public static rotateBlock(dices: number[], color: string): void {
@@ -388,7 +400,7 @@ export class SendMmessage {
 
     public static positionCheck(block: Block): void {
         if (game.arrayCurrentPosition.length != 0) {
-            console.log("checkBlock" + " x: " + block.x + " y: " + block.y + " h: " + block.height + " w: " + block.width + " color: " + block.color);
+            console.log("checkBlock" + " x: " + block.x + " y: " + block.y + " w: " + block.width + " h: " + block.height + " color: " + block.color);
             socket.send(JSON.stringify(messageCreator.createMessagePositionCheck(block)));
         }
     }

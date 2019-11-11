@@ -4,4 +4,5 @@ import { MessageType } from "../message-type";
 export class MessageSetName extends MessageBase {
     public name: string;
     public type = MessageType.SetName;
+    public photoURL:  string;
 }

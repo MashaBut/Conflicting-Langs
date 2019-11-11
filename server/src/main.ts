@@ -1,4 +1,5 @@
 import { MessageType } from "../../library/dist/index";
+import { MessageCreator} from "../../library/dist/message-creator";
 import { Room } from "./room";
 import { EventHandling } from "./event-handling";
 const express = require('express');
@@ -8,20 +9,20 @@ const app = express();
 const server = createServer(app);
 const wss = new webSocket.Server({ server });
 const uuidv1 = require('uuid/v1');
-import * as jwt from "jsonwebtoken";
 const request = require('request');
+import * as jwt from "jsonwebtoken";
+import { User } from "./user";
 
 app.use(express.static('client/dist'));
 let eventHanding = new EventHandling();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
 let rooms = new Array<Room>();
-
-eventHanding.initPicture();
+let messageCreator = new MessageCreator();
 wss.on('connection', function (ws: any) {
     let id = String(uuidv1());
     let token: any;
-    let picture: any;
+    let user: User = new User();
     ws.on('message', (message: any) => {
         const msg = JSON.parse(message);
         switch (msg.type) {
@@ -29,22 +30,30 @@ wss.on('connection', function (ws: any) {
                 token = jwt.decode(msg.token);
                 sockets.set(id, ws);
                 clients.set(id, token.username);
-                request('https://cooper.games/platform/profile/hunroll',function(error:any,response:any,body:any){
-                    console.log("error ",error);
-                    console.log('statusCode: ' ,response && response.statusCode);
-                    console.log('body:',body);
+                var options = {
+                    url: 'https://cooper.games/api/users/nickname/' + token.username,
+                    headers: {
+                        'authorization': 'Bearer ' + msg.token
+                    }
+                };
+
+                request(options, function (error: any, response: any, body: string) {
+                    //console.log("error ", error);
+                    //console.log('statusCode: ', response && response.statusCode);
+                    //console.log('body:', body);
+                    const info = JSON.parse(body);
+                    user.photoURL = String(info.photoURL);
+                    user.id = info.id;
+                    user.nickname = info.nickname;
                 });
-                picture = eventHanding.picture.get(token.username);
-                console.log(picture);
+                sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname,user.photoURL)));
                 eventHanding.sendRooms(rooms, sockets);
                 break;
-            case MessageType.SetName://get cooper
-                /* sockets.set(id, ws);
-                 clients.set(id, msg.name);
-                 eventHanding.sendRooms(rooms, sockets);*/
+            case MessageType.SetName:
+                sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname,user.photoURL)));
                 break;
             case MessageType.SetNameRoom://+
-                let room = new Room(msg.name, id, eventHanding.picture.get(token.username), clients.get(id));
+                let room = new Room(msg.name, id, user.photoURL, clients.get(id));
                 room.settingsRoom(msg.settings);
                 rooms.push(room);
                 eventHanding.sendRooms(rooms, sockets);
@@ -53,7 +62,7 @@ wss.on('connection', function (ws: any) {
                 eventHanding.sendRooms(rooms, sockets);
                 for (let room of rooms) {
                     if (room.id === msg.id) {
-                        eventHanding.gameStart(room, sockets, clients, id, eventHanding.picture.get(token.username));
+                        eventHanding.gameStart(room, sockets, clients, id, user.photoURL);
                         break;
                     }
                 }
@@ -84,15 +93,13 @@ wss.on('connection', function (ws: any) {
                 eventHanding.setResultOfGame(id, rooms, sockets);
                 eventHanding.sendRooms(rooms, sockets);
                 break;
-            default:
-                console.log(msg);
-                token = jwt.decode(msg);
-                console.log("i am " + token);
-                break;
         }
     })
-    /*ws.on('close', function () {
-    });*/
+    ws.on('close', function () {
+        eventHanding.sendDisconnect(id, rooms, sockets);
+        sockets.delete(id);
+        clients.delete(id);
+    });
 });
 
 server.listen(8080, function () {

@@ -3,6 +3,6 @@ export enum SizeMap {
     BigY = 50,
     MediumX = 18,
     MediumY = 34,
-    SmallX = 14,
-    SmallY = 28
+    SmallX = 8,
+    SmallY = 14
 }

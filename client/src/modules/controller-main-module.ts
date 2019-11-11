@@ -27,14 +27,23 @@ export class Game {
     private sizeFirstBlock: number[];
     private calc = new Calculation();
     public arrayCurrentPosition = new Array<Block>();
+    public firstFilter = new Array<Block>();
+    public secondFilter = new Array<Block>();
     public currentPosition: Block;
     private counterBlocksInArray: number = 0;
+    public elemInNumber: Block = new Block(0, 0, 0, 0, ColorPlayers.Blue);
+    x: number;
+    y: number;
+    height: number;
+    width: number;
 
-    public initCanvas(settings:Settings) {
+    public initCanvas(settings: Settings) {
         this.canvasDraw = new Draw(DOM.canvas, settings.width, settings.height, settings.mapColor, settings.gridColor, this.position.blocks);
         this.drawNewCanvas(settings.width, settings.height, settings.mapColor, settings.gridColor);
         this.position.areaMap(settings.width, settings.height);
-        this.calc.setLines(settings.height,settings.width);
+        this.height = settings.height;
+        this.width = settings.width;
+        console.log("Settings: " + settings.height, settings.width);
     }
 
     public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
@@ -47,27 +56,51 @@ export class Game {
     }
 
     private firstStepInNumbers(x: number, y: number): number[] {
-        x == 0 ? x = 0 : x = this.canvasDraw.numberOfVerticalLines - this.position.currentDices[0];
-        y == 0 ? y = 0 : y = this.canvasDraw.numberOfHorizontalLines - this.position.currentDices[1];
-        return [x * this.canvasDraw.aspectRatioWidth, y * this.canvasDraw.aspectRatioHeight];
+        x == 0 ? this.x = 0 : this.x = this.canvasDraw.numberOfVerticalLines - this.position.currentDices[0];
+        y == 0 ? this.y = 0 : this.y = this.canvasDraw.numberOfHorizontalLines - this.position.currentDices[1];
+        return [this.x * this.canvasDraw.aspectRatioWidth, this.y * this.canvasDraw.aspectRatioHeight];
     }
 
     public calculatePosition(): void {
         if (this.currentPlayer.isFirstMove()) {
             let coord: number[] = this.firstStepInNumbers(this.currentPlayer.getX(), this.currentPlayer.getY());
+            this.elemInNumber = new Block(this.x, this.y, this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
             this.sizeFirstBlock = CoordinateTransformation.conversionToPixels(this.canvasDraw.aspectRatioWidth - 2, this.canvasDraw.aspectRatioHeight - 2, this.position.currentDices);
             this.currentPosition = new Block(coord[0], coord[1], this.sizeFirstBlock[0], this.sizeFirstBlock[1], this.currentPlayer.getColor());
             this.draw();
         }
         else {
             this.calc.color = this.currentPlayer.getColor();
+            this.calc.setLines(this.height, this.width);
             this.calc.сalculatePosition(this.position.currentDices, this.position.blocks);
             if (this.calc.arrayCurrentPosition.length != 0) {
                 this.arrayCurrentPosition = this.calc.arrayCurrentPosition;
                 this.currentPosition = this.arrayCurrentPosition[0];
                 SendMmessage.positionCheck(this.currentPosition);
             }
+            console.log(this.calc.arrayCurrentPosition);
         }
+    }
+
+    private filter(): void {
+        let x = this.canvasDraw.numberOfHorizontalLines - this.position.currentDices[0];
+        let y = this.canvasDraw.numberOfVerticalLines - this.position.currentDices[1];
+        console.log(x, y);
+        this.firstFilter.forEach((block: Block) => {
+            if (x <= block.x + block.width) {
+                this.secondFilter.push(block);
+            }
+        });
+        console.log("secondfilter");
+        console.log(this.secondFilter);
+
+        this.secondFilter.forEach((block: Block) => {
+            if (y <= block.y + block.height) {
+                this.arrayCurrentPosition.push(block);
+            }
+        })
+        console.log("finally");
+        console.log(this.arrayCurrentPosition);
     }
 
     public convertBlockSizeToPixels(block: Block): Block {
@@ -79,8 +112,8 @@ export class Game {
         DOM.undisabledButtonDice();
         clearTimeout(this.timer);
         if (this.currentPlayer.isFirstMove()) {
-            this.currentPlayer.setFirstMove(false);
             this.repetitionAtCompletion();
+            this.currentPlayer.setFirstMove(false);
         }
         else {
             this.repetitionAtCompletion();
@@ -105,18 +138,17 @@ export class Game {
             Allerts.viewIntoAboutLoosingLife();
         }
         if (this.currentPlayer.getLives() === 0) {
-            let winnerArea:number;
-            if(this.currentPlayer.getColor() == this.player1.getColor()) {
+            let winnerArea: number;
+            if (this.currentPlayer.getColor() == this.player1.getColor()) {
                 winnerArea = this.player2.getOccupiedArea();
             }
             else {
-                winnerArea =  this.player1.getOccupiedArea();
+                winnerArea = this.player1.getOccupiedArea();
             }
             SendMmessage.resultOfGame(winnerArea);
             DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea());
             DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea());
             Allerts.viewResultsOfTheGame();
-            //alert(this.currentPlayer.getName() + " loser");
         }
         this.changePlayer();
     }
@@ -126,13 +158,12 @@ export class Game {
         let block;
         this.canvasDraw.redraw(this.currentPosition, this.position.blocks, this.currentPlayer.getColor());
         if (this.currentPlayer.isFirstMove()) {
-        block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
-            this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
+            block = this.elemInNumber;
         }
         else {
-            block = new Block(Math.floor(this.currentPosition.x / this.canvasDraw.aspectRatioWidth), Math.floor(this.currentPosition.y / this.canvasDraw.aspectRatioHeight),
-            this.position.currentDices[0], this.position.currentDices[1], this.currentPlayer.getColor());
+            block = new Block(this.elemInNumber.x, this.elemInNumber.y, this.elemInNumber.width, this.elemInNumber.height, this.currentPlayer.getColor());
         }
+
         this.position.blocks.push(block);
         SendMmessage.sendBlock(block);
     }

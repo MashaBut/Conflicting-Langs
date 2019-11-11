@@ -52,9 +52,10 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageSetName(name: string): MessageSetName {
+    public createMessageSetName(name: string, photoURL:string): MessageSetName {
         let message = new MessageSetName();
         message.name = name;
+        message.photoURL = photoURL;
         return message;
     }
 

@@ -108,7 +108,6 @@ export class PositionCalculation {
             if (block.color === newBlock.color) {
                 yOfSet = 0;
                 for (let y = block.y; y <= block.y + block.height; y++) {
-
                     if (y === newBlock.y) {
                         if (block.height - yOfSet >= newBlock.height) {
                             if (block.x + block.width === newBlock.x) {
@@ -148,7 +147,7 @@ export class PositionCalculation {
     }
 
     public checkPosition(newBlock: Block): boolean {
-        if (this.isBlockInOtherBlock(newBlock) && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))//(this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock))
+        if (this.isBlockInOtherBlock(newBlock) && (this.isTouchTheRightBlockForX(newBlock) || this.isTouchTheRightBlockForY(newBlock)))
             return true;
         else
             return false;

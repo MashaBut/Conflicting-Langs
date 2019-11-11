@@ -11,7 +11,6 @@ export class ManipulationWithDOM {
 
 
     //buttons
-    static writeNames: HTMLElement = <HTMLButtonElement>document.getElementById('writeNames');
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
     static soundOff: HTMLElement = <HTMLElement>document.getElementById("soundOff");
     static endGame: HTMLElement = <HTMLElement>document.getElementById("endGame");
