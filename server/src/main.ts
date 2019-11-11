@@ -30,17 +30,14 @@ wss.on('connection', function (ws: any) {
                 token = jwt.decode(msg.token);
                 sockets.set(id, ws);
                 clients.set(id, token.username);
-                var options = {
+                var options1 = {
                     url: 'https://cooper.games/api/users/nickname/' + token.username,
                     headers: {
                         'authorization': 'Bearer ' + msg.token
                     }
                 };
 
-                request(options, function (error: any, response: any, body: string) {
-                    //console.log("error ", error);
-                    //console.log('statusCode: ', response && response.statusCode);
-                    //console.log('body:', body);
+                request(options1, function (error: any, response: any, body: string) {
                     const info = JSON.parse(body);
                     user.photoURL = String(info.photoURL);
                     user.id = info.id;

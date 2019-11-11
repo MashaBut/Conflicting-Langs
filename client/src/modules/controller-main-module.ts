@@ -43,7 +43,6 @@ export class Game {
         this.position.areaMap(settings.width, settings.height);
         this.height = settings.height;
         this.width = settings.width;
-        console.log("Settings: " + settings.height, settings.width);
     }
 
     public drawNewCanvas(sizeX: number, sizeY: number, colorMap: string, colorGrid: string): void {
@@ -203,6 +202,8 @@ export class Game {
         DOM.setupNamePlayer(DOM.nameplayer1, this.player1.getName());
         DOM.engagedTerritory(DOM.territoryplayer1, this.player1.getOccupiedArea());
         PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
+        DOM.rightPlayer.style.cssText = "display: none";
+        DOM.leftPlayer.style.cssText = "display: block";
     }
 
     public setPlayer2(name: string, color: string): void {

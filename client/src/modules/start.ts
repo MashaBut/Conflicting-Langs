@@ -40,11 +40,13 @@ let dices: number[];
 let arrayRooms: Array<any>;
 let settings: Settings = new Settings();
 setUpSettings();
+
 setTimeout(() => {
-    let a: any = localStorage.getItem('JwtCooper');
+    let a: any = localStorage.getItem('JwtCooper')
     socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
     View.HollPage();
 }, 1500);
+
 View.StartPage();
 socket.onmessage = function (message: any) {
     let msg = JSON.parse(message.data);
@@ -67,7 +69,6 @@ socket.onmessage = function (message: any) {
         case MessageType.SendInfoToPlayerRooms:
             settings = msg.settings;
             game.initCanvas(settings);
-            //console.log(msg);
             if (msg.currentPlayer == 0) {
                 DOM.ONE.style.backgroundImage = "url('" + msg.picture[0] + "')";
                 DOM.TWO.style.backgroundImage = "url('" + msg.picture[1] + "')";
@@ -114,12 +115,15 @@ socket.onmessage = function (message: any) {
 function leftGame(): void {
     View.HollPage();
     setUpSettings();
-    game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
+    game = new Game();
+    DOM.undisabledButtonDice();
+   // game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
     let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s"
     DOM.ONE.style.cssText = "background-image: url(" + path + ");";
     DOM.TWO.style.cssText = "background-image: url(" + path + ");";
-    game.arrayCurrentPosition.length = 0;
+   /* game.arrayCurrentPosition.length = 0;
     game.position.blocks.length = 0;
+    game.currentPosition = new Block(0, 0, 0, 0, ColorMap.BlueGrid);*/
 }
 
 fromEvent(DOM.createRoom, 'click')
