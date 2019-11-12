@@ -159,8 +159,7 @@ export class EventHandling {
                         sockets.get(key).send(JSON.stringify(this.messageCreator.createMessageMoveToHollPage()));
                     })
                     rooms.splice(numbPosition, 1);
-                }
-                    , 2000);
+                }, 2000);
             }
             numbPosition++;
         }

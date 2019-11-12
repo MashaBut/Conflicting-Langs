@@ -81,27 +81,6 @@ export class Game {
         }
     }
 
-    private filter(): void {
-        let x = this.canvasDraw.numberOfHorizontalLines - this.position.currentDices[0];
-        let y = this.canvasDraw.numberOfVerticalLines - this.position.currentDices[1];
-        console.log(x, y);
-        this.firstFilter.forEach((block: Block) => {
-            if (x <= block.x + block.width) {
-                this.secondFilter.push(block);
-            }
-        });
-        console.log("secondfilter");
-        console.log(this.secondFilter);
-
-        this.secondFilter.forEach((block: Block) => {
-            if (y <= block.y + block.height) {
-                this.arrayCurrentPosition.push(block);
-            }
-        })
-        console.log("finally");
-        console.log(this.arrayCurrentPosition);
-    }
-
     public convertBlockSizeToPixels(block: Block): Block {
         return new Block(block.x * this.canvasDraw.aspectRatioWidth, block.y * this.canvasDraw.aspectRatioHeight, block.width * this.canvasDraw.aspectRatioWidth,
             block.height * this.canvasDraw.aspectRatioHeight, block.color);
@@ -129,12 +108,10 @@ export class Game {
         if (this.currentPlayer === this.player1) {
             PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
             Timer.flagForTimer = false;
-           // Allerts.viewIntoAboutLoosingLife();
         }
         else if (this.currentPlayer === this.player2) {
             PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
             Timer.flagForTimer = false;
-           // Allerts.viewIntoAboutLoosingLife();
         }
         if (this.currentPlayer.getLives() === 0) {
             let winnerArea: number;
@@ -153,7 +130,6 @@ export class Game {
     }
 
     private repetitionAtCompletion(): void {
-
         let block;
         this.canvasDraw.redraw(this.currentPosition, this.position.blocks, this.currentPlayer.getColor());
         if (this.currentPlayer.isFirstMove()) {
@@ -162,7 +138,6 @@ export class Game {
         else {
             block = new Block(this.elemInNumber.x, this.elemInNumber.y, this.elemInNumber.width, this.elemInNumber.height, this.currentPlayer.getColor());
         }
-
         this.position.blocks.push(block);
         SendMmessage.sendBlock(block);
     }
@@ -213,15 +188,6 @@ export class Game {
         DOM.setupNamePlayer(DOM.nameplayer2, this.player2.getName());
         DOM.engagedTerritory(DOM.territoryplayer2, this.player2.getOccupiedArea());
         PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
-    }
-
-    public keyCode(e: KeyboardEvent) {
-        DOM.disableStandardKeyOperation(e);
-    }
-
-    public clearFuildForPlayerData(color1: string, color2: string): void {
-        this.setPlayer1("", color1);
-        this.setPlayer2("", color2);
     }
 
     public rotateBlock() {

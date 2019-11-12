@@ -21,7 +21,6 @@ export class Calculation {
             this.position.change();
             this.calculateAllPosition(this.position.currentDices);
             if (this.arrayCurrentPosition.length == 0) {
-                console.log("feil");
             }
         }
     }

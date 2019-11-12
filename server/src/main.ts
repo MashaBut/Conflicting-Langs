@@ -17,6 +17,7 @@ app.use(express.static('client/dist'));
 let eventHanding = new EventHandling();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
+let tokens: Map<string,any> = new Map();
 let rooms = new Array<Room>();
 let messageCreator = new MessageCreator();
 wss.on('connection', function (ws: any) {
@@ -28,6 +29,7 @@ wss.on('connection', function (ws: any) {
         switch (msg.type) {
             case MessageType.Token:
                 token = jwt.decode(msg.token);
+                tokens.set(id, msg.token);
                 sockets.set(id, ws);
                 clients.set(id, token.username);
                 var options1 = {
@@ -36,7 +38,6 @@ wss.on('connection', function (ws: any) {
                         'authorization': 'Bearer ' + msg.token
                     }
                 };
-
                 request(options1, function (error: any, response: any, body: string) {
                     const info = JSON.parse(body);
                     user.photoURL = String(info.photoURL);
@@ -49,13 +50,13 @@ wss.on('connection', function (ws: any) {
             case MessageType.SetName:
                 sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname,user.photoURL)));
                 break;
-            case MessageType.SetNameRoom://+
+            case MessageType.SetNameRoom:
                 let room = new Room(msg.name, id, user.photoURL, clients.get(id));
                 room.settingsRoom(msg.settings);
                 rooms.push(room);
                 eventHanding.sendRooms(rooms, sockets);
                 break;
-            case MessageType.JoinTheRoom://+
+            case MessageType.JoinTheRoom:
                 eventHanding.sendRooms(rooms, sockets);
                 for (let room of rooms) {
                     if (room.id === msg.id) {
@@ -96,6 +97,7 @@ wss.on('connection', function (ws: any) {
         eventHanding.sendDisconnect(id, rooms, sockets);
         sockets.delete(id);
         clients.delete(id);
+        tokens.delete(id);
     });
 });
 

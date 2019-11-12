@@ -53,8 +53,7 @@ socket.onmessage = function (message: any) {
     switch (msg.type) {
         case MessageType.SetName:
             name = msg.name;
-            let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s"
-            DOM.ONE.style.cssText = "background-image: url(" + path + ");";
+            let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s";
             DOM.TWO.style.cssText = "background-image: url(" + path + ");";
             DOM.ONE.style.backgroundImage = "url('" + msg.photoURL + "')";
             game.setPlayer1(name, settings.firstPlayerColor);
@@ -117,13 +116,9 @@ function leftGame(): void {
     setUpSettings();
     game = new Game();
     DOM.undisabledButtonDice();
-   // game.clearFuildForPlayerData(settings.firstPlayerColor, settings.secondPlayerColor);
     let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s"
     DOM.ONE.style.cssText = "background-image: url(" + path + ");";
     DOM.TWO.style.cssText = "background-image: url(" + path + ");";
-   /* game.arrayCurrentPosition.length = 0;
-    game.position.blocks.length = 0;
-    game.currentPosition = new Block(0, 0, 0, 0, ColorMap.BlueGrid);*/
 }
 
 fromEvent(DOM.createRoom, 'click')
@@ -216,7 +211,7 @@ DOM.divMobVersion.addEventListener('click', (event: any) => {
     }
 })
 
-function viewRoom(id: string, name: string, nameOfPlayer: string): void {//+
+function viewRoom(id: string, name: string, nameOfPlayer: string): void {
     let roomsDiv = DOM.rooms;
     let newButton = document.createElement('button');
     newButton.id = "clientRoom";
@@ -226,7 +221,7 @@ function viewRoom(id: string, name: string, nameOfPlayer: string): void {//+
     roomsDiv.appendChild(newButton);
 }
 
-function clearRooms(): void {//+
+function clearRooms(): void {
     let idDiv: any = DOM.rooms;
     while (idDiv.hasChildNodes()) {
         idDiv.removeChild(idDiv.lastChild);
@@ -235,11 +230,23 @@ function clearRooms(): void {//+
 
 function setUpSettings(): void {
     settings.firstPlayerColor = ColorPlayers.Red;
+    DOM.redButton1.textContent = "✔";
+    DOM.blueButton1.textContent = " ";
+    DOM.orangeButton1.textContent = " ";
     settings.secondPlayerColor = ColorPlayers.Blue;
+    DOM.blueButton2.textContent = "✔";
+    DOM.orangeButton2.textContent = " ";
+    DOM.redButton2.textContent = " ";
     settings.mapColor = ColorMap.BlueMap;
+    DOM.blueMap.textContent = "✔";
+    DOM.brownMap.textContent = " ";
+    DOM.whiteMap.textContent = " ";
     settings.gridColor = ColorMap.BlueGrid;
     settings.width = SizeMap.BigX;
     settings.height = SizeMap.BigY;
+    DOM.bigMap.textContent = "✔";
+    DOM.smallMap.textContent = "Small";
+    DOM.mediumMap.textContent = "Medium";
 }
 
 DOM.rooms.addEventListener('click', function (event: any) {
@@ -342,6 +349,7 @@ DOM.settings.addEventListener('click', (event: any) => {
 
 fromEvent(document.body, 'keydown')
     .subscribe((e: KeyboardEvent) => {
+        DOM.disableStandardKeyOperation(e);
         switch (e.keyCode) {
             case KeyCodes.Space:
             case KeyCodes.Up:
