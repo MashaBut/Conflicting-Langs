@@ -14,6 +14,7 @@
 <body>
     <div class="startpage" id="startpage">
         <div class="gridForStartPage">
+            <label>Loading...</label>
         </div>
     </div>
 
@@ -30,7 +31,7 @@
             </div>
 
             <div class="warning" id="warningAboutуEndingOfTheGame">
-                <p>Your opponent went out :( <br> The game is finished!</p>
+                <p>Disconnect :( <br> The game is finished!</p>
                 <button type="button" class="hideWarning" id="hideWarningAboutуEndingOfTheGame">OK</button>
             </div>
 
@@ -39,6 +40,7 @@
             </div>
 
             <div class="informationAboutGame" id="informationAboutGame">
+                <button type="button" class="hideInfo" id="hideInfo">✖</button>
                 <article id="slider">
                     <input checked type="radio" name="slider" id="switch1">
                     <input type="radio" name="slider" id="switch2">
@@ -67,13 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="controls">
-                        <label for="switch1"></label>
-                        <label for="switch2"></label>
-                        <label for="switch3"></label>
-                    </div>
                 </article>
-                <button type="button" class="hideInfo" id="hideInfo">OK</button>
                 <div id="active">
                     <label for="switch1"></label>
                     <label for="switch2"></label>
@@ -81,8 +77,11 @@
                 </div>
             </div>
 
-            <p class="VS">Enter the ready room or create your own!</p>
-            <div class="rooms" id="rooms"></div>
+            <div class="rooms">
+                <p>Enter the ready room!</p>
+                <div id="rooms"></div>
+            </div>
+
             <div class="properties" id="properties">
                 <p>Choose your color!</p>
                 <div class="flex">
@@ -108,23 +107,27 @@
                     <button type="button" class="mediumMap" id="mediumMap">Medium</button>
                     <button type="button" class="bigMap" id="bigMap">Big</button>
                 </div>
-            </div>
 
-            <div class="enterNameOfRoom">
-                <label for="input" class="label">
+                <div class="enterNameOfRoom">
+                    <label for="input" class="label">
                         <input type="text" required class="input" id="nameRoom" value="" placeholder="Name of room">
                     </label>
-            </div>
+                </div>
+        
+                <div class="click">
+                    <button type="button" class="createRoom" id="createRoom">Create Room</button>
+                </div>  
 
-            <div class="click">
-                <button type="button" class="createRoom" id="createRoom">Create Room</button>
             </div>
         </div>
     </div>
 
     <div class="gamepage" id="gamepage">
         <div class="gridForGamePage">
-
+            <div class="aboutGame">
+                <button type="button" class="information" id="information">i</button>
+            </div>    
+                
             <div class="warningAllert" id="warningAboutLoosingLife">
                 <p>You lost the life :(</p>
                 <button type="button" class="hideWarning" id="hideWarningAboutLoosingLife">OK</button>

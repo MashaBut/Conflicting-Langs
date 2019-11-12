@@ -18,19 +18,19 @@ export class Allerts {
         warning.style.display = 'none';
     }
 
-    public static viewIntoAboutLoosingLife(): void {
+    public static viewInfoAboutLoosingLife(): void {
         ManipulationWithDOM.warningAboutLoosingLife.style.display = 'block';
     }
 
-    public static hideIntoAboutLoosingLife(): void {
+    public static hideInfoAboutLoosingLife(): void {
         ManipulationWithDOM.warningAboutLoosingLife.style.display = 'none';
     }
 
-    public static viewIntoAboutEndingOfTheGame(): void {
+    public static viewInfoAboutEndingOfTheGame(): void {
         ManipulationWithDOM.warningAboutуEndingOfTheGame.style.display = 'block';
     }
 
-    public static hideIntoAboutEndingOfTheGame(): void {
+    public static hideInfoAboutEndingOfTheGame(): void {
         ManipulationWithDOM.warningAboutуEndingOfTheGame.style.display = 'none';
     }
 

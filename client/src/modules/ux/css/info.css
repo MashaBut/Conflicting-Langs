@@ -5,7 +5,7 @@
     display: none;
     font-size: 1.1vw;
     text-align: center;
-    padding-top: 4%;
+    padding-top: 3%;
     padding-left: 3%;
     padding-right: 3%;
     background-color: #0e0e0e;
@@ -13,7 +13,7 @@
     border-style: solid;
     border-color: #c1a940;
     border-radius: 20px;
-    height: 52%;
+    height: 45%;
     width: 70%;
     margin-left: 61.6%;
     margin-top: 27.5%;
@@ -71,8 +71,10 @@
 
 #slider {
     /*центровка слайдера*/
-    margin: 0 auto;
-    height: 70%;
+    margin: auto;
+    height: 75%;
+    width: 85%;
+    margin-top: 3%;
 }
 
 #slides article {
@@ -97,9 +99,9 @@
 article div {
     /*размер изображений слайдера*/
     width: 100%;
-    line-height: 100%;
     font-size: 1vw;
     line-height: 130%;
+    margin: auto;
 }
 
 #switch1:checked~#controls label:nth-child(3),
@@ -213,14 +215,12 @@ a {
 }
 
 .hideInfo {
-    height: 15%;
-    width: 15%;
-    margin-top: 0%;
-    padding-top: 3px;
-    font-size: 1.2vw;
+    height: 30px;
+    width: 30px;
+    float: right;
     font-weight: 700;
     text-transform: uppercase;
-    color: #fff;
+    color: #c1a940;
     background-color: #0e0e0e;
     border-color: #c1a940;
     border-radius: 20px;
