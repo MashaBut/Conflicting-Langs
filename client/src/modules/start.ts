@@ -45,7 +45,7 @@ setTimeout(() => {
     let a: any = localStorage.getItem('JwtCooper')
     socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
     View.HollPage();
-}, 1500);
+}, 2000);
 
 View.StartPage();
 socket.onmessage = function (message: any) {
@@ -102,11 +102,11 @@ socket.onmessage = function (message: any) {
             break;
         case MessageType.ErrorForPosition:
             setTimeout(() => {
-                Allerts.viewIntoAboutLoosingLife();
+                Allerts.viewInfoAboutLoosingLife();
             }, 1500);
             break;
         case MessageType.MoveToHollPage:
-            Allerts.viewIntoAboutEndingOfTheGame();
+            Allerts.viewInfoAboutEndingOfTheGame();
             leftGame();
             break;
     }
@@ -168,13 +168,11 @@ DOM.hideWarningAboutColor.addEventListener('click', function (event: any) { Alle
 
 DOM.hideWarningAboutNameOfRoom.addEventListener('click', function (event: any) { Allerts.hideWarning(DOM.warningAboutNameOfRoom); });
 
-DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) { Allerts.hideIntoAboutLoosingLife(); });
+DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) { Allerts.hideInfoAboutLoosingLife(); });
 
-DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideIntoAboutEndingOfTheGame(); });
+DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideInfoAboutEndingOfTheGame(); });
 
-DOM.hideResultsOfTheGame.addEventListener('click', function (event: any) {
-    Allerts.hideIntoAboutEndingOfTheGame();
-});
+DOM.hideResultsOfTheGame.addEventListener('click', function (event: any) { Allerts.hideResultsOfTheGame(); });
 
 function createButtonForMobileVersion(): void {
     buttonForMobileVersion("moveToLeft", "←");

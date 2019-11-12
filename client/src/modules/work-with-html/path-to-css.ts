@@ -1,5 +1,4 @@
 import "../ux/css/main.css";
-import "../ux/css/players.css";
 import "../ux/css/start-page.css";
 
 import "../ux/css/hollpage.css";
