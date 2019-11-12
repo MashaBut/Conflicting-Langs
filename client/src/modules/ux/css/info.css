@@ -20,6 +20,15 @@
     z-index: 0;
 }
 
+.gridForGamePage .informationAboutGame {
+    grid-column: 2;
+    grid-row: 2;
+    margin: auto;
+    height: 55%;
+    width: 52%;
+    z-index: 0;
+}
+
 .warning {
     grid-column-start: 1;
     grid-column-end: 2;

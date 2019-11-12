@@ -5,7 +5,6 @@ import { CoordinateTransformation } from "./game/work-with-canvas/coordinate-tra
 import { PositionCalculation } from "../../../library/dist/models/position-calculation";
 import { Block } from "../../../library/dist/models/block";
 import { Calculation } from "../../../library/dist/index";
-import { Timer } from "./game/timer";
 import { PlayersLives } from "./game/lives";
 import { Allerts } from "./work-with-html/work-with-allerts";
 
@@ -107,11 +106,9 @@ export class Game {
 
         if (this.currentPlayer === this.player1) {
             PlayersLives.checkLife(this.player1.getLives(), DOM.livesForPlayerOne);
-            Timer.flagForTimer = false;
         }
         else if (this.currentPlayer === this.player2) {
             PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
-            Timer.flagForTimer = false;
         }
         if (this.currentPlayer.getLives() === 0) {
             let winnerArea: number;
@@ -122,8 +119,14 @@ export class Game {
                 winnerArea = this.player1.getOccupiedArea();
             }
             SendMmessage.resultOfGame(winnerArea);
-            DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea());
-            DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea());
+            if(this.currentPlayer === this.player1) {
+                DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea()) + "%";
+                DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea()) + "%";    
+            }
+            else if(this.currentPlayer === this.player2) {
+                DOM.territoryplayerOne.innerHTML = String(this.player2.getOccupiedArea()) + "%";
+                DOM.territoryplayerTwo.innerHTML = String(this.player1.getOccupiedArea()) + "%";    
+            }
             Allerts.viewResultsOfTheGame();
         }
         this.changePlayer();
@@ -230,7 +233,6 @@ export class Game {
 
     public setUpBlock() {
         DOM.playSound(PathToMedia.enterSound);
-        Timer.flagForTimer = false;
         this.endOfturn();
     }
 

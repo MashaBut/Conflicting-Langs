@@ -1,10 +1,31 @@
-.gridForGamePage .aboutGame {
-    grid-column: 3/3;
-    grid-row: 1/2;
-    margin-left: 80%;
-    margin-top: 4%;
-    width: 45px;
-    height: 45px;
+.gamepage .gridForGamePage .aboutGame {
+    grid-column: 3;
+    grid-row: 3;
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    margin-bottom: 1%;
+}
+
+@media only screen and (max-width: 1336px) {
+    .gamepage .gridForGamePage .aboutGame {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media only screen and (max-width: 1090px) {
+    .gamepage .gridForGamePage .aboutGame {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media only screen and (max-width: 870px) {
+    .gamepage .gridForGamePage .aboutGame {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 .warningAllert {
@@ -54,7 +75,7 @@
     font-size: 1.7vw;
     height: 60%;
     width: 100%;
-    margin-top: 7%;
+    margin-top: 3%;
 }
 
 .looser label{
@@ -87,20 +108,4 @@
     width: 70%;
     margin: auto;
     z-index: 0;
-}
-
-.approve {
-    height: 15%;
-    width: 15%;
-    margin-top: 1%;
-    padding-top: 1px;
-    font-size: 1.1vw;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #fff;
-    background-color: #0e0e0e;
-    border-color: #c1a940;
-    border-radius: 20px;
-    outline: none;
-    cursor: pointer; 
 }

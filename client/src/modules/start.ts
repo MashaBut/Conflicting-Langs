@@ -14,8 +14,6 @@ import { fromEvent } from 'rxjs';
 import { DiceRoller } from "./game/dice-roller";
 import { Block } from "../../../library/dist";
 
-import { Timer } from "./game/timer";
-
 import { Game } from "./controller-main-module";
 
 import { MessageCreator } from "../../../library/dist/message-creator";
@@ -34,7 +32,6 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
 let messageCreator = new MessageCreator();
 let game: Game = new Game();
-let timerForPlayer: Timer = new Timer();
 let name: string;
 let dices: number[];
 let arrayRooms: Array<any>;
@@ -112,6 +109,8 @@ socket.onmessage = function (message: any) {
 };
 
 function leftGame(): void {
+    Allerts.hideResultsOfTheGame();
+    Allerts.hideInfoAboutLoosingLife();
     View.HollPage();
     setUpSettings();
     game = new Game();
@@ -143,6 +142,7 @@ fromEvent(DOM.createRoom, 'click')
         else {
             Allerts.viewWarning(DOM.warningAboutNameOfRoom);
         }
+        Allerts.hideInfo();
     });
 
 setTimeout(function () {
@@ -155,7 +155,9 @@ setTimeout(function () {
 }, 200);
 
 
-DOM.infoButton.addEventListener('click', function (event: any) { Allerts.viewInfo(); });
+DOM.infoButton.addEventListener('click', function (event: any) { Allerts.viewInfo(DOM.gridForHollPage); });
+
+DOM.informationForGame.addEventListener('click', function (event: any) { Allerts.viewInfo(DOM.gridForGamePage); });
 
 DOM.hideInformationAboutGame.addEventListener('click', function (event: any) { Allerts.hideInfo(); });
 
@@ -166,8 +168,6 @@ DOM.hideWarningAboutNameOfRoom.addEventListener('click', function (event: any) {
 DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) { Allerts.hideInfoAboutLoosingLife(); });
 
 DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideInfoAboutEndingOfTheGame(); });
-
-DOM.hideResultsOfTheGame.addEventListener('click', function (event: any) { Allerts.hideResultsOfTheGame(); });
 
 function createButtonForMobileVersion(): void {
     buttonForMobileVersion("moveToLeft", "←");
