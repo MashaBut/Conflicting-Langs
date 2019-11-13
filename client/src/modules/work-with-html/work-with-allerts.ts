@@ -2,12 +2,15 @@ import { ManipulationWithDOM } from "../work-with-html/manipulations-with-dom";
 
 export class Allerts {
 
-    public static viewInfo(): void {
+    public static viewInfo(page: HTMLElement): void {
+        let holder = page;
+        holder.appendChild( ManipulationWithDOM.informationAboutGame);
         ManipulationWithDOM.informationAboutGame.style.display = 'block';
     }
 
     public static hideInfo(): void {
         ManipulationWithDOM.informationAboutGame.style.display = 'none';
+        ManipulationWithDOM.body.appendChild(ManipulationWithDOM.informationAboutGame);
     }
 
     public static viewWarning(warning: any): void {

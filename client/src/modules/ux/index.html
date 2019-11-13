@@ -11,40 +11,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
+<body id="body">
     <div class="startpage" id="startpage">
         <div class="gridForStartPage">
             <label>Loading...</label>
         </div>
     </div>
 
-    <div class="hollpage" id="hollpage">
-        <div class="gridForHollPage">
-            <div class="warning" id="warningAboutColor">
-                <p>Choose other color for your opponent (or for you)!</p>
-                <button type="button" class="hideWarning" id="hideWarningAboutColor">OK</button>
-            </div>
-
-            <div class="warning" id="warningAboutNameOfRoom">
-                <p>Name the room, please!</p>
-                <button type="button" class="hideWarning" id="hideWarningAboutNameOfRoom">OK</button>
-            </div>
-
-            <div class="warning" id="warningAboutуEndingOfTheGame">
-                <p>Disconnect :( <br> The game is finished!</p>
-                <button type="button" class="hideWarning" id="hideWarningAboutуEndingOfTheGame">OK</button>
-            </div>
-
-            <div class="aboutGame">
-                <button type="button" class="information" id="information">i</button>
-            </div>
-
-            <div class="informationAboutGame" id="informationAboutGame">
-                <button type="button" class="hideInfo" id="hideInfo">✖</button>
-                <article id="slider">
-                    <input checked type="radio" name="slider" id="switch1">
-                    <input type="radio" name="slider" id="switch2">
-                    <input type="radio" name="slider" id="switch3">
+    <div class="informationAboutGame" id="informationAboutGame">
+            <button type="button" class="hideInfo" id="hideInfo">✖</button>
+            <article id="slider">
+                <input checked type="radio" name="slider" id="switch1">
+                <input type="radio" name="slider" id="switch2">
+                <input type="radio" name="slider" id="switch3">
                     <div id="slides">
                         <div id="overflow">
                             <div class="divesForInfo">
@@ -69,12 +48,34 @@
                             </div>
                         </div>
                     </div>
-                </article>
-                <div id="active">
-                    <label for="switch1"></label>
-                    <label for="switch2"></label>
-                    <label for="switch3"></label>
-                </div>
+            </article>
+            <div id="active">
+                <label for="switch1"></label>
+                <label for="switch2"></label>
+                <label for="switch3"></label>
+            </div>    
+    </div>
+
+    <div class="hollpage" id="hollpage">
+        <div class="gridForHollPage" id="gridForHollPage">
+
+            <div class="warning" id="warningAboutColor">
+                <p>Choose other color for your opponent (or for you)!</p>
+                <button type="button" class="hideWarning" id="hideWarningAboutColor">OK</button>
+            </div>
+
+            <div class="warning" id="warningAboutNameOfRoom">
+                <p>Name the room, please!</p>
+                <button type="button" class="hideWarning" id="hideWarningAboutNameOfRoom">OK</button>
+            </div>
+
+            <div class="warning" id="warningAboutуEndingOfTheGame">
+                <p>The game is finished!</p>
+                <button type="button" class="hideWarning" id="hideWarningAboutуEndingOfTheGame">OK</button>
+            </div>
+
+            <div class="aboutGame">
+                <button type="button" class="information" id="information">i</button>
             </div>
 
             <div class="rooms">
@@ -123,9 +124,9 @@
     </div>
 
     <div class="gamepage" id="gamepage">
-        <div class="gridForGamePage">
+        <div class="gridForGamePage" id="gridForGamePage">
             <div class="aboutGame">
-                <button type="button" class="information" id="information">i</button>
+                <button type="button" class="information" id="informationForGame">i</button>
             </div>    
                 
             <div class="warningAllert" id="warningAboutLoosingLife">
@@ -139,7 +140,7 @@
                         <label>LOSER</label><br>
                         <label>Engaged territory: </label>
                         <p id="territoryplayerOne" value=""></p>
-                        <!-- <div class="photoForLoser"></div>   -->
+                        <div class="photoForLoser"></div>
                     </div>
 
 
@@ -147,15 +148,14 @@
                         <label>WINNNER!</label><br>
                         <label>Engaged territory: </label>
                         <p id="territoryplayerTwo" value=""></p>
-                        <!-- <div class="photoForWinner">                        </div> -->
+                        <div class="photoForWinner"></div>
                     </div>
                 </div>
-                <button type="button" class="approve" id="hideResultsOfTheGame">OK</button>
             </div>
 
             <div class="flex-box">
                 <div class="left_triangle" id="left_triangle"></div>
-                <p class="timer" id="timer">00:00</p>
+                <!-- <p class="timer" id="timer">00:00</p> -->
                 <div class="right_triangle" id="right_triangle"></div>
             </div>
 

@@ -9,6 +9,8 @@ export class ManipulationWithDOM {
     static ONE:HTMLElement = <HTMLElement>document.getElementById("player1ForGame")
     static TWO:HTMLElement = <HTMLElement>document.getElementById("player2ForGame");
 
+    static body: HTMLElement = <HTMLElement>document.getElementById("body");
+
 
     //buttons
     static tossDice: HTMLElement = <HTMLElement>document.getElementById("rollTheDice");
@@ -68,10 +70,13 @@ export class ManipulationWithDOM {
 
     //div
     static gamePage: HTMLElement = <HTMLElement>document.getElementById("gamepage");
+    static gridForHollPage: HTMLElement = <HTMLElement>document.getElementById("gridForHollPage");
+    static gridForGamePage: HTMLElement = <HTMLElement>document.getElementById("gridForGamePage");
     static divMobVersion: HTMLElement = <HTMLElement>document.getElementById("MobVirsion");
 
     //info
     static infoButton: any = <HTMLElement>document.getElementById("information");
+    static informationForGame: any = <HTMLElement>document.getElementById("informationForGame");
     static informationAboutGame: any = <HTMLElement>document.getElementById("informationAboutGame");
     static hideInformationAboutGame: any = <HTMLElement>document.getElementById("hideInfo");
 

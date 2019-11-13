@@ -303,7 +303,6 @@
     margin: auto;
     height: 100%;
     width: 100%;
-    padding-top: 3px;
     /* ------------------Typography--------------------- */
     font-size: 1vw; 
     font-weight: 700;
@@ -415,6 +414,12 @@
         height: 45px;
         width: 45px;
     }
+
+    .hollpage .click {
+        height: 8%;
+        width: 31;
+    }
+
 }
 
 
@@ -431,14 +436,14 @@
         font-weight: 700;
     }
 
-    .hollpage .createRoom {
+    .hollpage .click {
         /* ------------------Typography--------------------- */
-        font-size: 1vw; 
-        font-weight: 700;
+        width: 30%;
+        height: 8%;
     }
 
     .enterNameOfRoom {
-        margin-top: 5%;
+        margin-top: 2%;
     }
 
     .hollpage .properties p {
@@ -481,12 +486,20 @@
         margin-left: 80%;
     }
 
+    .hollpage .click {
+        width: 35%;
+    }
+
     .rooms {
         width: 60%;
     }
 
     .properties {
         width: 60%;
+    }
+
+    .enterNameOfRoom {
+        margin-top: 0%;
     }
 
 }
