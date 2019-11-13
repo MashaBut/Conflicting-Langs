@@ -27,8 +27,9 @@ const socket = new WebSocket(socketUrl);
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     createButtonForMobileVersion();
 } else {
-    createDivMobVersion();
+   deleteDivMobVersion();
 }
+
 
 let messageCreator = new MessageCreator();
 let game: Game = new Game();
@@ -170,21 +171,21 @@ DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) 
 DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideInfoAboutEndingOfTheGame(); });
 
 function createButtonForMobileVersion(): void {
-    buttonForMobileVersion("moveToLeft", "←");
-    buttonForMobileVersion("moveToRight", "→");
-    buttonForMobileVersion("setUp", "Set Up");
-    buttonForMobileVersion("rotate", "Rotate");
+    buttonForMobileVersion("moveToLeft", "←", DOM.flexBox1);
+    buttonForMobileVersion("moveToRight", "→", DOM.flexBox2);
+    buttonForMobileVersion("setUp", "Set Up", DOM.flexBox2);
+    buttonForMobileVersion("rotate", "Rotate", DOM.flexBox1);
 }
 
-function buttonForMobileVersion(id: string, text: string): void {
-    let div = DOM.divMobVersion;
+function buttonForMobileVersion(id: string, text: string, div: HTMLElement): void {
+    let flexBox = div;
     let newButton = document.createElement('button');
     newButton.id = id;
     newButton.textContent = text;
-    div.appendChild(newButton);
+    flexBox.appendChild(newButton);
 }
 
-function createDivMobVersion(): void {
+function deleteDivMobVersion(): void {
     let idDiv: any = DOM.divMobVersion;
     while (idDiv.hasChildNodes()) {
         idDiv.removeChild(idDiv.lastChild);

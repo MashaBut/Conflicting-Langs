@@ -122,8 +122,6 @@
     grid-column: 2/3;
     grid-row: 3/3;
     margin: auto;
-    margin-top: 27px;
-    margin-bottom: 0;
     width: 22%;
     height: 40%;
     text-align: center;
@@ -146,7 +144,7 @@
     outline: none;
 }
 
-.sound {
+.differentSettings {
     grid-column: 3/3;
     grid-row: 3/3;
     display: flex;
@@ -160,16 +158,10 @@
     text-align: center;
 }
      
-.sound button {
+.differentSettings button {
     /* ------------------Block model--------------------- */
     height: 65%;
     width: 26%;
-    /* ------------------Display--------------------- */
-    background-image: url('../../../assets/images/volume.jpg');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    /* background-color: #0e0e0e; */
     border : 0.5%;
     border-color: #8b8b8b;
     border-radius: 20px;
@@ -177,7 +169,15 @@
     outline: none;
 }
 
-.sound #goToStartPage {
+.differentSettings #soundOff {
+    /* ------------------Display--------------------- */
+    background-image: url('../../../assets/images/volume.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.differentSettings #endGame {
     /* ------------------Display--------------------- */
     background-image: url('../../../assets/images/exit.png');
     background-size: contain;
@@ -185,12 +185,17 @@
     background-repeat: no-repeat;
 }
 
-.sound #endGame {
+.differentSettings #informationForGame {
+    /* ------------------Typography--------------------- */
+    font-size: 1.2vw; 
+    font-weight: 700;
+    /* text-transform: uppercase; */
+    color: #c1a940;
     /* ------------------Display--------------------- */
-    background-image: url('../../../assets/images/stopGame.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #0e0e0e;
+    border-color: #c1a940;
+    border-radius: 50%;
+    /* ------------------ Other --------------------- */
 }
 
 @media only screen and (min-width: 1660px) {
@@ -226,7 +231,7 @@
         height: 130px;
     }
 
-    .sound {
+    .differentSettings {
         width: 65%;
     }
 }
@@ -251,7 +256,7 @@
         font-size: 1.6vw;
     }
 
-    .sound {
+    .differentSettings {
         width: 70%;
         margin-top: 10px;
     }

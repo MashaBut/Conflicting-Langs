@@ -97,6 +97,11 @@ export class ManipulationWithDOM {
 
     static territoryplayerOne: HTMLElement = <HTMLElement>document.getElementById("territoryplayerOne");
     static territoryplayerTwo: HTMLElement = <HTMLElement>document.getElementById("territoryplayerTwo");
+    
+    //mobileVirsion
+    static flexBox1: HTMLElement = <HTMLElement>document.getElementById("flexBox1");
+    static flexBox2: HTMLElement = <HTMLElement>document.getElementById("flexBox2");
+
 
 
     public static disabledButtonDice(): void {
