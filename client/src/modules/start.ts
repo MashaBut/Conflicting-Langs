@@ -26,9 +26,18 @@ const socket = new WebSocket(socketUrl);
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     createButtonForMobileVersion();
+    if(screen.orientation.type === "portrait-primary") {
+        alert("Переверните экран");
+      //  window.screen.orientation.lock()  setAttribute( "style", "-webkit-transform: rotate(-90deg);");
+    }
 } else {
     createDivMobVersion();
 }
+window.addEventListener("orientationchange", function() {                   
+    if(screen.orientation.type === "portrait-primary") {
+        alert("Переверните экран");
+    }
+}, false);
 
 let messageCreator = new MessageCreator();
 let game: Game = new Game();
@@ -42,7 +51,7 @@ setTimeout(() => {
     let a: any = localStorage.getItem('JwtCooper')
     socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
     View.HollPage();
-}, 2000);
+}, 20000);
 
 View.StartPage();
 socket.onmessage = function (message: any) {

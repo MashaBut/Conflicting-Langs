@@ -96,16 +96,14 @@ export class Game {
             this.repetitionAtCompletion();
         }
         this.repetititonAtEachTurn();
+        this.checkArea();
         this.changePlayer();
     }
-    public checkArea(): void {
+    private checkArea(): void {
         if(this.player1.getOccupiedArea()+this.player2.getOccupiedArea()==100) {
-            if(this.player1.getOccupiedArea()==this.currentPlayer.getOccupiedArea()) {
-
-            }
-            else {
-                
-            }
+            this.resultOfGame();
+            Allerts.viewResultsOfTheGame();
+            SendMmessage.resultOfGame(this.currentPlayer.getOccupiedArea());
         }
     }
 
@@ -129,17 +127,20 @@ export class Game {
                 winnerArea = this.player1.getOccupiedArea();
             }
             SendMmessage.resultOfGame(winnerArea);
-            if(this.currentPlayer === this.player1) {
-                DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea()) + "%";
-                DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea()) + "%";    
-            }
-            else if(this.currentPlayer === this.player2) {
-                DOM.territoryplayerOne.innerHTML = String(this.player2.getOccupiedArea()) + "%";
-                DOM.territoryplayerTwo.innerHTML = String(this.player1.getOccupiedArea()) + "%";    
-            }
+            this.resultOfGame();
             Allerts.viewResultsOfTheGame();
         }
         this.changePlayer();
+    }
+    private resultOfGame() :void {
+        if(this.currentPlayer === this.player1) {
+            DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea()) + "%";
+            DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea()) + "%";    
+        }
+        else if(this.currentPlayer === this.player2) {
+            DOM.territoryplayerOne.innerHTML = String(this.player2.getOccupiedArea()) + "%";
+            DOM.territoryplayerTwo.innerHTML = String(this.player1.getOccupiedArea()) + "%";    
+        }
     }
 
     private repetitionAtCompletion(): void {
