@@ -99,6 +99,16 @@ export class Game {
         this.repetititonAtEachTurn();
         this.changePlayer();
     }
+    public checkArea(): void {
+        if(this.player1.getOccupiedArea()+this.player2.getOccupiedArea()==100) {
+            if(this.player1.getOccupiedArea()==this.currentPlayer.getOccupiedArea()) {
+
+            }
+            else {
+                
+            }
+        }
+    }
 
     public failute(): void {
         this.currentPlayer.setLives();
