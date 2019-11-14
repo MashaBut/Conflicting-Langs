@@ -91,6 +91,7 @@ export class Game {
         if (this.currentPlayer.isFirstMove()) {
             this.repetitionAtCompletion();
             this.currentPlayer.setFirstMove(false);
+            this.currentPosition = new Block(0, 0, 0, 0, ColorPlayers.Blue);
         }
         else {
             this.repetitionAtCompletion();
@@ -100,10 +101,19 @@ export class Game {
         this.changePlayer();
     }
     private checkArea(): void {
-        if(this.player1.getOccupiedArea()+this.player2.getOccupiedArea()==100) {
+        if (this.player1.getOccupiedArea() + this.player2.getOccupiedArea() == 100) {
             this.resultOfGame();
             Allerts.viewResultsOfTheGame();
-            SendMmessage.resultOfGame(this.currentPlayer.getOccupiedArea());
+            if (this.currentPlayer.getColor() == this.player1.getColor()) {
+                setTimeout(() => {
+                    SendMmessage.resultOfGame(this.player2.getOccupiedArea(), this.player1.getOccupiedArea());
+                }, 2500);
+            }
+            else {
+                setTimeout(() => {
+                    SendMmessage.resultOfGame(this.player1.getOccupiedArea(), this.player2.getOccupiedArea());
+                }, 2500);
+            }
         }
     }
 
@@ -119,27 +129,29 @@ export class Game {
             PlayersLives.checkLife(this.player2.getLives(), DOM.livesForPlayerTwo);
         }
         if (this.currentPlayer.getLives() === 0) {
-            let winnerArea: number;
             if (this.currentPlayer.getColor() == this.player1.getColor()) {
-                winnerArea = this.player2.getOccupiedArea();
+                setTimeout(() => {
+                    SendMmessage.resultOfGame(this.player2.getOccupiedArea(), this.player1.getOccupiedArea());
+                }, 2500);
             }
             else {
-                winnerArea = this.player1.getOccupiedArea();
+                setTimeout(() => {
+                    SendMmessage.resultOfGame(this.player1.getOccupiedArea(), this.player2.getOccupiedArea());
+                }, 2500);
             }
-            SendMmessage.resultOfGame(winnerArea);
             this.resultOfGame();
             Allerts.viewResultsOfTheGame();
         }
         this.changePlayer();
     }
-    private resultOfGame() :void {
-        if(this.currentPlayer === this.player1) {
+    private resultOfGame(): void {
+        if (this.currentPlayer === this.player1) {
             DOM.territoryplayerOne.innerHTML = String(this.player1.getOccupiedArea()) + "%";
-            DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea()) + "%";    
+            DOM.territoryplayerTwo.innerHTML = String(this.player2.getOccupiedArea()) + "%";
         }
-        else if(this.currentPlayer === this.player2) {
+        else if (this.currentPlayer === this.player2) {
             DOM.territoryplayerOne.innerHTML = String(this.player2.getOccupiedArea()) + "%";
-            DOM.territoryplayerTwo.innerHTML = String(this.player1.getOccupiedArea()) + "%";    
+            DOM.territoryplayerTwo.innerHTML = String(this.player1.getOccupiedArea()) + "%";
         }
     }
 
