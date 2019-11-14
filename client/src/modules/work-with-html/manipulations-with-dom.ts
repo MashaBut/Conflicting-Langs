@@ -65,11 +65,9 @@ export class ManipulationWithDOM {
     static territoryplayer1: HTMLElement = <HTMLElement>document.getElementById("territoryplayer1");
     static territoryplayer2: HTMLElement = <HTMLElement>document.getElementById("territoryplayer2");
 
-    //timer
-    static timer: HTMLElement = <HTMLElement>document.getElementById("timer");
-
     //div
     static gamePage: HTMLElement = <HTMLElement>document.getElementById("gamepage");
+    static statisticsPage: HTMLElement = <HTMLElement>document.getElementById("statisticspage");
     static gridForHollPage: HTMLElement = <HTMLElement>document.getElementById("gridForHollPage");
     static gridForGamePage: HTMLElement = <HTMLElement>document.getElementById("gridForGamePage");
     static divMobVersion: HTMLElement = <HTMLElement>document.getElementById("MobVirsion");
@@ -79,6 +77,10 @@ export class ManipulationWithDOM {
     static informationForGame: any = <HTMLElement>document.getElementById("informationForGame");
     static informationAboutGame: any = <HTMLElement>document.getElementById("informationAboutGame");
     static hideInformationAboutGame: any = <HTMLElement>document.getElementById("hideInfo");
+    static viewStatistics: any = <HTMLElement>document.getElementById("viewStatistics");
+    static hideStatisticsButton: any = <HTMLElement>document.getElementById("hideStatistics");
+
+    static tableBody: any = <HTMLElement>document.getElementById("tableBody");
 
     //all warnings
     static warningAboutNameOfRoom: any = <HTMLElement>document.getElementById("warningAboutNameOfRoom");

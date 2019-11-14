@@ -3,6 +3,7 @@ import "../ux/css/start-page.css";
 
 import "../ux/css/hollpage.css";
 import "../ux/css/info.css";
+import "../ux/css/statistics.css"
 
 import "../ux/css/game-page.css";
 import "../ux/css/canvas.css";

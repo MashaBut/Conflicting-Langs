@@ -170,6 +170,36 @@ DOM.hideWarningAboutLoosingLife.addEventListener('click', function (event: any) 
 
 DOM.hideWarningAboutуEndingOfTheGame.addEventListener('click', function (event: any) { Allerts.hideInfoAboutEndingOfTheGame(); });
 
+DOM.viewStatistics.addEventListener('click', function (event: any) { View.StatisticsPage(); })
+
+DOM.hideStatisticsButton.addEventListener('click', function (event: any) {View.HollPage(); })
+
+
+function fillTheTable(tbody:HTMLElement, obj:any) :void {
+    let tb = tbody;
+    let tr = document.createElement('tr');
+    tb.appendChild(tr);
+    let th1 = document.createElement('th');
+    let th2 = document.createElement('th');
+    let th3 = document.createElement('th');
+    let th4 = document.createElement('th');
+    th1.textContent = obj.name;
+    th2.textContent = obj.isWinnew;
+    th3.textContent = obj.result;
+    th4.textContent = obj.dateOfDate;
+    tr.appendChild(th1);
+    tr.appendChild(th2);
+    tr.appendChild(th3);
+    tr.appendChild(th4);
+}
+
+function clearTable(): void {
+    let idDiv: any = DOM.tableBody;
+    while (idDiv.hasChildNodes()) {
+        idDiv.removeChild(idDiv.lastChild);
+    }
+}
+
 function createButtonForMobileVersion(): void {
     buttonForMobileVersion("moveToLeft", "←", DOM.flexBox1);
     buttonForMobileVersion("moveToRight", "→", DOM.flexBox2);
