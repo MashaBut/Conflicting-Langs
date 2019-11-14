@@ -1,5 +1,5 @@
 import { MessageType } from "../../library/dist/index";
-import { MessageCreator} from "../../library/dist/message-creator";
+import { MessageCreator } from "../../library/dist/message-creator";
 import { Room } from "./room";
 import { EventHandling } from "./event-handling";
 const express = require('express');
@@ -12,14 +12,16 @@ const uuidv1 = require('uuid/v1');
 const request = require('request');
 import * as jwt from "jsonwebtoken";
 import { User } from "./user";
+import { Result } from "./result";
 
 app.use(express.static('client/dist'));
 let eventHanding = new EventHandling();
 let sockets: Map<string, any> = new Map();
 let clients: Map<string, string> = new Map();
-let tokens: Map<string,any> = new Map();
+let tokens: Map<string, any> = new Map();
 let rooms = new Array<Room>();
 let messageCreator = new MessageCreator();
+let results: Array<Result> = new Array<Result>();
 wss.on('connection', function (ws: any) {
     let id = String(uuidv1());
     let token: any;
@@ -44,11 +46,11 @@ wss.on('connection', function (ws: any) {
                     user.id = info.id;
                     user.nickname = info.nickname;
                 });
-                sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname,user.photoURL)));
+                sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname, user.photoURL)));
                 eventHanding.sendRooms(rooms, sockets);
                 break;
             case MessageType.SetName:
-                sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname,user.photoURL)));
+                sockets.get(id).send(JSON.stringify(messageCreator.createMessageSetName(user.nickname, user.photoURL)));
                 break;
             case MessageType.SetNameRoom:
                 let room = new Room(msg.name, id, user.photoURL, clients.get(id));
@@ -88,6 +90,7 @@ wss.on('connection', function (ws: any) {
                 eventHanding.saveBlock(id, rooms, msg.block, sockets);
                 break;
             case MessageType.ResultOfGame:
+                eventHanding.setResult(id, rooms, msg.area1, msg.area2, results, clients, sockets);
                 eventHanding.setResultOfGame(id, rooms, sockets);
                 eventHanding.sendRooms(rooms, sockets);
                 break;

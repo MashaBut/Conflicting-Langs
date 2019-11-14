@@ -33,6 +33,12 @@ export class Draw {
 		this.drawGrid();
 		this.redrawBlocks(blocks);
 	}
+	public aspectRatio():void {
+		this.canvasElement.width = this.CanvasHolder.offsetWidth;
+		this.canvasElement.height = this.CanvasHolder.offsetHeight;
+		this.aspectRatioWidth = this.setAspectRatioForVertical();
+		this.aspectRatioHeight = this.setAspectRatioForHorizonal();
+	}
 
 	private drawGrid(): void {
 		for (let i = 0; i <= this.numberOfHorizontalLines; i++) {
@@ -72,6 +78,7 @@ export class Draw {
 
 	public redraw(block: Block, blocks: any, color: string): void {
 		this.clearCanvas();
+		//this.aspectRatio();
 		this.drawGrid();
 		this.redrawBlocks(blocks);
 		this.drawBlockOnMap(block, color);

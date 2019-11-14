@@ -26,10 +26,17 @@ const socket = new WebSocket(socketUrl);
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     createButtonForMobileVersion();
+    if (screen.orientation.type === "portrait-primary") {
+        alert("Переверните экран");
+    }
 } else {
-   deleteDivMobVersion();
+    deleteDivMobVersion();
 }
-
+window.addEventListener("orientationchange", function () {
+    if (screen.orientation.type === "portrait-primary") {
+        alert("Переверните экран");
+    }
+}, false);
 
 let messageCreator = new MessageCreator();
 let game: Game = new Game();
@@ -43,16 +50,17 @@ setTimeout(() => {
     let a: any = localStorage.getItem('JwtCooper')
     socket.send(JSON.stringify(messageCreator.createMessageToken(a)));
     View.HollPage();
-}, 2000);
+}, 1500);
 
+let pathToPicture: string = "https://srcb.oboi.ws/wallpapers/big_12502_oboi_ryzhaja_lisa_v_snegu.jpg"
 View.StartPage();
 socket.onmessage = function (message: any) {
     let msg = JSON.parse(message.data);
     switch (msg.type) {
         case MessageType.SetName:
             name = msg.name;
-            let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s";
-            DOM.TWO.style.cssText = "background-image: url(" + path + ");";
+            let path: string = pathToPicture;
+            DOM.TWO.style.backgroundImage = "url('" + path + "')";
             DOM.ONE.style.backgroundImage = "url('" + msg.photoURL + "')";
             game.setPlayer1(name, settings.firstPlayerColor);
             break;
@@ -61,6 +69,12 @@ socket.onmessage = function (message: any) {
             arrayRooms = msg.rooms;
             arrayRooms.forEach((room: any) => {
                 viewRoom(room.id, room.name, room.creatorName);
+            });
+            break;
+        case MessageType.ResultsAllPlayers:
+            let a: any = msg.results;
+            a.forEach((result: any) => {
+                console.log("Name: " + result.name + " isWinner: " + result.isWinner + " result: " + result.result + " dateOfDate: " + result.dateOfDate);
             });
             break;
         case MessageType.SendInfoToPlayerRooms:
@@ -116,7 +130,7 @@ function leftGame(): void {
     setUpSettings();
     game = new Game();
     DOM.undisabledButtonDice();
-    let path: string = "https://encrypted-tbn0.gstatic.com/ihttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFDyooH6i3fSw092B_fU3PHtn2UgHWohrFJSsLUFWV3iLCdXQtuQ&smages?q=tbn:ANd9GcQRU10V8XNOiqGtymjqScuC0KAUwVa4u9AtnrkX9gr8Cw6h-w_4&s"
+    let path: string = pathToPicture;
     DOM.ONE.style.cssText = "background-image: url(" + path + ");";
     DOM.TWO.style.cssText = "background-image: url(" + path + ");";
 }
@@ -150,7 +164,8 @@ setTimeout(function () {
     window.onresize = function () {
         setTimeout(function () {
             game.drawNewCanvas(settings.width, settings.height, settings.mapColor, settings.gridColor);
-            game.calculatePosition();
+            game.draw();
+            //game.calculatePosition();
         }, 20);
     }
 }, 200);
@@ -409,13 +424,8 @@ fromEvent(DOM.soundOff, 'click')
 
 fromEvent(DOM.endGame, 'click')
     .subscribe(() => {
-        View.HollPage();
-        DOM.playSound(PathToMedia.endOfTheGame);
-    });
-
-fromEvent(DOM.endGame, 'click')
-    .subscribe(() => {
         leftGame();
+        DOM.playSound(PathToMedia.endOfTheGame);
         socket.send(JSON.stringify(messageCreator.createMessageMoveToHollPage()));
     })
 
@@ -429,8 +439,6 @@ function tossDice(): void {
 
 function timer() {
     PushImage.returnImage(dices);
-    //timerForPlayer.Timer();
-    //game.turnTime();
     game.createPositionsBlockForMap(dices);
 }
 
@@ -453,7 +461,7 @@ export class SendMmessage {
         }
     }
 
-    public static resultOfGame(area: number): void {
-        socket.send(JSON.stringify(messageCreator.createMessageResultOfGame(area)));
+    public static resultOfGame(area1: number, area2: number): void {
+        socket.send(JSON.stringify(messageCreator.createMessageResultOfGame(area1, area2)));
     }
 }

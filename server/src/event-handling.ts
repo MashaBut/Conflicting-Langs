@@ -3,6 +3,7 @@ import { MessageCreator } from "../../library/dist/message-creator";
 import { Block } from "../../library/dist";
 import { Calculation } from "../../library/dist";
 import { Settings } from "../../library/dist";
+import { Result } from "./result";
 
 export class EventHandling {
     messageCreator = new MessageCreator();
@@ -163,5 +164,55 @@ export class EventHandling {
             }
             numbPosition++;
         }
+    }
+
+    public setResult(id: string, rooms: Array<Room>, area1: number, area2: number, results: Array<Result>, clients: Map<string, string>, sockets: Map<string, any>): void {
+        let a: any;
+        for (let room of rooms) {
+            if (room.isCurrentPlayer() === id) {
+                if (room.players[0] == id) {
+                    let now = new Date().toLocaleString();
+                    let r = new Result();
+                    a = clients.get(id);
+                    r.name = a;
+                    r.result = area1;
+                    r.isWinner = "winner";
+                    r.dateOfDate = now;
+                    results.push(r);
+
+                    r = new Result();
+                    a = clients.get(room.players[1]);
+                    r.name = a;
+                    r.result = area2;
+                    r.isWinner = "loser";
+                    r.dateOfDate = now;
+                    results.push(r);
+                }
+                if (room.players.length > 1) {
+                    if (room.players[1] == id) {
+                        let now = new Date().toLocaleString();
+                        let r = new Result();
+                        a = clients.get(id);
+                        r.name = a;
+                        r.result = area1;
+                        r.isWinner = "winner";
+                        r.dateOfDate = now;
+                        results.push(r);
+                        r = new Result();
+                        a = clients.get(room.players[0]);
+                        r.name = a;
+                        r.result = area2;
+                        r.isWinner = "loser";
+                        r.dateOfDate = now;
+                        results.push(r);
+                    }
+                }
+            }
+        }
+        let message = JSON.stringify(this.messageCreator.createMessageResultsAllPlayers(results));
+        sockets.forEach((value: string, key: string, socket: Map<string, string>) => {
+            let ws:any = socket.get(key);
+            ws.send(message);
+        })
     }
 }

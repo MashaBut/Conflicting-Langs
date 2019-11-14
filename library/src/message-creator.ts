@@ -20,6 +20,7 @@ import { MessageType } from "./message-type";
 import { MessagePositionCheck } from "./message-models/message-position-check";
 import { MessageResultOfGame } from "./message-models/message-result-of-game";
 import { MessageToken } from "./message-models/message-token";
+import { MessageResultsAllPlayers } from "./message-models/message-results-all-players";
 export class MessageCreator {
 
     public createMessageToken(token: string): MessageToken {
@@ -40,9 +41,10 @@ export class MessageCreator {
         return message;
     }
 
-    public createMessageResultOfGame(area: number): MessageResultOfGame {
+    public createMessageResultOfGame(area1: number, area2: number): MessageResultOfGame {
         let message = new MessageResultOfGame();
-        message.area = area;
+        message.area1 = area1;
+        message.area2 = area2;
         return message;
     }
 
@@ -151,6 +153,12 @@ export class MessageCreator {
     public createMessageEoorForPosition(): MessageBase {
         let message = new MessageBase();
         message.type = MessageType.ErrorForPosition;
+        return message;
+    }
+
+    public createMessageResultsAllPlayers(results: Array<any>) {
+        let message = new MessageResultsAllPlayers();
+        message.results = results;
         return message;
     }
 }
