@@ -73,8 +73,10 @@ socket.onmessage = function (message: any) {
             break;
         case MessageType.ResultsAllPlayers:
             let a: any = msg.results;
+            clearTable();
             a.forEach((result: any) => {
-                console.log("Name: " + result.name + " isWinner: " + result.isWinner + " result: " + result.result + " dateOfDate: " + result.dateOfDate);
+                fillTheTable(DOM.tableBody, result); 
+               // console.log("Name: " + result.name + " isWinner: " + result.isWinner + " result: " + result.result + " dateOfDate: " + result.dateOfDate);
             });
             break;
         case MessageType.SendInfoToPlayerRooms:
